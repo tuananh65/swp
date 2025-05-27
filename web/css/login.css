@@ -1,0 +1,201 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-bottom: 2px solid #007bff;
+}
+
+.logo img {
+  width: 100px;
+  height: auto;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.nav-list a:hover {
+  color: #007bff;
+}
+
+.icons span {
+  margin-left: 15px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Banner */
+.banner {
+  background: linear-gradient(90deg, #f5e6ff, #e6f5ff);
+  padding: 80px 0;
+  text-align: center;
+  position: relative;
+}
+
+.banner h1 {
+  font-size: 36px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.banner p {
+  font-size: 14px;
+  color: #666;
+}
+
+.banner p a {
+  color: #333;
+  text-decoration: none;
+}
+
+.banner p a:hover {
+  color: #007bff;
+}
+
+/* Decorative Elements */
+.banner::before,
+.banner::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ff6f61;
+}
+
+.banner::before {
+  top: 20px;
+  left: 20px;
+}
+
+.banner::after {
+  bottom: 20px;
+  left: 50%;
+}
+
+.signup-button {
+    background-color: #14B8A6;
+    color: #FFFFFF;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    text-decoration: none;
+    font-size: 16px;
+}
+.signup-button:hover {
+    background-color: #0D9488;
+}
+
+.form {
+    background-color: #E6F7FA;
+    border-radius: 16px;
+    padding: 32px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 20px auto; /* Đảm bảo form cách header một khoảng */
+}
+.form h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #1F2937;
+}
+.form p {
+    color: #6B7280;
+    margin-bottom: 24px;
+}
+.input-group {
+    margin-bottom: 16px;
+    text-align: left;
+}
+.input-group label {
+    display: block;
+    color: #4B5563;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+.input-field {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    font-size: 16px;
+}
+.links {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    font-size: 12px;
+}
+.link {
+    color: #3B82F6;
+    text-decoration: none;
+}
+.link:hover {
+    text-decoration: underline;
+}
+.login-button {
+    background-color: #1F2937;
+    color: #FFFFFF;
+    padding: 12px;
+    border-radius: 6px;
+    width: 100%;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+.login-button:hover {
+    background-color: #374151;
+    
+}
+
+
+/* Layout container */
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Nội dung chính */
+.main-content {
+  flex: 1;
+}
+
+/* Footer */
+.main-footer {
+  background: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  border-top: 2px solid #007bff;
+}
+
+.main-footer p {
+  margin: 0;
+  font-size: 14px;
+}
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
