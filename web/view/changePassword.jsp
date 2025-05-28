@@ -54,6 +54,9 @@
     <div class="main-content">
         <div class="password-form">
             <h2>Change PASSWORD</h2>
+            <c:if test="${not empty errorMessage}">
+                    <p style="color: red;">${errorMessage}</p>
+            </c:if>
             <form action="${pageContext.request.contextPath}/auth" method="post">
                 <input type="hidden" name="action" value="changePassword">
                 <input type="password" name="password" placeholder="Old Password*" required><br>
