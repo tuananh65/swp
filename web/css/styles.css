@@ -1,0 +1,648 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Sora", sans-serif;
+  background-color: #f9fafb;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 5px 40px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo img {
+  height: 70px;
+  transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-list > a,
+.nav-list .dropdown > a {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px;
+  transition: color 0.3s ease;
+}
+
+.nav-list > a:hover,
+.nav-list .dropdown > a:hover {
+  color: #7c3aed;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+  border-radius: 5px;
+  z-index: 100;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 12px 15px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-content a:hover {
+  background-color: #f5f5f5;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.icons {
+  display: flex;
+  gap: 15px;
+}
+
+.icons .icon {
+  font-size: 18px;
+  color: #0e2a46;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.icons .icon:hover {
+  color: #7c3aed;
+}
+
+/* Banner */
+.banner {
+    position: relative;
+    width: 100%;
+    height: 250px; /* Adjust height as needed */
+    overflow: hidden;
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the banner area */
+}
+
+.banner-text {
+    position: absolute;
+    top: 47%; /* Move text upward by reducing top from 50% to 40% */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #1f2937; /* Dark color for "SIGN UP" */
+}
+
+.banner-title {
+    font-size: 2.5em;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.banner-breadcrumb {
+    font-size: 1em;
+    color: #4b5563; /* Color for breadcrumb text */
+}
+
+.banner-breadcrumb table {
+    width: 200px; /* Fixed width to control text positioning */
+    margin: 0 auto; /* Center the table */
+}
+
+.banner-breadcrumb td {
+    width: 50%; /* Equal width for both columns */
+    color: #4b5563; /* Same color for "Home" and "Sign Up" */
+}
+
+.banner-breadcrumb td:first-child {
+    text-align: right; /* Right-align "Home" */
+    padding-right: 5px; /* Small padding for spacing */
+}
+
+.banner-breadcrumb td:last-child {
+    text-align: left; /* Left-align "Sign Up" */
+    padding-left: 5px; /* Small padding for spacing */
+}
+
+.copyright {
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    width: 100%;
+}
+
+/* Main Content */
+.main-content {
+    display: flex;
+    justify-content: center; /* Center the content */
+    align-items: stretch; /* Ensure both elements stretch to the same height */
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 70px;
+    gap: 0; /* Remove any gap between the form and image */
+}
+
+.signup-form {
+    background: #f5f5f5;
+    padding: 50px;
+    width: 75%;
+    margin: 0; /* Remove any margin to ensure no gap */
+    border-radius: 5px 0 0 5px; /* Rounded corners on the left side */
+}
+
+.signup-form h2 {
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 2px solid #ccc; /* Added horizontal line */
+    padding-bottom: 5px; /* Optional: adds space between text and line */
+}   
+
+.signup-form input, .signup-form select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 0px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+
+.signup-form button {
+    width: 110px;
+    padding: 0px 0px 0px 16px; /* Adjusted padding to accommodate the circle */
+    background: #6b48ff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between; /* Space between text and circle */
+    margin-top: 20px;
+}
+
+.signup-form button:hover {
+    background: #5a3fe5;
+}
+
+.signup-form .arrow-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Size of the circle */
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background for the circle */
+    border-radius: 50%; /* Make it a circle */
+    font-size: 18px;
+    color: white;
+}
+
+.signup-form p {
+    text-align: left;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.signup-form a {
+    color: #6b48ff;
+    text-decoration: none;
+}
+
+.signup-image {
+    width: 75%;
+    margin: 0; /* Remove any margin to ensure no gap */
+}
+
+.signup-image img {
+    width: 100%;
+    height: 100%; /* Ensure the image takes the full height of the container */
+    object-fit: cover; /* Ensure the image scales properly */
+    border-radius: 0 5px 5px 0; /* Rounded corners on the right side */
+}
+
+.password-form {
+    background: #f5f5f5;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 5px;
+    text-align: center; /* Center the content horizontally */
+}
+
+.password-form h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 2px solid #ccc; /* Added horizontal line */
+    padding-bottom: 5px; /* Optional: adds space between text and line */
+}
+
+.password-form input {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 0px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.password-form button {
+    width: 110px;
+    padding: 0px 0px 0px 16px; /* Adjusted padding to accommodate the circle */
+    background: #6b48ff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between; /* Space between text and circle */
+    margin-top: 20px;
+}
+
+.password-form button:hover {
+    background: #5a3fe5;
+}
+
+.password-form .arrow-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Size of the circle */
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background for the circle */
+    border-radius: 50%; /* Make it a circle */
+    font-size: 18px;
+    color: white;
+}
+
+.verify-email-form {
+    background: #f5f5f5;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.verify-email-form h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.verify-email-form p {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.verify-email-form input {
+    width: 100%;
+    padding: 15px;
+    margin: 40px 0 0 0;
+    border: 0px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.verify-email-form .resend-link {
+    text-align: left;
+    display: block;
+    margin: 5px 0;
+    color: #6b48ff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.verify-email-form .resend-link:hover {
+    text-decoration: underline;
+}
+
+.verify-email-form button {
+    width: 110px;
+    padding: 0px 0px 0px 10px;
+    background: #6b48ff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.verify-email-form button:hover {
+    background: #5a3fe5;
+}
+
+.verify-email-form .arrow-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    font-size: 18px;
+    color: white;
+}
+
+.posts-container {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.post {
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.post:hover {
+    transform: translateY(-5px);
+}
+
+.post a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.post-thumbnail {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.post-meta {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.post-meta span {
+    margin-right: 10px;
+}
+
+.post-meta .post-date {
+    color: #e74c3c;
+}
+
+.post-meta .post-category {
+    color: #7c3aed;
+}
+
+.post-title {
+    padding: 0 20px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.post-brief {
+    padding: 0 20px;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.read-more {
+    margin: 0 20px 20px;
+    padding: 10px 20px;
+    background: #6b48ff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.read-more:hover {
+    background: #5a3fe5;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.page-btn {
+    padding: 8px 16px;
+    background: #f5f5f5;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.page-btn.active {
+    background: #6b48ff;
+    color: white;
+}
+
+.page-btn:hover {
+    background: #e0e0e0;
+}
+
+/* Sidebar */
+.sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.sidebar-section {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.sidebar-section h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #1f2937;
+}
+
+.search-box {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Recent Posts */
+.recent-post {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.recent-post-thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.recent-post-info h5 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 5px;
+}
+
+.recent-post-info p {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Popular Tags */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag {
+    padding: 5px 10px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #666;
+}
+
+/* Footer */
+.footer {
+    background: #1f2937;
+    color: #fff;
+    padding: 40px 20px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.footer-section h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.footer-section p,
+.footer-section ul,
+.footer-section input,
+.footer-section button {
+    font-size: 14px;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    color: #fff;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.gallery {
+    display: flex;
+    gap: 10px;
+}
+
+.gallery img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.footer-section input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.subscribe-btn {
+    padding: 10px 20px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.subscribe-btn:hover {
+    background: #c0392b;
+}
