@@ -26,7 +26,7 @@ public class User {
     }
 
     public User(int userId, String userName, String password, int roleId, String fullName, String gender, Date dateOfBirth, 
-                String avatarUrl, String email, String phone, String address, String status, Date createdAt, String token, Date tokenExpiry) {
+                String avatarUrl, String email, String phone, String address, String status, Date createdAt) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
