@@ -1,0 +1,153 @@
+/*           USER DETAIL*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+.user-details {
+    text-align: center;
+    padding: 50px 20px;
+    background: linear-gradient(to right, #f5e7ff, #e0c3ff);
+}
+
+.user-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 30px;
+}
+
+.user-info h2 {
+    font-size: 28px;
+    color: #1a237e;
+    margin: 0 0 5px;
+    display: flex;
+    align-items: center;
+}
+
+.user-info .status.active {
+    color: #00e676;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.user-info .role {
+    font-size: 18px;
+    color: #d81b60;
+    margin: 5px 0;
+}
+
+.user-info .gender {
+    font-size: 16px;
+    color: #3f51b5;
+    margin: 5px 0;
+}
+
+.user-info .contact,
+.user-info .location,
+.user-info .email {
+    margin: 5px 0;
+    color: #f4511e;
+    font-size: 16px;
+}
+
+.user-info .contact a,
+.user-info .email a {
+    color: #f4511e;
+    text-decoration: none;
+}
+
+.user-info .contact a:hover,
+.user-info .email a:hover {
+    text-decoration: underline;
+}
+
+.social-icons a {
+    margin-left: 10px;
+    font-size: 18px;
+    color: #666;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #1a237e;
+}
+
+.instructors {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #fffaf0;
+}
+
+.instructors .category {
+    color: #9c27b0;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.instructors h2 {
+    font-size: 30px;
+    color: #1a237e;
+    margin-bottom: 20px;
+}
+
+.instructor-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.instructor-card {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.instructor-card:hover {
+    transform: translateY(-5px);
+}
+
+.instructor-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.instructor-card h3 {
+    font-size: 18px;
+    color: #1a237e;
+    margin: 10px 0 5px;
+}
+
+.instructor-card .role {
+    color: #666;
+    font-size: 14px;
+}
