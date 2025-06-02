@@ -98,7 +98,7 @@
                 <div class="hero-overlay"></div>
                 <img class="hero-image" src="${pageContext.request.contextPath}/images/banner.jpg" alt="Banner">
                 <div class="hero-text">
-                    <h1>USER PROFILE</h1>
+                    <h1 style="color: #000000;">USER PROFILE</h1>
                 </div>
             </div>
         </section>
@@ -266,8 +266,9 @@
                         <div class="profile-right">
                            <form class="profile-form" id="profile-form" action="${pageContext.request.contextPath}/updateUser" method="post">
     <input type="hidden" name="userID" value="${user.userID}" />
-    
-    <h1>ID: ${user.userID}</h1>
+    <!-- debug -->
+    <!-- oninput="this.setCustomValidity('')" -->
+    <h1>ID: ${user.userID}</h1> 
     
     <div class="form-row">
         <div class="form-group">
@@ -307,6 +308,7 @@
         <div class="form-group">
             <label for="userPhone">Phone *</label>
             <input
+                
                 type="tel"
                 id="userPhone"
                 name="userPhone"
@@ -395,7 +397,7 @@
                     <div class="footer-content">
                         <div class="footer-section">
                             <div class="footer-logo">
-                                <img src="/placeholder.svg?height=60&width=180" alt="Logo" />
+                                <img src="${pageContext.request.contextPath}/images/logo.jpg" alt="Logo" height="80" width="120" />
                             </div>
                             <p class="footer-description">
                                 Nền tảng học trực tuyến giúp bạn phát triển kỹ năng mềm hiệu quả
@@ -431,42 +433,26 @@
                         <div class="footer-section">
                             <h3>Thư viện ảnh</h3>
                             <div class="gallery-grid">
+                                
                                 <div class="gallery-item">
-                                    <img
-                                        src="/placeholder.svg?height=80&width=80"
-                                        alt="Gallery 1"
-                                        />
+                                    <img src="${pageContext.request.contextPath}/images/gallery1.jpg" alt="Gallery 1" height="80" width="80" />
                                 </div>
                                 <div class="gallery-item">
-                                    <img
-                                        src="/placeholder.svg?height=80&width=80"
-                                        alt="Gallery 2"
-                                        />
+                                    <img src="${pageContext.request.contextPath}/images/gallery2.jpg" alt="Gallery 2" height="80" width="80" />
                                 </div>
                                 <div class="gallery-item">
-                                    <img
-                                        src="/placeholder.svg?height=80&width=80"
-                                        alt="Gallery 3"
-                                        />
+                                    <img src="${pageContext.request.contextPath}/images/gallery3.jpg" alt="Gallery 3" height="80" width="80" />
                                 </div>
                                 <div class="gallery-item">
-                                    <img
-                                        src="/placeholder.svg?height=80&width=80"
-                                        alt="Gallery 4"
-                                        />
+                                    <img src="${pageContext.request.contextPath}/images/gallery4.jpg" alt="Gallery 4" height="80" width="80" />
                                 </div>
                                 <div class="gallery-item">
-                                    <img
-                                        src="/placeholder.svg?height=80&width=80"
-                                        alt="Gallery 5"
-                                        />
+                                    <img src="${pageContext.request.contextPath}/images/gallery5.jpg" alt="Gallery 5" height="80" width="80" />
                                 </div>
                                 <div class="gallery-item">
-                                    <img
-                                        src="/placeholder.svg?height=80&width=80"
-                                        alt="Gallery 6"
-                                        />
+                                    <img src="${pageContext.request.contextPath}/images/gallery6.jpg" alt="Gallery 6" height="80" width="80" />
                                 </div>
+
                             </div>
                         </div>
 
