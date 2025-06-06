@@ -1,0 +1,316 @@
+/* SettingList.css */
+
+/* Base Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Banner Styles */
+.banner {
+    text-align: center;
+    padding: 40px 0;
+    background-image: url("anh/nen.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 30px;
+}
+
+.banner h1 {
+    font-size: 36px;
+    color: #0E2A46;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.banner p {
+    color: #666;
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+/* Content Area */
+.content {
+    padding: 0 20px 20px;
+    flex: 1;
+}
+
+/* Search and Add Container */
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.search-container form {
+    display: flex;
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+.search {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    flex-grow: 1;
+}
+
+.search button {
+    padding: 8px 15px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search button:hover {
+    background-color: #5a6268;
+}
+
+/* Add Button */
+.add-user-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.add-user-btn:hover {
+    background-color: #218838;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.add-user-btn i {
+    margin-right: 8px;
+    font-size: 12px;
+}
+
+/* Table Styles */
+table {
+    width: 90%;
+    margin: 0 auto 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+}
+
+thead th {
+    background-color: #7768E5;
+    color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+/* Giảm độ dài cột SettingID */
+thead th:nth-child(1),
+tbody td:nth-child(1) {
+    width: 80px; /* Điều chỉnh giá trị này theo ý muốn */
+}
+
+tbody td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Action Buttons */
+/* Corrected style for the Edit link (which is an <a> tag) */
+td a[href*="editSetting"] { /* Target the <a> tag specifically for editSetting */
+    display: inline-block;
+    padding: 6px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff; /* Màu xanh dương tươi */
+    transition: background-color 0.3s;
+}
+
+td a[href*="editSetting"]:hover {
+    background-color: #0056b3; /* Màu xanh dương đậm hơn khi hover */
+}
+
+/* Style for the Delete button (which is a <button> tag) */
+td button.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+td button.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.pagination a,
+.pagination button {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    min-width: 30px;
+    text-align: center;
+    cursor: pointer;
+    background-color: white;
+}
+
+.pagination a:hover,
+.pagination button:hover {
+    background-color: #f0f0f0;
+    border-color: #7768E5;
+    color: #7768E5;
+}
+
+.pagination .active {
+    background-color: #7768E5;
+    color: white;
+    border-color: #7768E5;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #333;
+    color: white;
+    font-size: 14px;
+}
+
+/* --- Specific Styles for Filter Selects in Table Header --- */
+
+/* Apply styles to the select elements directly within thead th */
+thead th select#filterType,
+thead th select#filterStatus {
+    /* Match thead background and text color directly */
+    background-color: #7768E5;
+    color: white;
+
+    /* Remove default borders and rounded corners to blend in */
+    border: none;
+    border-radius: 0;
+
+    /* Sizing and positioning - Adjusted width */
+    width: calc(100% - 20px); /* Leave some space for potential padding/arrow */
+    padding: 6px 10px; /* Padding from UserList.css for filters */
+    margin: 0; /* Remove default margins */
+    box-sizing: border-box; /* Include padding in width calculation */
+
+    /* Font styles from UserList.css for filters */
+    font-weight: bold;
+    font-size: 14px;
+
+    /* Custom dropdown arrow (from UserList.css) */
+    cursor: pointer;
+    appearance: none; /* Hide default arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='10'%20height='10'%3E%3Cpath%20fill='white'%20d='M0%200l5%205%205-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+}
+
+/* Style for options within the dropdown (when opened) */
+thead th select#filterType option,
+thead th select#filterStatus option {
+    color: black;
+    background-color: white;
+}
+
+/* Style when the select element is focused */
+thead th select#filterType:focus,
+thead th select#filterStatus:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #c8c0f5; /* Light purple shadow on focus */
+}
+
+/* Adjust padding of the specific th cells to allow select to fill them */
+thead th:nth-child(2), /* For the 'Type' column */
+thead th:nth-child(5)    /* For the 'Status' column */
+{
+    padding: 0; /* Remove padding from the th itself */
+}
+
+/* Add padding to the content inside those th cells if needed */
+thead th:nth-child(2) > *,
+thead th:nth-child(5) > * {
+    padding: 10px;
+    display: block; /* Ensure content takes full width */
+}
+
+/* Thêm style cho nút Active/Deactive */
+.active-btn {
+    background-color: #28a745; /* Màu xanh lá cây cho Active */
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.active-btn:hover {
+    background-color: #218838;
+}
+
+.inactive-btn {
+    background-color: #dc3545; /* Màu đỏ cho Deactive */
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.inactive-btn:hover {
+    background-color: #c82333;
+}
