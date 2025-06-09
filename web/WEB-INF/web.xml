@@ -71,4 +71,9 @@
         <servlet-name>CourseDetailServlet</servlet-name>
         <url-pattern>/CourseDetailServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseListServlet</servlet-name>
+        <url-pattern>/courseList</url-pattern>
+    </servlet-mapping>
+ 
 </web-app>

@@ -122,6 +122,7 @@ public class CourseDAO extends DBContext {
         c.setFeatured(rs.getBoolean("Featured"));
         return c;
     }
+   
 
     // Main method for testing
     public static void main(String[] args) {
