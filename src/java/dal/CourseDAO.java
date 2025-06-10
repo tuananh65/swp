@@ -105,6 +105,48 @@ public class CourseDAO extends DBContext {
         return list;
     }
 
+    // Tìm kiếm khóa học có phân trang
+    public List<Course> searchCourses(String keyword, int page, int pageSize) {
+        List<Course> courses = new ArrayList<>();
+        String sql = "SELECT * FROM Course WHERE CourseName LIKE ? ORDER BY CourseID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + keyword + "%");
+            ps.setInt(2, (page - 1) * pageSize);
+            ps.setInt(3, pageSize);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Course course = extractCourse(rs);
+                courses.add(course);
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi trong searchCourses: " + e.getMessage());
+            e.printStackTrace();
+        } 
+        return courses;
+    }
+
+    // Đếm tổng số khóa học theo keyword (để chia trang)
+    public int countCourses(String keyword) {
+        String sql = "SELECT COUNT(*) FROM Course WHERE CourseName LIKE ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + keyword + "%");
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi trong countCourses: " + e.getMessage());
+            e.printStackTrace();
+        } 
+        return 0;
+    }
+
     // Hàm hỗ trợ: Tạo đối tượng Course từ ResultSet
     private Course extractCourse(ResultSet rs) throws SQLException {
         Course c = new Course();
@@ -122,7 +164,6 @@ public class CourseDAO extends DBContext {
         c.setFeatured(rs.getBoolean("Featured"));
         return c;
     }
-   
 
     // Main method for testing
     public static void main(String[] args) {
