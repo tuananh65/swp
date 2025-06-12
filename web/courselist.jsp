@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -10,14 +11,12 @@
     <title>Danh Sách Khóa Học - Soft Skills</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/courselist.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
-     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Include Header -->
     <jsp:include page="/view/header.jsp"/>
-    
-    <!-- Banner -->
+
     <section class="banner">
         <div class="container">
             <div class="banner-content">
@@ -29,285 +28,135 @@
         </div>
     </section>
 
-    <!-- Main Content -->
     <div class="main-container">
-        <!-- Sidebar -->
         <aside class="sidebar">
-            <!-- Search Box -->
-            <div class="search-box">
-                <input type="text" placeholder="Search" id="searchInput" value="${searchTerm}">
-                <button type="button" class="search-btn" onclick="searchCourses()"><i class="fas fa-search"></i></button>
-            </div>
-
-            <!-- Service Categories -->
-            <div class="service-category">
-                <h3>SERVICE CATEGORY</h3>
-                <ul class="category-list">
-                    <li class="category-item ${categoryFilter == 'Communication' ? 'active' : ''}">
-                        <div class="category-header" onclick="filterByCategory('Communication')">
-                            <span>Communication</span>
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </li>
-                    <li class="category-item ${categoryFilter == 'Emotional Intelligence' ? 'active' : ''}">
-                        <div class="category-header" onclick="filterByCategory('Emotional Intelligence')">
-                            <span>Emotional Intelligence</span>
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </li>
-                    <li class="category-item ${categoryFilter == 'Time Management' ? 'active' : ''}">
-                        <div class="category-header" onclick="filterByCategory('Time Management')">
-                            <span>Time Management</span>
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </li>
-                    <li class="category-item ${categoryFilter == 'Leadership' ? 'active' : ''}">
-                        <div class="category-header" onclick="filterByCategory('Leadership')">
-                            <span>Leadership</span>
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </li>
-                    <li class="category-item ${categoryFilter == 'Teamwork' ? 'active' : ''}">
-                        <div class="category-header" onclick="filterByCategory('Teamwork')">
-                            <span>Teamwork</span>
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Contact Info -->
+            <form action="${pageContext.request.contextPath}/courseList" method="get">
+                <div class="search-box">
+                    <input type="text" name="search" placeholder="Tìm kiếm khóa học..." value="${fn:escapeXml(searchTerm)}">
+                    <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+                    <!-- Thêm hidden inputs để giữ trạng thái checkbox -->
+                    <input type="hidden" name="showThumbnail" value="${showThumbnail}">
+                    <input type="hidden" name="showPrice" value="${showPrice}">
+                    <input type="hidden" name="showRegister" value="${showRegister}">
+                    <input type="hidden" name="showTagline" value="${showTagline}">
+                    <input type="hidden" name="showTitle" value="${showTitle}">
+                    <input type="hidden" name="sort" value="${sortBy}">
+                    <input type="hidden" name="pageSize" value="${pageSize}">
+                </div>
+            </form>
             <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <span>(555) 567-987-237</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Hudson, Wisconsin(WI), 54016</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>contact@gmail.com</span>
-                </div>
+                <div class="contact-item"><i class="fas fa-phone"></i><span>(555) 567-987-237</span></div>
+                <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Hudson, Wisconsin(WI), 54016</span></div>
+                <div class="contact-item"><i class="fas fa-envelope"></i><span>contact@gmail.com</span></div>
             </div>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
-            <!-- Filter Options -->
-            <div class="filter-options">
-                <div class="filter-checkboxes">
-                    <label><input type="checkbox" checked> Thumbnail</label>
-                    <label><input type="checkbox" checked> Price</label>
-                    <label><input type="checkbox" checked> Register button</label>
-                    <label><input type="checkbox" checked> Tagline</label>
-                    <label><input type="checkbox" checked> Title</label>
-                </div>
-                <div class="filter-right">
-                    <span>Maximum courses per page:</span>
-                    <div class="page-size-selector">
-                        <input type="number" id="pageSizeInput" value="${pageSize}" min="1" class="page-size-input" placeholder="Enter number" onchange="updatePageSize()">
+            <form id="filterForm" action="${pageContext.request.contextPath}/courseList" method="get">
+                <div class="filter-options">
+                    <div class="filter-checkboxes">
+                        <label><input type="checkbox" name="showThumbnail" value="true" ${showThumbnail ? 'checked' : ''}> Thumbnail</label>
+                        <label><input type="checkbox" name="showPrice" value="true" ${showPrice ? 'checked' : ''}> Price</label>
+                        <label><input type="checkbox" name="showRegister" value="true" ${showRegister ? 'checked' : ''}> Register button</label>
+                        <label><input type="checkbox" name="showTagline" value="true" ${showTagline ? 'checked' : ''}> Tagline</label>
+                        <label><input type="checkbox" name="showTitle" value="true" ${showTitle ? 'checked' : ''}> Title</label>
+                        <button type="submit" class="save-display-btn">Lưu</button>
                     </div>
-                    <div class="sort-options">
-                        <span>Sorted by 
-                            <select name="sort" onchange="sortCourses()">
-                                <option value="latest" ${sortBy == 'latest' ? 'selected' : ''}>Latest</option>
-                                <option value="price_low" ${sortBy == 'price_low' ? 'selected' : ''}>Price Low</option>
-                                <option value="price_high" ${sortBy == 'price_high' ? 'selected' : ''}>Price High</option>
-                                <option value="name" ${sortBy == 'name' ? 'selected' : ''}>Name</option>
+                    <div class="filter-right">
+                        <span>Số khóa học mỗi trang:</span>
+                        <input type="number" name="pageSize" value="${pageSize}" min="1" max="100" class="page-size-input" onchange="this.form.submit()">
+                        <span>Sắp xếp theo: 
+                            <select name="sort" onchange="this.form.submit()">
+                                <option value="latest" ${sortBy == 'latest' ? 'selected' : ''}>Mới nhất</option>
+                                <option value="price_low" ${sortBy == 'price_low' ? 'selected' : ''}>Giá thấp</option>
+                                <option value="price_high" ${sortBy == 'price_high' ? 'selected' : ''}>Giá cao</option>
+                                <option value="name" ${sortBy == 'name' ? 'selected' : ''}>Tên</option>
                             </select>
                         </span>
                     </div>
                 </div>
+                <input type="hidden" name="search" value="${fn:escapeXml(searchTerm)}">
+            </form>
+
+            <div class="courses-grid">
+                <c:choose>
+                    <c:when test="${not empty courses}">
+                        <c:forEach var="course" items="${courses}">
+                            <div class="course-card">
+                                <c:if test="${showThumbnail}">
+                                    <div class="course-image">
+                                        <img src="${pageContext.request.contextPath}/${not empty course.courseThumbnail ? course.courseThumbnail : 'images/default-course.jpg'}" 
+                                             alt="${fn:escapeXml(course.courseName)}">
+                                    </div>
+                                </c:if>
+                                <div class="course-content">
+                                    <c:if test="${showTitle}">
+                                        <h3>${fn:escapeXml(course.courseName)}</h3>
+                                    </c:if>
+                                    <p>${fn:escapeXml(course.briefInfo)}</p>
+                                    <c:if test="${showTagline}">
+                                        <div class="course-tags">
+                                            <span class="tag">${fn:escapeXml(course.tagLine)}</span>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${showPrice}">
+                                        <div class="course-price">
+                                            <c:if test="${course.salePrice < course.originalPrice}">
+                                                <span class="original-price"><fmt:formatNumber value="${course.originalPrice}" type="currency"/></span>
+                                                <span class="sale-price"><fmt:formatNumber value="${course.salePrice}" type="currency"/></span>
+                                            </c:if>
+                                            <c:if test="${course.salePrice >= course.originalPrice}">
+                                                <span class="price"><fmt:formatNumber value="${course.originalPrice}" type="currency"/></span>
+                                            </c:if>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${showRegister}">
+                                        <button class="register-btn">Đăng ký ngay</button>
+                                    </c:if>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="no-courses">
+                            <p>Không tìm thấy khóa học nào. Vui lòng thử từ khóa khác.</p>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
-                
-                <!-- Courses Grid -->
-                <div class="courses-grid">
-                    <!-- Course 1 -->
-                    <div class="course-card">
-                        <div class="course-image">
-                            <img src="${pageContext.request.contextPath}/images/time-management.jpg" alt="Time Management">
-                        </div>
-                        <div class="course-content">
-                            <h3>Time Management</h3>
-                            <p>Master your day with smart time strategies. This course boosts productivity, cuts stress, and helps you build a balanced, successful life.</p>
-                            <div class="course-tags">
-                                <span class="tag">Tag: #timemanagement</span>
-                                <span class="tag">#softskills</span>
-                            </div>
-                            <div class="course-price">
-                                200.000 VND
-                            </div>
-                            <button class="register-btn">Register Now</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Course 2 -->
-                    <div class="course-card">
-                        <div class="course-image">
-                            <img src="${pageContext.request.contextPath}/images/time-management.jpg" alt="Time Management">
-                        </div>
-                        <div class="course-content">
-                            <h3>Time Management</h3>
-                            <p>Master your day with smart time strategies. This course boosts productivity, cuts stress, and helps you build a balanced, successful life.</p>
-                            <div class="course-tags">
-                                <span class="tag">Tag: #timemanagement</span>
-                                <span class="tag">#softskills</span>
-                            </div>
-                            <div class="course-price">
-                                200.000 VND
-                            </div>
-                            <button class="register-btn">Register Now</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Course 3 -->
-                    <div class="course-card">
-                        <div class="course-image">
-                            <img src="${pageContext.request.contextPath}/images/time-management.jpg" alt="Time Management">
-                        </div>
-                        <div class="course-content">
-                            <h3>Time Management</h3>
-                            <p>Master your day with smart time strategies. This course boosts productivity, cuts stress, and helps you build a balanced, successful life.</p>
-                            <div class="course-tags">
-                                <span class="tag">Tag: #timemanagement</span>
-                                <span class="tag">#softskills</span>
-                            </div>
-                            <div class="course-price">
-                                200.000 VND
-                            </div>
-                            <button class="register-btn">Register Now</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Course 4 -->
-                    <div class="course-card">
-                        <div class="course-image">
-                            <img src="${pageContext.request.contextPath}/images/time-management.jpg" alt="Time Management">
-                        </div>
-                        <div class="course-content">
-                            <h3>Time Management</h3>
-                            <p>Master your day with smart time strategies. This course boosts productivity, cuts stress, and helps you build a balanced, successful life.</p>
-                            <div class="course-tags">
-                                <span class="tag">Tag: #timemanagement</span>
-                                <span class="tag">#softskills</span>
-                            </div>
-                            <div class="course-price">
-                                200.000 VND
-                            </div>
-                            <button class="register-btn">Register Now</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Course 5 -->
-                    <div class="course-card">
-                        <div class="course-image">
-                            <img src="${pageContext.request.contextPath}/images/time-management.jpg" alt="Time Management">
-                        </div>
-                        <div class="course-content">
-                            <h3>Time Management</h3>
-                            <p>Master your day with smart time strategies. This course boosts productivity, cuts stress, and helps you build a balanced, successful life.</p>
-                            <div class="course-tags">
-                                <span class="tag">Tag: #timemanagement</span>
-                                <span class="tag">#softskills</span>
-                            </div>
-                            <div class="course-price">
-                                200.000 VND
-                            </div>
-                            <button class="register-btn">Register Now</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Course 6 -->
-                    <div class="course-card">
-                        <div class="course-image">
-                            <img src="${pageContext.request.contextPath}/images/time-management.jpg" alt="Time Management">
-                        </div>
-                        <div class="course-content">
-                            <h3>Time Management</h3>
-                            <p>Master your day with smart time strategies. This course boosts productivity, cuts stress, and helps you build a balanced, successful life.</p>
-                            <div class="course-tags">
-                                <span class="tag">Tag: #timemanagement</span>
-                                <span class="tag">#softskills</span>
-                            </div>
-                            <div class="course-price">
-                                200.000 VND
-                            </div>
-                            <button class="register-btn">Register Now</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Course 7 -->
-                    <div class="course-card">
-                        <div class="course-image">
-                            <img src="${pageContext.request.contextPath}/images/time-management.jpg" alt="Time Management">
-                        </div>
-                        <div class="course-content">
-                            <h3>Time Management</h3>
-                            <p>Master your day with smart time strategies. This course boosts productivity, cuts stress, and helps you build a balanced, successful life.</p>
-                            <div class="course-tags">
-                                <span class="tag">Tag: #timemanagement</span>
-                                <span class="tag">#softskills</span>
-                            </div>
-                            <div class="course-price">
-                                200.000 VND
-                            </div>
-                            <button class="register-btn">Register Now</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Course 8 -->
-                    <div class="course-card">
-                        <div class="course-image">
-                            <img src="${pageContext.request.contextPath}/images/time-management.jpg" alt="Time Management">
-                        </div>
-                        <div class="course-content">
-                            <h3>Time Management</h3>
-                            <p>Master your day with smart time strategies. This course boosts productivity, cuts stress, and helps you build a balanced, successful life.</p>
-                            <div class="course-tags">
-                                <span class="tag">Tag: #timemanagement</span>
-                                <span class="tag">#softskills</span>
-                            </div>
-                            <div class="course-price">
-                                200.000 VND
-                            </div>
-                            <button class="register-btn">Register Now</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Course 9 -->
-                    <div class="course-card">
-                        <div class="course-image">
-                            <img src="${pageContext.request.contextPath}/images/time-management.jpg" alt="Time Management">
-                        </div>
-                        <div class="course-content">
-                            <h3>Time Management</h3>
-                            <p>Master your day with smart time strategies. This course boosts productivity, cuts stress, and helps you build a balanced, successful life.</p>
-                            <div class="course-tags">
-                                <span class="tag">Tag: #timemanagement</span>
-                                <span class="tag">#softskills</span>
-                            </div>
-                            <div class="course-price">
-                                200.000 VND
-                            </div>
-                            <button class="register-btn">Register Now</button>
-                        </div>
-                    </div>
-                </div>
-                
-               <!-- Pagination -->
+
             <div class="pagination">
                 <c:if test="${totalPages > 1}">
+                    <c:if test="${currentPage > 1}">
+                        <a class="page-btn" href="${pageContext.request.contextPath}/courseList?page=${currentPage - 1}&search=${fn:escapeXml(searchTerm)}&sort=${sortBy}&pageSize=${pageSize}&showThumbnail=${showThumbnail}&showPrice=${showPrice}&showRegister=${showRegister}&showTagline=${showTagline}&showTitle=${showTitle}">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </c:if>
                     <c:forEach var="i" begin="1" end="${totalPages}">
-                        <button class="page-btn ${currentPage == i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>
+                        <c:choose>
+                            <c:when test="${i == currentPage}">
+                                <span class="page-btn active">${i}</span>
+                            </c:when>
+                            <c:when test="${i <= 2 || i > totalPages - 2 || (i >= currentPage - 1 && i <= currentPage + 1)}">
+                                <a class="page-btn" href="${pageContext.request.contextPath}/courseList?page=${i}&search=${fn:escapeXml(searchTerm)}&sort=${sortBy}&pageSize=${pageSize}&showThumbnail=${showThumbnail}&showPrice=${showPrice}&showRegister=${showRegister}&showTagline=${showTagline}&showTitle=${showTitle}">${i}</a>
+                            </c:when>
+                            <c:when test="${i == 3 && currentPage > 4 || i == totalPages - 2 && currentPage < totalPages - 3}">
+                                <span class="page-dots">...</span>
+                            </c:when>
+                        </c:choose>
                     </c:forEach>
+                    <c:if test="${currentPage < totalPages}">
+                        <a class="page-btn" href="${pageContext.request.contextPath}/courseList?page=${currentPage + 1}&search=${fn:escapeXml(searchTerm)}&sort=${sortBy}&pageSize=${pageSize}&showThumbnail=${showThumbnail}&showPrice=${showPrice}&showRegister=${showRegister}&showTagline=${showTagline}&showTitle=${showTitle}">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </c:if>
                 </c:if>
             </div>
         </main>
     </div>
 
-   <!-- Footer -->
+    <!-- Footer -->
+
         <footer class="footer">
             <div class="footer-top">
                 <div class="container">
@@ -454,67 +303,33 @@
                 </div>
             </div>
         </footer>
-        
 
-   
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function goToPage(page) {
-            const searchTerm = "${searchTerm}";
-            const categoryFilter = "${categoryFilter}";
-            const sortBy = "${sortBy}";
-            const pageSize = document.getElementById("pageSizeInput").value;
-            window.location.href = `${pageContext.request.contextPath}/coursesList?page=${page}&pageSize=${pageSize}&search=${searchTerm}&category=${categoryFilter}&sort=${sortBy}`;
-        }
+        const filterKey = 'course_display_filters';
 
-        function searchCourses() {
-            const searchTerm = document.getElementById("searchInput").value;
-            const categoryFilter = "${categoryFilter}";
-            const sortBy = "${sortBy}";
-            const pageSize = document.getElementById("pageSizeInput").value;
-            window.location.href = `${pageContext.request.contextPath}/coursesList?page=1&pageSize=${pageSize}&search=${searchTerm}&category=${categoryFilter}&sort=${sortBy}`;
-        }
+        // Lưu trạng thái checkbox vào localStorage
+        document.querySelector('.save-display-btn').addEventListener('click', () => {
+            const checkboxes = document.querySelectorAll('.filter-checkboxes input[type="checkbox"]');
+            const filterState = {};
+            checkboxes.forEach(cb => {
+                filterState[cb.name] = cb.checked;
+            });
+            localStorage.setItem(filterKey, JSON.stringify(filterState));
+        });
 
-        function filterByCategory(category) {
-            const searchTerm = "${searchTerm}";
-            const sortBy = "${sortBy}";
-            const pageSize = document.getElementById("pageSizeInput").value;
-            window.location.href = `${pageContext.request.contextPath}/coursesList?page=1&pageSize=${pageSize}&search=${searchTerm}&category=${category}&sort=${sortBy}`;
-        }
-
-        function updatePageSize() {
-            const searchTerm = "${searchTerm}";
-            const categoryFilter = "${categoryFilter}";
-            const sortBy = "${sortBy}";
-            const pageSize = document.getElementById("pageSizeInput").value;
-            window.location.href = `${pageContext.request.contextPath}/coursesList?page=1&pageSize=${pageSize}&search=${searchTerm}&category=${categoryFilter}&sort=${sortBy}`;
-        }
-
-        function sortCourses() {
-            const searchTerm = "${searchTerm}";
-            const categoryFilter = "${categoryFilter}";
-            const sortBy = document.querySelector('select[name="sort"]').value;
-            const pageSize = document.getElementById("pageSizeInput").value;
-            window.location.href = `${pageContext.request.contextPath}/coursesList?page=1&pageSize=${pageSize}&search=${searchTerm}&category=${categoryFilter}&sort=${sortBy}`;
-        }
-
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchCourses();
+        // Áp dụng trạng thái từ localStorage khi load trang
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedState = localStorage.getItem(filterKey);
+            if (savedState) {
+                const filterState = JSON.parse(savedState);
+                Object.entries(filterState).forEach(([name, checked]) => {
+                    const checkbox = document.querySelector(`.filter-checkboxes input[name="${name}"]`);
+                    if (checkbox) {
+                        checkbox.checked = checked;
+                    }
+                });
             }
         });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const categoryItems = document.querySelectorAll('.category-item');
-            categoryItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    categoryItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-        });
     </script>
-    
 </body>
 </html>

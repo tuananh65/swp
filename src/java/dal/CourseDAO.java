@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +30,9 @@ public class CourseDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.err.println("Lỗi trong getAllCourses: " + e.getMessage());
-            e.printStackTrace();
-        } 
+        } finally {
+            closeResources();
+        }
         return list;
     }
 
@@ -51,15 +51,16 @@ public class CourseDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.err.println("Lỗi trong getCourseById: " + e.getMessage());
-            e.printStackTrace();
-        } 
+        } finally {
+            closeResources();
+        }
         return null;
     }
 
     // Thêm khóa học mới
     public boolean insertCourse(Course course) {
         String sql = "INSERT INTO Course (CourseName, TagLine, BriefInfo, Description, OriginalPrice, SalePrice, CourseThumbnail, CreatedAt, UpdatedAt, UserID, Featured) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             conn = new DBContext().getConnection();
@@ -72,17 +73,18 @@ public class CourseDAO extends DBContext {
             ps.setDouble(5, course.getOriginalPrice());
             ps.setDouble(6, course.getSalePrice());
             ps.setString(7, course.getCourseThumbnail());
-            ps.setTimestamp(8, course.getCreatedAt() != null ? new Timestamp(course.getCreatedAt().getTime()) : null);
-            ps.setTimestamp(9, course.getUpdatedAt() != null ? new Timestamp(course.getUpdatedAt().getTime()) : null);
+            ps.setDate(8, course.getCreatedAt());
+            ps.setDate(9, course.getUpdatedAt());
             ps.setInt(10, course.getUserID());
             ps.setBoolean(11, course.isFeatured());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("Lỗi trong insertCourse: " + e.getMessage());
-            e.printStackTrace();
             return false;
-        } 
+        } finally {
+            closeResources();
+        }
     }
 
     // Lấy các khóa học nổi bật
@@ -100,38 +102,59 @@ public class CourseDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.err.println("Lỗi trong getFeaturedCourses: " + e.getMessage());
-            e.printStackTrace();
-        } 
+        } finally {
+            closeResources();
+        }
         return list;
     }
 
-    // Tìm kiếm khóa học có phân trang
-    public List<Course> searchCourses(String keyword, int page, int pageSize) {
+    // ✅ Tìm kiếm, phân trang, sắp xếp
+    public List<Course> searchCourses(String keyword, int offset, int pageSize, String sortBy) {
         List<Course> courses = new ArrayList<>();
-        String sql = "SELECT * FROM Course WHERE CourseName LIKE ? ORDER BY CourseID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String orderBy = "CourseID"; // fallback
+
+        switch (sortBy) {
+            case "latest":
+                orderBy = "CreatedAt DESC";
+                break;
+            case "price_low":
+                orderBy = "SalePrice ASC";
+                break;
+            case "price_high":
+                orderBy = "SalePrice DESC";
+                break;
+            case "name":
+                orderBy = "CourseName ASC";
+                break;
+        }
+
+        String sql = "SELECT * FROM Course WHERE CourseName LIKE ? "
+                   + "ORDER BY " + orderBy + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, "%" + keyword + "%");
-            ps.setInt(2, (page - 1) * pageSize);
+            ps.setInt(2, offset);
             ps.setInt(3, pageSize);
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                Course course = extractCourse(rs);
-                courses.add(course);
+                courses.add(extractCourse(rs));
             }
         } catch (SQLException e) {
             System.err.println("Lỗi trong searchCourses: " + e.getMessage());
-            e.printStackTrace();
-        } 
+        } finally {
+            closeResources();
+        }
+
         return courses;
     }
 
-    // Đếm tổng số khóa học theo keyword (để chia trang)
+    // ✅ Đếm số khóa học khớp với keyword
     public int countCourses(String keyword) {
         String sql = "SELECT COUNT(*) FROM Course WHERE CourseName LIKE ?";
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -142,12 +165,13 @@ public class CourseDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.err.println("Lỗi trong countCourses: " + e.getMessage());
-            e.printStackTrace();
-        } 
+        } finally {
+            closeResources();
+        }
         return 0;
     }
 
-    // Hàm hỗ trợ: Tạo đối tượng Course từ ResultSet
+    // Tạo Course từ ResultSet
     private Course extractCourse(ResultSet rs) throws SQLException {
         Course c = new Course();
         c.setCourseID(rs.getInt("CourseID"));
@@ -158,20 +182,30 @@ public class CourseDAO extends DBContext {
         c.setOriginalPrice(rs.getDouble("OriginalPrice"));
         c.setSalePrice(rs.getDouble("SalePrice"));
         c.setCourseThumbnail(rs.getString("CourseThumbnail"));
-        c.setCreatedAt(rs.getTimestamp("CreatedAt"));
-        c.setUpdatedAt(rs.getTimestamp("UpdatedAt"));
+        c.setCreatedAt(rs.getDate("CreatedAt"));
+        c.setUpdatedAt(rs.getDate("UpdatedAt"));
         c.setUserID(rs.getInt("UserID"));
         c.setFeatured(rs.getBoolean("Featured"));
         return c;
     }
 
-    // Main method for testing
+    // Đóng tài nguyên
+    private void closeResources() {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi đóng tài nguyên: " + e.getMessage());
+        }
+    }
+
+    // Main test
     public static void main(String[] args) {
         CourseDAO dao = new CourseDAO();
-        List<Course> list = dao.getAllCourses();
-
+        List<Course> list = dao.searchCourses("java", 0, 5, "price_low");
         for (Course c : list) {
-            System.out.println("Course Name: " + c.toString());
+            System.out.println("Tên khóa học: " + c.getCourseName());
         }
     }
 }

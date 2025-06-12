@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Course {
     private int courseID;
@@ -11,19 +11,15 @@ public class Course {
     private double originalPrice;
     private double salePrice;
     private String courseThumbnail;
-    private Date createdAt;
-    private Date updatedAt;
+   private Date createdAt; // Sử dụng java.util.Date
+    private Date updatedAt; // Sử dụng java.util.Date
     private int userID;
     private boolean featured;
 
-    // Constructor không tham số
     public Course() {
     }
 
-    // Constructor đầy đủ
-    public Course(int courseID, String courseName, String tagLine, String briefInfo, String description,
-                  double originalPrice, double salePrice, String courseThumbnail,
-                  Date createdAt, Date updatedAt, int userID, boolean featured) {
+    public Course(int courseID, String courseName, String tagLine, String briefInfo, String description, double originalPrice, double salePrice, String courseThumbnail, Date createdAt, Date updatedAt, int userID, boolean featured) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.tagLine = tagLine;
@@ -37,107 +33,53 @@ public class Course {
         this.userID = userID;
         this.featured = featured;
     }
+    
+    
 
-    // Getters và Setters
-    public int getCourseID() {
-        return courseID;
-    }
+    // Getters and Setters
+    public int getCourseID() { return courseID; }
+    public void setCourseID(int courseID) { this.courseID = courseID; }
 
-    public void setCourseID(int courseID) {
-        this.courseID = courseID;
-    }
+    public String getCourseName() { return courseName; }
+    public void setCourseName(String courseName) { this.courseName = courseName; }
 
-    public String getCourseName() {
-        return courseName;
-    }
+    public String getTagLine() { return tagLine; }
+    public void setTagLine(String tagLine) { this.tagLine = tagLine; }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
+    public String getBriefInfo() { return briefInfo; }
+    public void setBriefInfo(String briefInfo) { this.briefInfo = briefInfo; }
 
-    public String getTagLine() {
-        return tagLine;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public void setTagLine(String tagLine) {
-        this.tagLine = tagLine;
-    }
+    public double getOriginalPrice() { return originalPrice; }
+    public void setOriginalPrice(double originalPrice) { this.originalPrice = originalPrice; }
 
-    public String getBriefInfo() {
-        return briefInfo;
-    }
+    public double getSalePrice() { return salePrice; }
+    public void setSalePrice(double salePrice) { this.salePrice = salePrice; }
 
-    public void setBriefInfo(String briefInfo) {
-        this.briefInfo = briefInfo;
-    }
+    public String getCourseThumbnail() { return courseThumbnail; }
+    public void setCourseThumbnail(String courseThumbnail) { this.courseThumbnail = courseThumbnail; }
 
-    public String getDescription() {
-        return description;
-    }
+    public Date getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public Date getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(Date updatedAt) { this.updatedAt = updatedAt; }
 
-    public double getOriginalPrice() {
-        return originalPrice;
-    }
+    public int getUserID() { return userID; }
+    public void setUserID(int userID) { this.userID = userID; }
 
-    public void setOriginalPrice(double originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
-    public double getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(double salePrice) {
-        this.salePrice = salePrice;
-    }
-
-    public String getCourseThumbnail() {
-        return courseThumbnail;
-    }
-
-    public void setCourseThumbnail(String courseThumbnail) {
-        this.courseThumbnail = courseThumbnail;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public boolean isFeatured() {
-        return featured;
-    }
-
-    public void setFeatured(boolean featured) {
-        this.featured = featured;
-    }
+    public boolean isFeatured() { return featured; }
+    public void setFeatured(boolean featured) { this.featured = featured; }
 
     @Override
     public String toString() {
-        return "Course{" + "courseID=" + courseID + ", courseName=" + courseName + ", tagLine=" + tagLine + ", briefInfo=" + briefInfo + ", description=" + description + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice + ", courseThumbnail=" + courseThumbnail + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", userID=" + userID + ", featured=" + featured + '}';
+        return "Course{" +
+                "courseID=" + courseID +
+                ", courseName='" + courseName + '\'' +
+                ", tagLine='" + tagLine + '\'' +
+                ", featured=" + featured +
+                '}';
     }
-    
 }

@@ -11,10 +11,6 @@
         <servlet-name>AuthServlet</servlet-name>
         <servlet-class>controller.AuthServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>AuthServlet</servlet-name>
-        <url-pattern>/auth</url-pattern>
-    </servlet-mapping>
     <servlet>
         <servlet-name>StudentServlet</servlet-name>
         <servlet-class>controller.StudentServlet</servlet-class>
@@ -39,6 +35,19 @@
         <servlet-name>PostDetailServlet</servlet-name>
         <servlet-class>controller.PostDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CourseDetailServlet</servlet-name>
+        <servlet-class>controller.CourseDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CourseListServlet</servlet-name>
+        <servlet-class>controller.CourseListServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AuthServlet</servlet-name>
+        <url-pattern>/auth</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StudentServlet</servlet-name>
         <url-pattern>/student</url-pattern>
@@ -75,5 +84,5 @@
         <servlet-name>CourseListServlet</servlet-name>
         <url-pattern>/courseList</url-pattern>
     </servlet-mapping>
- 
+
 </web-app>
