@@ -1,0 +1,122 @@
+/* editSetting.css */
+
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.content {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+}
+
+.error-message {
+    background-color: #ffe0e0;
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+form div {
+    margin-bottom: 10px; /* Giảm khoảng cách giữa các div chứa label và input */
+}
+
+form label {
+    display: block;
+    margin-bottom: 3px; /* Giảm khoảng cách giữa label và input */
+    font-weight: bold;
+    color: #555;
+    font-size: 0.9em; /* Giảm kích thước font label một chút nếu cần */
+}
+
+form input[type="text"],
+form input[type="number"],
+form select {
+    width: calc(100% - 12px);
+    padding: 6px; /* Giảm padding bên trong input */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px; /* Giảm kích thước font input một chút nếu cần */
+}
+
+form select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg fill="%23555" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 14px;
+    cursor: pointer;
+}
+
+/* Style for the button group at the bottom */
+form .button-group {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 8px; /* Giảm khoảng cách giữa các nút */
+    margin-top: 15px; /* Giảm khoảng cách phía trên nhóm nút */
+}
+
+form button.add-user-btn, /* Style for the Update button */
+form a.cancel-btn,
+form a.add-new-btn { /* Style for the Add new button */
+    padding: 8px 12px; /* Giảm padding bên trong nút */
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px; /* Giảm kích thước font nút */
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+form button.add-user-btn {
+    background-color: #007bff; /* Blue for Update button */
+}
+
+form button.add-user-btn:hover {
+    background-color: #0056b3;
+}
+
+form a.cancel-btn {
+    background-color: #6c757d; /* Gray for Cancel button */
+}
+
+form a.cancel-btn:hover {
+    background-color: #545b62;
+}
+
+/* Style for the "Add new" button in editSetting.jsp */
+form a.add-new-btn {
+    background-color: #28a745; /* Green for Add new button */
+}
+
+form a.add-new-btn:hover {
+    background-color: #1e7e34;
+}
+
+.banner {
+    margin-top: -17px;
+    background: linear-gradient(90deg, #f5e6ff, #e6f5ff);
+    padding: 60px 0; /* Giảm padding banner */
+    text-align: center;
+    position: relative;
+}
+
+.banner h1 {
+    font-size: 2em; /* Giảm kích thước font tiêu đề banner */
+    margin-bottom: 3px;
+}
+
+.banner p {
+    font-size: 0.9em;
+}
