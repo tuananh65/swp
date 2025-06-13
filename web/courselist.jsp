@@ -111,7 +111,7 @@
                                         </div>
                                     </c:if>
                                     <c:if test="${showRegister}">
-                                        <button class="register-btn">Đăng ký ngay</button>
+                                        <button class="register-btn"><a href="${pageContext.request.contextPath}/CourseDetailServlet?courseId=${course.courseID}">Register Now</a></button>
                                     </c:if>
                                 </div>
                             </div>
