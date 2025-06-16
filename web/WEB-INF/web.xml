@@ -75,5 +75,57 @@
         <servlet-name>CourseListServlet</servlet-name>
         <url-pattern>/courseList</url-pattern>
     </servlet-mapping>
- 
+   <servlet>
+        <servlet-name>SliderListServlet</servlet-name>
+        <servlet-class>controller.admin.SliderListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SliderListServlet</servlet-name>
+        <url-pattern>/sliderlist</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SliderDetailServlet</servlet-name>
+        <servlet-class>controller.admin.SliderDetailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SliderDetailServlet</servlet-name>
+        <url-pattern>/sliderdetail</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddSliderServlet</servlet-name>
+        <servlet-class>controller.admin.AddSliderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddSliderServlet</servlet-name>
+        <url-pattern>/addSlider</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>HideSliderServlet</servlet-name>
+        <servlet-class>controller.admin.HideSliderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HideSliderServlet</servlet-name>
+        <url-pattern>/hideSlider</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ShowSliderServlet</servlet-name>
+        <servlet-class>controller.admin.ShowSliderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowSliderServlet</servlet-name>
+        <url-pattern>/showSlider</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteSliderServlet</servlet-name>
+        <servlet-class>controller.admin.DeleteSliderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteSliderServlet</servlet-name>
+        <url-pattern>/deleteSlider</url-pattern>
+    </servlet-mapping>
 </web-app>
