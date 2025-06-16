@@ -1,0 +1,347 @@
+/* MyCourses.css */
+
+/* General Body and Wrapper Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa; /* Màu nền nhẹ nhàng cho trang */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Đảm bảo body chiếm toàn bộ chiều cao viewport */
+    color: #333; /* Màu chữ mặc định cho toàn trang */
+}
+
+/* --- Hero Banner Section --- */
+.hero-banner {
+    width: 100%;
+    height: 300px; /* Chiều cao cố định cho banner */
+    overflow: hidden; /* Đảm bảo ảnh không tràn ra ngoài */
+    position: relative; /* Quan trọng: Để các phần tử con có position: absolute căn chỉnh theo nó */
+    display: flex; /* Dùng flexbox để căn giữa hero-content */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    text-align: center; /* Căn giữa văn bản trong hero-text */
+    color: #fff; /* Màu chữ mặc định là trắng cho banner */
+    margin-bottom: 30px; /* Khoảng cách với nội dung bên dưới */
+}
+
+.hero-banner .hero-content {
+    position: absolute; /* Đặt hero-content để nó chiếm toàn bộ không gian của hero-banner */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex; /* Dùng flexbox để căn giữa nội dung bên trong nó */
+    flex-direction: column; /* Đặt các mục theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều dọc */
+    align-items: center; /* Căn giữa theo chiều ngang */
+    z-index: 2; /* Đảm bảo nội dung (text) nằm trên lớp phủ và ảnh */
+}
+
+.hero-banner .hero-image {
+    position: absolute; /* Đặt ảnh để nó bao phủ toàn bộ hero-banner */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh bao phủ toàn bộ vùng mà không bị méo */
+    z-index: 0; /* Nằm dưới văn bản và lớp phủ */
+}
+
+.hero-banner .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Lớp phủ màu đen mờ (50% opacity) để chữ dễ đọc hơn */
+    z-index: 1; /* Nằm trên ảnh nhưng dưới văn bản */
+}
+
+.hero-banner .hero-text {
+    position: relative; /* Để z-index hoạt động so với hero-overlay nếu có */
+    z-index: 3; /* Đảm bảo văn bản nằm trên tất cả (ảnh và lớp phủ) */
+    padding: 20px;
+    box-sizing: border-box;
+    color: #fff; /* Đảm bảo màu chữ trắng */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9); /* Thêm đổ bóng mạnh hơn cho chữ để dễ đọc trên nền ảnh */
+}
+
+.hero-banner .hero-text h1 {
+    font-size: 3.5em; /* Kích thước chữ lớn */
+    margin: 0;
+    text-transform: uppercase; /* Chuyển thành chữ hoa */
+    color: #fff; /* Đảm bảo màu trắng */
+    letter-spacing: 2px; /* Thêm khoảng cách giữa các chữ cái */
+}
+
+.hero-banner .hero-text p {
+    font-size: 1.3em; /* Kích thước chữ lớn hơn một chút */
+    margin-top: 10px;
+    color: #fff; /* Đảm bảo màu trắng */
+}
+
+.hero-banner .hero-text p a {
+    color: #fff; /* Màu chữ trắng cho liên kết */
+    text-decoration: none; /* Bỏ gạch chân mặc định */
+    font-weight: bold; /* In đậm liên kết */
+}
+
+.hero-banner .hero-text p a:hover {
+    text-decoration: underline; /* Gạch chân khi di chuột qua */
+    color: #f0f0f0; /* Hơi thay đổi màu khi hover */
+}
+
+
+/* --- Controls Section (Checkboxes and Select) --- */
+.controls {
+    margin: 20px auto; /* Căn giữa và tạo khoảng cách */
+    display: flex;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    gap: 15px; /* Khoảng cách giữa các phần tử điều khiển */
+    align-items: center;
+    max-width: 1200px;
+    padding: 0 20px; /* Thêm padding ngang */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    padding: 15px 20px;
+}
+
+.controls label {
+    margin-right: 0; /* Đã dùng gap nên không cần margin-right */
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* Ngăn không cho chữ bị ngắt dòng */
+    font-size: 0.95em;
+    color: #555;
+}
+
+.controls label input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.1); /* Phóng to checkbox một chút */
+}
+
+.controls label select {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.95em;
+    cursor: pointer;
+    background-color: #f9f9f9;
+}
+
+/* --- Course Grid Section --- */
+.course-grid {
+    display: grid;
+    /* responsive columns */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 20px auto; /* Căn giữa grid */
+    padding: 0 20px; /* Thêm padding ngang */
+}
+
+.course-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Đổ bóng mềm mại hơn */
+    text-align: left; /* Căn trái nội dung thẻ */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.course-card:hover {
+    transform: translateY(-5px); /* Hiệu ứng nhấc lên khi hover */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.course-card img {
+    width: 100%;
+    height: 180px; /* Chiều cao cố định cho ảnh */
+    object-fit: cover; /* Đảm bảo ảnh đầy đủ khung mà không bị méo */
+    border-radius: 8px; /* Bo tròn ảnh */
+    margin-bottom: 10px;
+}
+
+.course-category {
+    color: #8b5cf6; /* Màu tím tương đồng với nút enroll */
+    font-size: 0.85em;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.course-title {
+    color: #1f2937;
+    font-size: 1.25em; /* Kích thước tiêu đề lớn hơn */
+    font-weight: bold;
+    margin: 5px 0 10px;
+    line-height: 1.4;
+    flex-grow: 1; /* Đảm bảo title chiếm không gian còn lại */
+}
+
+.course-rating {
+    color: #f59e0b; /* Màu vàng sao */
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.course-details {
+    color: #6b7280;
+    font-size: 0.85em;
+    margin-bottom: 15px;
+}
+
+.enroll-btn {
+    background-color: #8b5cf6;
+    color: white;
+    border: none;
+    padding: 12px 25px; /* Tăng padding nút */
+    border-radius: 8px; /* Bo tròn nút hơn */
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%; /* Nút chiếm toàn bộ chiều rộng thẻ */
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px; /* Khoảng cách giữa chữ và mũi tên */
+}
+
+.enroll-btn:hover {
+    background-color: #7c3aed;
+    transform: translateY(-2px); /* Hiệu ứng nhấc nhẹ nút khi hover */
+}
+
+/* --- Pagination Section --- */
+.pagination {
+    margin: 40px auto 30px auto; /* Khoảng cách trên dưới, căn giữa */
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap; /* Cho phép xuống dòng nếu nhiều nút */
+}
+
+.pagination button {
+    background: #8b5cf6;
+    color: white;
+    border: none;
+    padding: 10px 15px; /* Tăng padding nút phân trang */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    min-width: 40px; /* Đảm bảo kích thước tối thiểu */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+    background-color: #7c3aed;
+    transform: translateY(-2px);
+}
+
+.pagination button.active {
+    background-color: #5b21b6; /* Màu đậm hơn cho nút active */
+    font-weight: bold;
+    transform: none; /* Bỏ hiệu ứng nhấc lên cho nút active */
+}
+
+.pagination button:disabled {
+    background: #d1d5db;
+    color: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Ensure content is not hidden by header if any */
+.content-wrapper {
+    flex: 1 0 auto;
+    width: 100%;
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 1024px) {
+    .course-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Điều chỉnh cho tablet */
+    }
+    .hero-banner .hero-text h1 {
+        font-size: 3em;
+    }
+    .hero-banner .hero-text p {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 768px) {
+    .controls {
+        flex-direction: column; /* Xếp chồng các controls */
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .controls label {
+        width: 100%; /* Checkbox và select chiếm hết chiều rộng */
+    }
+    .controls label select {
+        width: calc(100% - 16px); /* Điều chỉnh width cho select */
+    }
+
+    .course-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Điều chỉnh cho màn hình nhỏ hơn */
+        padding: 0 15px;
+    }
+    .course-card {
+        padding: 12px;
+    }
+    .course-card img {
+        height: 150px;
+    }
+    .course-title {
+        font-size: 1.15em;
+    }
+    .enroll-btn {
+        padding: 10px 20px;
+    }
+
+    .hero-banner {
+        height: 250px; /* Giảm chiều cao banner trên di động */
+    }
+    .hero-banner .hero-text h1 {
+        font-size: 2.5em;
+    }
+    .hero-banner .hero-text p {
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-banner {
+        height: 200px;
+    }
+    .hero-banner .hero-text h1 {
+        font-size: 1.8em;
+        letter-spacing: 1px;
+    }
+    .hero-banner .hero-text p {
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+    .course-grid {
+        grid-template-columns: 1fr; /* Một cột duy nhất trên màn hình rất nhỏ */
+        padding: 0 10px;
+    }
+    .controls {
+        margin: 15px auto;
+        padding: 10px 15px;
+        gap: 8px;
+    }
+    .pagination button {
+        padding: 8px 12px;
+        font-size: 0.9em;
+    }
+}
