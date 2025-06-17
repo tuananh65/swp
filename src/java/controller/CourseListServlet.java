@@ -46,7 +46,6 @@ public class CourseListServlet extends HttpServlet {
                 if (pageSize < 1) pageSize = DEFAULT_PAGE_SIZE;
                 if (pageSize > MAX_PAGE_SIZE) pageSize = MAX_PAGE_SIZE;
             } catch (NumberFormatException ignored) {}
-            
 
             // Xử lý checkbox: kiểm tra giá trị thực tế
             boolean showThumbnail = "true".equalsIgnoreCase(request.getParameter("showThumbnail"));

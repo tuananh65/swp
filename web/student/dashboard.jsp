@@ -2,6 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%
+    if (request.getAttribute("myEnrollments") == null) {
+        response.sendRedirect(request.getContextPath() + "/student/dashboard");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -18,7 +24,8 @@
         <jsp:include page="/default/header.jsp"/>
         <div class="login-register-links" id="userSection">
             <a href="${pageContext.request.contextPath}/view/changePassword.jsp" class="custom-btn">Change Password</a>
-            <a href="${pageContext.request.contextPath}/profile?id=3" class="custom-btn">Profile</a>
+            <a href="${pageContext.request.contextPath}/profile?id=${sessionScope.currentUser.userId}" class="custom-btn">Profile</a>
+            <a href="${pageContext.request.contextPath}/mycourses" class="custom-btn">My Course</a>
             <a href="${pageContext.request.contextPath}/logout" class="custom-btn">Đăng xuất</a>
         </div>
     </nav>
@@ -30,119 +37,128 @@
             <div class="banner-breadcrumb">
                 <table>
                     <tr>
-                        <td>Home</td>
-                        <td>My Registrations</td>
+                        <td><a href="${pageContext.request.contextPath}/home">Student</a></td>
+                        <td>Dashboard</td>
                     </tr>
                 </table>
             </div>
         </div>
     </div>
+    
+    <!-- Main Content -->
+    <main class="myRegistrations-main">
+        <div class="myRegistrations-container">
+            <div class="myRegistrations-content-wrapper">
 
-    <div class="main-container">
-        <aside class="sidebar">
-            <form action="${pageContext.request.contextPath}/courseList" method="get">
-                <div class="search-box">
-                    <input type="text" name="search" placeholder="Tìm kiếm khóa học..." value="${fn:escapeXml(searchTerm)}">
-                    <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
-                    <input type="hidden" name="showThumbnail" value="${showThumbnail}">
-                    <input type="hidden" name="showPrice" value="${showPrice}">
-                    <input type="hidden" name="showRegister" value="${showRegister}">
-                    <input type="hidden" name="showTagline" value="${showTagline}">
-                    <input type="hidden" name="showTitle" value="${showTitle}">
-                    <input type="hidden" name="sort" value="${sortBy}">
-                    <input type="hidden" name="pageSize" value="${pageSize}">
-                </div>
-            </form>
-            <div class="subject-categories">
-                <h3>Subject category</h3>
-                <ul>
-                    <c:forEach var="category" items="${categories}">
-                        <li><a href="${pageContext.request.contextPath}/courseList?category=${fn:escapeXml(category)}">${fn:escapeXml(category)}</a></li>
-                    </c:forEach>
-                </ul>
-            </div>
-            <div class="contact-info">
-                <div class="contact-item"><i class="fas fa-phone"></i><span>(555) 567-8888</span></div>
-                <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Hudson, Wisconsin(WI), 54016</span></div>
-                <div class="contact-item"><i class="fas fa-envelope"></i><span>contact@example.com</span></div>
-            </div>
-        </aside>
+                <!-- Sidebar -->
+                <aside class="myRegistrations-sidebar">
+                    <!-- Search Subject -->
+                    <div class="myRegistrations-search-section">
+                        <div class="myRegistrations-search-box">
+                            <form action="${pageContext.request.contextPath}/student/dashboard" method="get" class="myRegistrations-search-box">
+                                <input type="text" name="search" placeholder="Search Subject" class="myRegistrations-search-input"
+                                       value="${fn:escapeXml(param.search)}" />
+                                <button class="myRegistrations-search-submit" type="submit"><i class="fas fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Subject Category -->
+                    <div class="myRegistrations-category-section">
+                        <h3 class="myRegistrations-category-title">SUBJECT CATEGORY</h3>
+                        <ul class="myRegistrations-category-list">
+                            <!-- Hiển thị tất cả category -->
+                            <li class="myRegistrations-category-item ${empty param.category ? 'myRegistrations-active' : ''}">
+                                <a href="${pageContext.request.contextPath}/student/dashboard" class="myRegistrations-category-link">
+                                    All <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                            <!-- Hiển thị danh sách category không trùng lặp -->
+                            <c:set var="uniqueCourses" value="" />
+                            <c:forEach var="e" items="${myEnrollments}">
+                                <c:if test="${not fn:contains(uniqueCourses, e.courseName)}">
+                                    <li class="myRegistrations-category-item ${param.category == e.courseName ? 'myRegistrations-active' : ''}">
+                                        <a href="${pageContext.request.contextPath}/student/dashboard?category=${fn:escapeXml(e.courseName)}" class="myRegistrations-category-link">
+                                            ${fn:escapeXml(e.courseName)} <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                    <c:set var="uniqueCourses" value="${uniqueCourses},${e.courseName}" />
+                                </c:if>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </aside>
 
-        <main class="main-content">
-            <c:if test="${not empty message}">
-                <div class="success-message">${fn:escapeXml(message)}</div>
-            </c:if>
-            <c:if test="${not empty error}">
-                <div class="error-message">${fn:escapeXml(error)}</div>
-            </c:if>
-            <div class="registrations-grid">
-                <c:choose>
-                    <c:when test="${not empty registrations}">
-                        <c:forEach var="reg" items="${registrations}">
-                            <div class="registration-card">
-                                <div class="registration-details">
-                                    <h3><a href="${pageContext.request.contextPath}/CourseDetailServlet?courseId=${reg.courseID}">${fn:escapeXml(reg.getCourseName())}</a></h3>
-                                    <p><strong>Course ID:</strong> ${reg.courseID}</p>
-                                    <p><strong>Thời gian đăng ký:</strong> <fmt:formatDate value="${reg.registrationTime}" pattern="dd/MM/yyyy HH:mm"/></p>
-                                    <p><strong>Gói:</strong> ${fn:escapeXml(reg.packageName)}</p>
-                                    <p><strong>Price:</strong> <fmt:formatNumber value="${reg.totalCost}" type="currency"/></p>
-                                    <p><strong>Status:</strong> ${fn:escapeXml(reg.status)}</p>
-                                    <p><strong>Valid From:</strong> <fmt:formatDate value="${reg.validFrom}" pattern="dd/MM/yyyy"/></p>
-                                    <p><strong>Valid To:</strong> <fmt:formatDate value="${reg.validTo}" pattern="dd/MM/yyyy"/></p>
-                                    <c:if test="${reg.status == 'submitted'}">
-                                        <div class="registration-actions">
-                                            <a href="${pageContext.request.contextPath}/myRegistrations?action=cancel&registrationId=${reg.registrationID}" 
-                                               class="action-btn cancel-btn" 
-                                               onclick="return confirm('Bạn có chắc muốn hủy đăng ký này?')">Cancel</a>
-                                            <a href="${pageContext.request.contextPath}/CourseDetailServlet?courseId=${reg.courseID}&editRegistration=${reg.registrationID}" 
-                                               class="action-btn edit-btn">Edit</a>
+                <!-- Content Cards -->
+                <div class="myRegistrations-cards-container">
+                    <!-- Alerts -->
+                    <c:if test="${not empty sessionScope.message}">
+                        <div class="myRegistrations-alert myRegistrations-alert-success">${sessionScope.message}</div>
+                        <c:remove var="message" scope="session" />
+                    </c:if>
+                    <c:if test="${not empty sessionScope.error}">
+                        <div class="myRegistrations-alert myRegistrations-alert-danger">${sessionScope.error}</div>
+                        <c:remove var="error" scope="session" />
+                    </c:if>
+
+                    <c:choose>
+                        <c:when test="${not empty myEnrollments}">
+                            <c:forEach var="e" items="${myEnrollments}">
+                                <div class="myRegistrations-card">
+                                    <div class="myRegistrations-card-content">
+                                        <div class="myRegistrations-card-left">
+                                            <div class="myRegistrations-card-info">
+                                                <p><strong>ID:</strong> ${e.enrollmentId}</p>
+                                                <p><strong>Subject:</strong> ${e.courseName}</p>
+                                                <p><strong>Registration Time:</strong> <fmt:formatDate value="${e.enrollmentDate}" pattern="dd/MM/yyyy" /></p>
+                                                <p><strong>Package:</strong> ${e.packageName}</p>
+                                            </div>
+                                        </div>
+                                        <div class="myRegistrations-card-right">
+                                            <div class="myRegistrations-card-details">
+                                                <p><strong>Total Cost:</strong> <fmt:formatNumber value="${e.totalPrice}" type="number" groupingUsed="true"/>đ</p>
+                                                <p><strong>Status:</strong>
+                                                    <c:choose>
+                                                        <c:when test="${e.status == 'Submitted'}">
+                                                            <a href="dashboard?action=confirm&id=${e.enrollmentId}" class="myRegistrations-status myRegistrations-submitted"
+                                                               onclick="return confirm('Are you sure you want to confirm this registration?');">
+                                                               Submitted
+                                                            </a>
+                                                        </c:when>
+                                                        <c:when test="${e.status == 'Confirmed'}">
+                                                            <span class="myRegistrations-status myRegistrations-confirmed">Confirmed</span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span class="myRegistrations-status">${e.status}</span>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </p>
+                                                <p><strong>Valid From:</strong> <fmt:formatDate value="${e.validFrom}" pattern="dd/MM/yyyy" /></p>
+                                                <p><strong>Valid To:</strong> <fmt:formatDate value="${e.validTo}" pattern="dd/MM/yyyy" /></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <c:if test="${e.status == 'Submitted'}">
+                                        <div class="myRegistrations-card-actions">
+                                            <a href="edit-registration.jsp?id=${e.enrollmentId}" class="myRegistrations-btn myRegistrations-btn-edit">EDIT</a>
+                                            <a href="dashboard?action=cancel&id=${e.enrollmentId}" class="myRegistrations-btn myRegistrations-btn-delete"
+                                               onclick="return confirm('Are you sure you want to cancel this registration?');">CANCEL</a>
                                         </div>
                                     </c:if>
                                 </div>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="myRegistrations-empty-state">
+                                <p>You have not registered for any course yet.</p>
                             </div>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <div class="no-registrations">
-                            <p>Bạn chưa có đăng ký nào.</p>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </div>
-
-            <!-- Pagination -->
-            <div class="pagination">
-                <c:if test="${totalPages > 1}">
-                    <c:if test="${currentPage > 1}">
-                        <a class="page-btn" href="${pageContext.request.contextPath}/myRegistrations?page=${currentPage - 1}">
-                            <i class="fas fa-chevron-left"></i>
-                        </a>
-                    </c:if>
-                    <c:forEach var="i" begin="1" end="${totalPages}">
-                        <c:choose>
-                            <c:when test="${i == currentPage}">
-                                <span class="page-btn active">${i}</span>
-                            </c:when>
-                            <c:when test="${i <= 4 || i > totalPages - 4 || (i >= currentPage - 2 && i <= currentPage + 2)}">
-                                <a class="page-btn" href="${pageContext.request.contextPath}/myRegistrations?page=${i}">${i}</a>
-                            </c:when>
-                            <c:when test="${i == 5 && currentPage > 6 || i == totalPages - 4 && currentPage < totalPages - 5}">
-                                <span class="page-dots">...</span>
-                            </c:when>
-                        </c:choose>
-                    </c:forEach>
-                    <c:if test="${currentPage < totalPages}">
-                        <a class="page-btn" href="${pageContext.request.contextPath}/myRegistrations?page=${currentPage + 1}">
-                            <i class="fas fa-chevron-right"></i>
-                        </a>
-                    </c:if>
-                </c:if>
-            </div>
-        </main>
-    </div>
-
+        </div>
+    </main>
     <!-- Footer -->
-        <jsp:include page="/default/footer.jsp"/>            
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <jsp:include page="/default/footer.jsp"/>            
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

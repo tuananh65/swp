@@ -170,9 +170,28 @@ public class CourseDAO extends DBContext {
         }
         return 0;
     }
+    
+    public Integer getCourseCreatorId(int courseId) {
+        String sql = "SELECT UserID FROM Course WHERE CourseID = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, courseId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("UserID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     // Tạo Course từ ResultSet
-    private Course extractCourse(ResultSet rs) throws SQLException {
+    public static Course extractCourse(ResultSet rs) throws SQLException {
         Course c = new Course();
         c.setCourseID(rs.getInt("CourseID"));
         c.setCourseName(rs.getString("CourseName"));

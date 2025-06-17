@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee                              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <servlet-mapping>
-        <servlet-name>MyRegistrationsServlet</servlet-name>
-        <url-pattern>/myRegistrations</url-pattern>
-    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
@@ -15,21 +11,9 @@
         <servlet-name>HomeServlet</servlet-name>
         <servlet-class>controller.HomeServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>MyRegistrationsServlet</servlet-name>
-        <servlet-class>controller.student.MyRegistrationsServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>AuthServlet</servlet-name>
         <url-pattern>/auth</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>StudentServlet</servlet-name>
-        <servlet-class>controller.StudentServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StudentServlet</servlet-name>
-        <url-pattern>/student</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>TeacherServlet</servlet-name>
@@ -134,5 +118,29 @@
     <servlet-mapping>
         <servlet-name>CourseListServlet</servlet-name>
         <url-pattern>/courseList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterCourseServlet</servlet-name>
+        <url-pattern>/register-course</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StudentDashboardServlet</servlet-name>
+        <url-pattern>/student/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>RegisterCourseServlet</servlet-name>
+        <servlet-class>controller.student.RegisterCourseServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StudentDashboardServlet</servlet-name>
+        <servlet-class>controller.student.StudentDashboardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MyCoursesServlet</servlet-name>
+        <servlet-class>controller.MyCoursesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyCoursesServlet</servlet-name>
+        <url-pattern>/mycourses</url-pattern>
     </servlet-mapping>
 </web-app>
