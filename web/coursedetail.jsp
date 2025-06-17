@@ -278,7 +278,23 @@
                             <p><strong>Giá khuyến mãi:</strong> <span class="sale-price">${course.salePrice} VND</span></p>
                         </div>
 
-                        <a href="${pageContext.request.contextPath}/myRegistrations?action=register&courseId=${course.courseID}" class="enroll-button">Register Now</a>
+                        <form action="${pageContext.request.contextPath}/register-course" method="post" class="enroll-form">
+                            <input type="hidden" name="courseId" value="${course.courseID}" />
+                            <input type="hidden" name="basePrice" value="${course.salePrice}" />
+
+                            <div class="package-selection">
+                                <label for="packageId"><strong>Chọn gói học:</strong></label>
+                                <select name="packageId" id="packageId" onchange="updatePrice()">
+                                    <c:forEach var="pkg" items="${packageList}">
+                                        <option value="${pkg.packageId}" data-modifier="${pkg.priceModifier}">
+                                            ${pkg.name} (${pkg.durationInDays} ngày)
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="enroll-button">Register Now</button>
+                        </form>
 
                         <div class="extra-info">
                             <p><strong>Ngày tạo:</strong> <fmt:formatDate value="${course.createdAt}" pattern="dd/MM/yyyy" /></p>
@@ -295,6 +311,15 @@
                 </div>
             </c:if>
         </main>
+        <script>
+function updatePrice() {
+    const select = document.getElementById('packageId');
+    const modifier = parseFloat(select.options[select.selectedIndex].dataset.modifier);
+    const originalPrice = parseFloat(${course.salePrice});
+    const totalPriceInput = document.querySelector('input[name="totalPrice"]');
+    totalPriceInput.value = (originalPrice * modifier).toFixed(2);
+}
+</script>
         <!-- Footer -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> 
         <jsp:include page="default/footer.jsp" />

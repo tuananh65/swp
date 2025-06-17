@@ -1,278 +1,424 @@
-/* myRegistrations.css */
+/* Reset and Base Styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    color: #333;
-    background-color: #f9fafb;
+.myRegistrations-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.main-container {
-    display: flex;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-    gap: 2rem;
+/* Header Styles */
+.myRegistrations-header {
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-/* Banner */
-.banner {
+.myRegistrations-header .myRegistrations-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+}
+
+.myRegistrations-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.myRegistrations-logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+}
+
+.myRegistrations-logo-text {
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+}
+
+.myRegistrations-nav-list {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.myRegistrations-nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.myRegistrations-nav-link:hover {
+  color: #667eea;
+}
+
+.myRegistrations-header-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.myRegistrations-search-btn,
+.myRegistrations-menu-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.myRegistrations-search-btn:hover,
+.myRegistrations-menu-btn:hover {
+  color: #667eea;
+}
+
+/* Hero Section */
+.myRegistrations-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 80px 0;
   position: relative;
-  width: 100%;
-  height: 250px;
   overflow: hidden;
 }
 
-.banner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.banner-text {
+.myRegistrations-hero-bg {
   position: absolute;
-  top: 47%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: #1f2937;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.1;
 }
 
-.banner-title {
-  font-size: 2.5em;
-  font-weight: 700;
+.myRegistrations-decorative-element {
+  position: absolute;
+  color: white;
+  font-size: 24px;
+}
+
+.myRegistrations-element-1 {
+  top: 20%;
+  left: 10%;
+  color: #ff6b6b;
+}
+
+.myRegistrations-element-2 {
+  top: 15%;
+  right: 10%;
+  color: #4ecdc4;
+}
+
+.myRegistrations-element-3 {
+  bottom: 30%;
+  left: 15%;
+  color: #45b7d1;
+}
+
+.myRegistrations-element-4 {
+  bottom: 20%;
+  right: 15%;
+  color: #f9ca24;
+}
+
+.myRegistrations-hero-title {
+  text-align: center;
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Main Content */
+.myRegistrations-main {
+  padding: 60px 0;
+  background: #f8f9fa;
+  min-height: 60vh;
+}
+
+.myRegistrations-content-wrapper {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+}
+
+/* Sidebar */
+.myRegistrations-sidebar {
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.myRegistrations-search-section {
+  margin-bottom: 30px;
+}
+
+.myRegistrations-search-box {
+  position: relative;
+}
+
+.myRegistrations-search-input {
+  width: 100%;
+  padding: 12px 45px 12px 15px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.myRegistrations-search-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.myRegistrations-search-submit {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.myRegistrations-category-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.myRegistrations-category-list {
+  list-style: none;
+}
+
+.myRegistrations-category-item {
+  margin-bottom: 10px;
+}
+
+.myRegistrations-category-item.myRegistrations-active {
+  background: #667eea;
+  border-radius: 8px;
+}
+
+.myRegistrations-category-item.myRegistrations-active .myRegistrations-category-link {
+  color: white;
+}
+
+.myRegistrations-category-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.myRegistrations-category-link:hover {
+  background: #f8f9fa;
+  color: #667eea;
+}
+
+.myRegistrations-alert {
+    padding: 12px 20px;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    border-left: 6px solid;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.myRegistrations-alert-success {
+    background-color: #e6f7e6;
+    color: #2e7d32;
+    border-color: #2e7d32;
+}
+
+.myRegistrations-alert-danger {
+    background-color: #fbeaea;
+    color: #c62828;
+    border-color: #c62828;
+}
+
+
+/* Registration Cards */
+.myRegistrations-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.myRegistrations-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.myRegistrations-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.myRegistrations-card-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.myRegistrations-card-info p,
+.myRegistrations-card-details p {
+  margin-bottom: 8px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.myRegistrations-card-info strong,
+.myRegistrations-card-details strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.myRegistrations-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
   text-transform: uppercase;
 }
 
-.banner-breadcrumb {
-  font-size: 1em;
-  color: #4b5563;
+.myRegistrations-status.myRegistrations-submitted {
+  background: #e3f2fd;
+  color: #1976d2;
 }
 
-.banner-breadcrumb table {
-  width: 200px;
-  margin: 0 auto;
+.myRegistrations-status.myRegistrations-confirmed {
+  background: #e8f5e8;
+  color: #2e7d32;
 }
 
-.banner-breadcrumb td {
-  width: 50%;
-  color: #4b5563;
+.myRegistrations-card-actions {
+  display: flex;
+  gap: 15px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
 }
 
-.banner-breadcrumb td:first-child {
-  text-align: right;
-  padding-right: 5px;
+.myRegistrations-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.banner-breadcrumb td:last-child {
-  text-align: left;
-  padding-left: 5px;
+.myRegistrations-btn-edit {
+  background: #e3f2fd;
+  color: #1976d2;
 }
 
-.sidebar {
-    flex: 0 0 250px;
-    background-color: #fff;
-    padding: 1.5rem;
-    border-radius: 0.75rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.myRegistrations-btn-edit:hover {
+  background: #1976d2;
+  color: white;
 }
 
-.search-box {
-    display: flex;
-    margin-bottom: 1.5rem;
+.myRegistrations-btn-delete {
+  background: #ffebee;
+  color: #d32f2f;
 }
 
-.search-box input {
-    flex: 1;
-    padding: 0.75rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.5rem 0 0 0.5rem;
-    font-size: 1rem;
+.myRegistrations-btn-delete:hover {
+  background: #d32f2f;
+  color: white;
 }
 
-.search-box button {
-    padding: 0.75rem;
-    background-color: #6366f1;
-    color: #fff;
-    border: none;
-    border-radius: 0 0.5rem 0.5rem 0;
-    cursor: pointer;
+/* Footer */
+.myRegistrations-footer {
+  background: #333;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
 }
 
-.search-box button:hover {
-    background-color: #4f46e5;
+.myRegistrations-footer-text {
+  font-size: 14px;
 }
 
-.subject-categories h3 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+.myRegistrations-brand {
+  color: #667eea;
+  font-weight: bold;
 }
 
-.subject-categories ul {
-    list-style: none;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .myRegistrations-nav {
+    display: none;
+  }
+
+  .myRegistrations-hero-title {
+    font-size: 32px;
+  }
+
+  .myRegistrations-content-wrapper {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .myRegistrations-card-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .myRegistrations-card-actions {
+    flex-direction: column;
+  }
 }
 
-.subject-categories li {
-    margin-bottom: 0.5rem;
-}
+@media (max-width: 480px) {
+  .myRegistrations-container {
+    padding: 0 15px;
+  }
 
-.subject-categories a {
-    text-decoration: none;
-    color: #374151;
-    font-size: 1rem;
-}
+  .myRegistrations-hero-title {
+    font-size: 24px;
+  }
 
-.subject-categories a:hover {
-    color: #6366f1;
-}
+  .myRegistrations-sidebar {
+    padding: 20px;
+  }
 
-.contact-info {
-    margin-top: 2rem;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-}
-
-.contact-item i {
-    margin-right: 0.75rem;
-    color: #6366f1;
-}
-
-.main-content {
-    flex: 1;
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 0.75rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.main-content h2 {
-    font-size: 1.75rem;
-    margin-bottom: 1.5rem;
-}
-
-.error-message {
-    color: #ef4444;
-    background-color: #fee2e2;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-.success-message {
-    color: #15803d;
-    background-color: #dcfce7;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-.registrations-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
-
-.registration-card {
-    background-color: #f9fafb;
-    padding: 1.5rem;
-    border-radius: 0.75rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.registration-details h3 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-}
-
-.registration-details h3 a {
-    color: #6366f1;
-    text-decoration: none;
-}
-
-.registration-details h3 a:hover {
-    text-decoration: underline;
-}
-
-.registration-details p {
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
-}
-
-.registration-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.action-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    font-size: 0.95rem;
-    text-align: center;
-}
-
-.cancel-btn {
-    background-color: #ef4444;
-    color: #fff;
-}
-
-.cancel-btn:hover {
-    background-color: #dc2626;
-}
-
-.edit-btn {
-    background-color: #f59e0b;
-    color: #fff;
-}
-
-.edit-btn:hover {
-    background-color: #d97706;
-}
-
-.no-registrations {
-    text-align: center;
-    padding: 2rem;
-    font-size: 1.1rem;
-    color: #6b7280;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 2rem;
-}
-
-.page-btn {
-    padding: 0.5rem 1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    color: #374151;
-    font-size: 0.95rem;
-}
-
-.page-btn:hover {
-    background-color: #f3f4f6;
-}
-
-.page-btn.active {
-    background-color: #6366f1;
-    color: #fff;
-    border-color: #6366f1;
-}
-
-.page-dots {
-    padding: 0.5rem;
-    color: #6b7280;
+  .myRegistrations-card {
+    padding: 20px;
+  }
 }

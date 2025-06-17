@@ -1,12 +1,14 @@
 package controller;
 
 import dal.CourseDAO;
+import dal.PackageDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Course;
+import model.Package;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,6 +24,9 @@ public class CourseDetailServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         CourseDAO dao = new CourseDAO();
+        PackageDAO packageDAO = new PackageDAO();
+List<Package> packageList = packageDAO.getAllPackages();
+request.setAttribute("packageList", packageList);
 
         // Lấy danh sách tất cả khóa học để hiển thị dropdown
         List<Course> courseList = dao.getAllCourses();

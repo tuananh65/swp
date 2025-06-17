@@ -191,11 +191,7 @@
                                     </c:if>
                                     <div class="course-content">
                                         <c:if test="${showTitle}">
-                                            <h3 class="course-title">
-                                                <a href="${pageContext.request.contextPath}/CourseDetailServlet?courseId=${course.courseID}" class="subject-link">
-                                                    ${fn:escapeXml(course.courseName)}
-                                                </a>
-                                            </h3>
+                                            <h3 class="course-title">${fn:escapeXml(course.courseName)}</h3>
                                         </c:if>
                                         <p class="course-description">${fn:escapeXml(course.briefInfo)}</p>
                                         <c:if test="${showTagline}">
@@ -213,7 +209,7 @@
                                             </div>
                                         </c:if>
                                         <c:if test="${showRegister}">
-                                            <a href="${pageContext.request.contextPath}/myRegistrations?action=register&courseId=${course.courseID}" class="register-btn">Register Now</a>
+                                            <a href="${pageContext.request.contextPath}/CourseDetailServlet?courseId=${course.courseID}" class="register-btn">Register Now</a>
                                         </c:if>
                                     </div>
                                 </div>

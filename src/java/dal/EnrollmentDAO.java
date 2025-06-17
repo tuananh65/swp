@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import model.Course;
 
 public class EnrollmentDAO extends DBContext {
 
@@ -344,5 +345,216 @@ public class EnrollmentDAO extends DBContext {
     }
     return false;
 }
+    
+    public List<EnrollmentDTO> getEnrollmentDTOsByUserId(int userId) {
+    List<EnrollmentDTO> list = new ArrayList<>();
+    String sql = "SELECT e.EnrollmentID, "
+            + "       u.FullName AS UserFullName, "
+            + "       u.Email AS UserEmail, "
+            + "       c.CourseName, "
+            + "       c.CourseThumbnail, "
+            + "       p.Name AS PackageName, "
+            + "       e.TotalPrice, "
+            + "       e.Status, "
+            + "       e.EnrollmentDate, "
+            + "       e.ValidFrom, "
+            + "       e.ValidTo, "
+            + "       ub.FullName AS UpdatedByName, "
+            + "       e.OrderID "
+            + "FROM Enrollment e "
+            + "JOIN [User] u ON e.UserID = u.UserID "
+            + "JOIN Course c ON e.CourseID = c.CourseID "
+            + "JOIN Package p ON e.PackageID = p.PackageID "
+            + "LEFT JOIN [User] ub ON e.UpdatedByUserID = ub.UserID "
+            + "WHERE e.UserID = ? "
+            + "ORDER BY e.EnrollmentDate DESC";
+
+    try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, userId);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            EnrollmentDTO dto = new EnrollmentDTO();
+            dto.setEnrollmentId(rs.getInt("EnrollmentID"));
+            dto.setUserFullName(rs.getString("UserFullName"));
+            dto.setUserEmail(rs.getString("UserEmail"));
+            dto.setCourseName(rs.getString("CourseName"));
+            dto.setCourseThumbnail(rs.getString("CourseThumbnail"));
+            dto.setPackageName(rs.getString("PackageName"));
+            dto.setTotalPrice(rs.getBigDecimal("TotalPrice"));
+            dto.setStatus(rs.getString("Status"));
+            dto.setEnrollmentDate(rs.getTimestamp("EnrollmentDate"));
+            dto.setValidFrom(rs.getDate("ValidFrom"));
+            dto.setValidTo(rs.getDate("ValidTo"));
+            dto.setUpdatedByName(rs.getString("UpdatedByName"));
+            dto.setOrderId(rs.getObject("OrderID") != null ? rs.getInt("OrderID") : null);
+            list.add(dto);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return list;
+}
+    
+    public List<EnrollmentDTO> getListEnrollmentsWithFilterByUserId(
+        int userId, String category, String search,
+        String subject, String status,
+        Date fromDate, Date toDate,
+        BigDecimal minPrice, BigDecimal maxPrice,
+        String sortColumn, String sortOrder,
+        int offset, int limit) {
+    
+    List<EnrollmentDTO> list = new ArrayList<>();
+    StringBuilder sql = new StringBuilder(
+            "SELECT e.EnrollmentID, " +
+            "       u.FullName AS UserFullName, " +
+            "       u.Email AS UserEmail, " +
+            "       c.CourseName, " +
+            "       c.CourseThumbnail, " +
+            "       p.Name AS PackageName, " +
+            "       e.TotalPrice, " +
+            "       e.Status, " +
+            "       e.EnrollmentDate, " +
+            "       e.ValidFrom, " +
+            "       e.ValidTo, " +
+            "       ub.FullName AS UpdatedByName, " +
+            "       e.OrderID " +
+            "FROM Enrollment e " +
+            "JOIN [User] u ON e.UserID = u.UserID " +
+            "JOIN Course c ON e.CourseID = c.CourseID " +
+            "JOIN Package p ON e.PackageID = p.PackageID " +
+            "LEFT JOIN [User] ub ON e.UpdatedByUserID = ub.UserID " +
+            "WHERE e.UserID = ? "
+    );
+
+    List<Object> params = new ArrayList<>();
+    params.add(userId);
+
+    if (search != null && !search.trim().isEmpty()) {
+    String lowerSearch = "%" + search.trim().toLowerCase() + "%";
+    sql.append("AND (")
+       .append("LOWER(c.CourseName) LIKE ? OR ")
+       .append("LOWER(e.Status) LIKE ? OR ")
+       .append("CAST(e.EnrollmentID AS VARCHAR) LIKE ? OR ")
+       .append("CAST(e.TotalPrice AS VARCHAR) LIKE ? OR ")
+       .append("FORMAT(e.ValidFrom, 'yyyy-MM-dd') LIKE ? OR ")
+       .append("FORMAT(e.ValidTo, 'yyyy-MM-dd') LIKE ? OR ")
+       .append("LOWER(p.Name) LIKE ?")  // 👈 Thêm điều kiện tìm kiếm theo Package
+       .append(") ");
+    for (int i = 0; i < 7; i++) params.add(lowerSearch);
+}
+
+
+    if (category != null && !category.trim().isEmpty()) {
+        sql.append("AND c.CourseName = ? ");
+        params.add(category.trim());
+    }
+
+    if (status != null && !status.trim().isEmpty()) {
+        sql.append("AND e.Status = ? ");
+        params.add(status.trim());
+    }
+
+    if (fromDate != null) {
+        sql.append("AND e.EnrollmentDate >= ? ");
+        params.add(new java.sql.Date(fromDate.getTime()));
+    }
+
+    if (toDate != null) {
+        sql.append("AND e.EnrollmentDate <= ? ");
+        params.add(new java.sql.Date(toDate.getTime()));
+    }
+
+    if (minPrice != null) {
+        sql.append("AND e.TotalPrice >= ? ");
+        params.add(minPrice);
+    }
+
+    if (maxPrice != null) {
+        sql.append("AND e.TotalPrice <= ? ");
+        params.add(maxPrice);
+    }
+
+    sql.append("ORDER BY ").append(sortColumn).append(" ").append(sortOrder)
+       .append(" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+    params.add(offset);
+    params.add(limit);
+
+    try (Connection conn = getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+        for (int i = 0; i < params.size(); i++) {
+            ps.setObject(i + 1, params.get(i));
+        }
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            EnrollmentDTO dto = new EnrollmentDTO();
+            dto.setEnrollmentId(rs.getInt("EnrollmentID"));
+            dto.setUserFullName(rs.getString("UserFullName"));
+            dto.setUserEmail(rs.getString("UserEmail"));
+            dto.setCourseName(rs.getString("CourseName"));
+            dto.setCourseThumbnail(rs.getString("CourseThumbnail"));
+            dto.setPackageName(rs.getString("PackageName"));
+            dto.setTotalPrice(rs.getBigDecimal("TotalPrice"));
+            dto.setStatus(rs.getString("Status"));
+            dto.setEnrollmentDate(rs.getTimestamp("EnrollmentDate"));
+            dto.setValidFrom(rs.getDate("ValidFrom"));
+            dto.setValidTo(rs.getDate("ValidTo"));
+            dto.setUpdatedByName(rs.getString("UpdatedByName"));
+            dto.setOrderId(rs.getObject("OrderID") != null ? rs.getInt("OrderID") : null);
+            list.add(dto);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return list;
+}
+    
+    public boolean deleteEnrollment(int enrollmentId, int userId) {
+        String sql = "DELETE FROM Enrollment WHERE EnrollmentID = ? AND UserID = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, enrollmentId);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public boolean updateStatusToConfirmed(int enrollmentId, int userId) {
+        String sql = "UPDATE Enrollment SET Status = 'Confirmed' WHERE EnrollmentID = ? AND UserID = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, enrollmentId);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public List<Course> getConfirmedCoursesByUserId(int userId) {
+        List<Course> courses = new ArrayList<>();
+        String sql = "SELECT DISTINCT c.* FROM Enrollment e "
+                   + "JOIN Course c ON e.CourseID = c.CourseID "
+                   + "WHERE e.UserID = ? AND e.Status = 'Confirmed'";
+
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course course = new CourseDAO().extractCourse(rs); // hoặc bạn tạo static extractCourse()
+                courses.add(course);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return courses;
+    }
 
 }
