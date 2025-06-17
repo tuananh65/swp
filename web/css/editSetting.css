@@ -1,122 +1,184 @@
 /* editSetting.css */
 
+/* General content container for forms */
 .content-wrapper {
+    /* Đã định nghĩa trong JSP để linh hoạt margin-top */
+    /* Tuy nhiên, đảm bảo các thuộc tính flex, padding, width là nhất quán */
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 20px;
+    align-items: flex-start; /* Căn trên đầu */
+    padding: 30px 0; /* Đảm bảo padding nhất quán */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .content {
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 80%;
-    max-width: 600px;
-}
-
-.error-message {
-    background-color: #ffe0e0;
-    color: #d32f2f;
-    border: 1px solid #d32f2f;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 4px;
-}
-
-form div {
-    margin-bottom: 10px; /* Giảm khoảng cách giữa các div chứa label và input */
-}
-
-form label {
-    display: block;
-    margin-bottom: 3px; /* Giảm khoảng cách giữa label và input */
-    font-weight: bold;
-    color: #555;
-    font-size: 0.9em; /* Giảm kích thước font label một chút nếu cần */
-}
-
-form input[type="text"],
-form input[type="number"],
-form select {
-    width: calc(100% - 12px);
-    padding: 6px; /* Giảm padding bên trong input */
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15); /* Đổ bóng mạnh hơn */
+    padding: 30px; /* Tăng padding tổng thể */
+    width: 90%; /* Chiếm phần lớn chiều rộng */
+    max-width: 700px; /* Tăng max-width để form rộng rãi hơn */
     box-sizing: border-box;
-    font-size: 14px; /* Giảm kích thước font input một chút nếu cần */
 }
 
-form select {
+/* Error/Success Messages */
+.error-message {
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red */
+    border: 1px solid #f5c6cb;
+    padding: 15px 20px;
+    margin-bottom: 25px; /* Tăng khoảng cách dưới */
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.no-setting-found-message {
+    text-align: center;
+    font-size: 1.1em;
+    color: #6c757d;
+    font-style: italic;
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+/* Form Styles */
+.setting-form .form-group { /* Sử dụng class form-group */
+    margin-bottom: 20px; /* Khoảng cách giữa các nhóm label-input */
+}
+
+.setting-form label {
+    display: block;
+    margin-bottom: 8px; /* Khoảng cách rõ ràng giữa label và input */
+    font-weight: 600; /* Đậm hơn */
+    color: #343a40; /* Màu chữ đậm hơn */
+    font-size: 1em; /* Kích thước font chuẩn */
+}
+
+.setting-form .form-control { /* Sử dụng class form-control */
+    width: 100%; /* Đảm bảo input chiếm toàn bộ chiều rộng có sẵn */
+    padding: 12px; /* Tăng padding input */
+    border: 1px solid #ced4da; /* Border nhạt hơn */
+    border-radius: 5px; /* Bo tròn góc input */
+    box-sizing: border-box;
+    font-size: 16px; /* Kích thước font chuẩn */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none; /* Bỏ outline mặc định khi focus */
+}
+
+.setting-form .form-control:focus {
+    border-color: #80bdff; /* Màu xanh khi focus */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Đổ bóng khi focus */
+}
+
+.setting-form select.form-control {
     appearance: none;
-    background-image: url('data:image/svg+xml;charset=UTF-8,<svg fill="%23555" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg fill="%23495057" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
     background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 14px;
+    background-position: right 12px center; /* Căn chỉnh mũi tên */
+    background-size: 16px; /* Kích thước mũi tên */
     cursor: pointer;
 }
 
-/* Style for the button group at the bottom */
-form .button-group {
+/* Button Group */
+.button-group {
     display: flex;
-    justify-content: center; /* Center the buttons horizontally */
-    gap: 8px; /* Giảm khoảng cách giữa các nút */
-    margin-top: 15px; /* Giảm khoảng cách phía trên nhóm nút */
+    justify-content: center; /* Căn giữa các nút */
+    gap: 15px; /* Khoảng cách giữa các nút */
+    margin-top: 30px; /* Khoảng cách phía trên nhóm nút */
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
 }
 
-form button.add-user-btn, /* Style for the Update button */
-form a.cancel-btn,
-form a.add-new-btn { /* Style for the Add new button */
-    padding: 8px 12px; /* Giảm padding bên trong nút */
+/* Base Button Styles */
+.btn {
+    padding: 12px 25px; /* Tăng padding nút */
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     color: #fff;
-    font-size: 14px; /* Giảm kích thước font nút */
+    font-size: 16px; /* Kích thước font chuẩn */
+    font-weight: 600; /* Đậm hơn */
     cursor: pointer;
     text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.3s ease;
+    display: inline-flex; /* Để căn icon với text */
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-form button.add-user-btn {
-    background-color: #007bff; /* Blue for Update button */
+.btn i {
+    margin-right: 8px; /* Khoảng cách giữa icon và text */
+    font-size: 15px; /* Kích thước icon */
 }
 
-form button.add-user-btn:hover {
+/* Specific Button Colors */
+.btn-primary { /* Update Button */
+    background-color: #007bff; /* Blue */
+}
+.btn-primary:hover {
     background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-form a.cancel-btn {
-    background-color: #6c757d; /* Gray for Cancel button */
+.btn-secondary { /* Cancel/Back to List Button */
+    background-color: #6c757d; /* Gray */
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-form a.cancel-btn:hover {
-    background-color: #545b62;
+.btn-success { /* Add New Button */
+    background-color: #28a745; /* Green */
+}
+.btn-success:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* Style for the "Add new" button in editSetting.jsp */
-form a.add-new-btn {
-    background-color: #28a745; /* Green for Add new button */
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .content {
+        padding: 25px;
+        width: 95%; /* Chiếm nhiều chiều rộng hơn trên màn hình nhỏ */
+    }
+    .setting-form .form-group {
+        margin-bottom: 15px;
+    }
+    .setting-form label,
+    .setting-form .form-control,
+    .btn {
+        font-size: 15px;
+    }
+    .button-group {
+        flex-direction: column; /* Xếp chồng các nút */
+        gap: 10px;
+    }
+    .btn {
+        width: 100%; /* Nút chiếm toàn bộ chiều rộng */
+    }
 }
 
-form a.add-new-btn:hover {
-    background-color: #1e7e34;
-}
-
-.banner {
-    margin-top: -17px;
-    background: linear-gradient(90deg, #f5e6ff, #e6f5ff);
-    padding: 60px 0; /* Giảm padding banner */
-    text-align: center;
-    position: relative;
-}
-
-.banner h1 {
-    font-size: 2em; /* Giảm kích thước font tiêu đề banner */
-    margin-bottom: 3px;
-}
-
-.banner p {
-    font-size: 0.9em;
+@media (max-width: 480px) {
+    .content {
+        padding: 20px;
+    }
+    .setting-form label,
+    .setting-form .form-control,
+    .btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+    .btn i {
+        margin-right: 5px;
+        font-size: 13px;
+    }
 }
