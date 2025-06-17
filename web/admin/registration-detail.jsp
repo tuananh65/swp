@@ -14,26 +14,44 @@
 <jsp:include page="/default/sidebar.jsp" />
 
 <body class="bg-gradient-to-br from-gray-50 to-white font-inter text-gray-800 overflow-x-hidden">
-   
+
 
     <style>
         @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
 
         /* Custom animations */
         @keyframes slideInFromLeft {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         @keyframes fadeInUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+            }
         }
 
         .animate-slide-in {
@@ -68,7 +86,7 @@
             filter: brightness(1.1);
         }
     </style>
-    
+
     <main class="container mx-auto mt-12 mb-12 p-8 max-w-5xl bg-white/95 rounded-2xl shadow-2xl border border-gray-100/50 transform transition-all duration-500 hover:scale-102 hover:shadow-blue-500/20">
         <c:if test="${empty enrollment}"><p class="text-red-600 font-medium animate-fade-in-up">enrollment is NULL</p></c:if>
         <c:if test="${empty user}"><p class="text-red-600 font-medium animate-fade-in-up">user is NULL</p></c:if>
@@ -82,7 +100,10 @@
 
         <c:if test="${param.success eq 'true'}">
             <div class="bg-green-50/80 text-green-700 border-l-4 border-green-400 p-5 rounded-r-xl mb-8 shadow-lg animate-fade-in-up">
-                Cập nhật thành công!
+                ✅ Cập nhật thành công!
+                <c:if test="${param.created eq 'true'}">
+                    <br>🎉 Tài khoản học viên đã được tạo và email thông tin đăng nhập đã được gửi!
+                </c:if>
             </div>
         </c:if>
 
@@ -97,10 +118,12 @@
             <div class="flex items-center gap-6 mb-8 animate-fade-in-up delay-100">
                 <label class="w-1/3 text-blue-900 font-semibold text-lg leading-tight">Full Name: </label>
                 <input type="text" class="flex-1 form-input border border-gray-300 rounded-2xl p-4 bg-gray-50 text-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:bg-white transition-all duration-400" value="${user.fullName}" disabled />
+
             </div>
             <div class="flex items-center gap-6 mb-8 animate-fade-in-up delay-200">
                 <label class="w-1/3 text-blue-900 font-semibold text-lg leading-tight">Email:</label>
                 <input type="email" class="flex-1 form-input border border-gray-300 rounded-2xl p-4 bg-gray-50 text-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:bg-white transition-all duration-400" value="${user.email}" disabled />
+
             </div>
             <div class="flex items-center gap-6 mb-8 animate-fade-in-up delay-300">
                 <label class="w-1/3 text-blue-900 font-semibold text-lg leading-tight">Gender: </label>
@@ -119,6 +142,7 @@
             <div class="flex items-center gap-6 mb-8 animate-fade-in-up delay-500">
                 <label class="w-1/3 text-blue-900 font-semibold text-lg leading-tight">Course:</label>
                 <input type="text" class="flex-1 form-input border border-gray-300 rounded-2xl p-4 bg-gray-50 text-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:bg-white transition-all duration-400" value="${course.courseName}" disabled />
+
             </div>
             <div class="flex items-center gap-6 mb-8 animate-fade-in-up delay-600">
                 <label class="w-1/3 text-blue-900 font-semibold text-lg leading-tight">Status:</label>
@@ -165,43 +189,45 @@
     </main>
 
     <script>
-    document.getElementById("validFrom").addEventListener("change", function () {
-        const fromDate = new Date(this.value);
-        const selectedOption = document.getElementById("packageId").selectedOptions[0];
-        const duration = parseInt(selectedOption.getAttribute("data-duration"));
+        document.getElementById("validFrom").addEventListener("change", function () {
+            const fromDate = new Date(this.value);
+            const selectedOption = document.getElementById("packageId").selectedOptions[0];
+            const duration = parseInt(selectedOption.getAttribute("data-duration"));
 
-        if (!isNaN(fromDate) && !isNaN(duration)) {
-            const toDate = new Date(fromDate);
-            toDate.setDate(toDate.getDate() + duration);
+            if (!isNaN(fromDate) && !isNaN(duration)) {
+                const toDate = new Date(fromDate);
+                toDate.setDate(toDate.getDate() + duration);
 
-            const formatted = toDate.toISOString().split('T')[0];
-            document.getElementById("validTo").value = formatted;
-        }
-    });
+                const formatted = toDate.toISOString().split('T')[0];
+                document.getElementById("validTo").value = formatted;
+            }
+        });
 
-    document.querySelector("form").addEventListener("submit", function (e) {
-        const validFrom = new Date(document.getElementById("validFrom").value);
-        const validTo = new Date(document.getElementById("validTo").value);
+        document.querySelector("form").addEventListener("submit", function (e) {
+            const validFrom = new Date(document.getElementById("validFrom").value);
+            const validTo = new Date(document.getElementById("validTo").value);
 
-        // Validate ngày
-        if (validTo < validFrom) {
-            alert("⚠️ Ngày 'Hiệu lực đến' không thể trước 'Hiệu lực từ'. Vui lòng kiểm tra lại.");
-            e.preventDefault();
-            return;
-        }
+            // Validate ngày
+            if (validTo < validFrom) {
+                alert("⚠️ Ngày 'Hiệu lực đến' không thể trước 'Hiệu lực từ'. Vui lòng kiểm tra lại.");
+                e.preventDefault();
+                return;
+            }
 
-        // Validate số điện thoại
-        const phoneInput = document.querySelector('input[name="phone"]');
-        const phone = phoneInput.value.trim();
-        const phoneRegex = /^\d{10}$/;
+            // Validate số điện thoại
+            const phoneInput = document.querySelector('input[name="phone"]');
+            const phone = phoneInput.value.trim();
+            const phoneRegex = /^\d{10}$/;
 
-        if (!phoneRegex.test(phone)) {
-            alert("⚠️ Số điện thoại không hợp lệ! Vui lòng nhập đúng 10 chữ số và không chứa ký tự khác.");
-            phoneInput.focus();
-            e.preventDefault(); // chặn submit
-        }
-    });
-</script>
+            if (!phoneRegex.test(phone)) {
+                alert("⚠️ Số điện thoại không hợp lệ! Vui lòng nhập đúng 10 chữ số và không chứa ký tự khác.");
+                phoneInput.focus();
+                e.preventDefault(); // chặn submit
+            }
+        });
+
+
+    </script>
 
 
     <!-- Nhúng widget chatbot đã tối ưu -->

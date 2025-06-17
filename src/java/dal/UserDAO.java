@@ -530,6 +530,26 @@ public class UserDAO extends DBContext {
     }
     return false;
 }
+     public boolean createUserByAdmin(User user) {
+    String sql = "INSERT INTO [User] (UserName, Password, RoleId, FullName, Gender, Email, Phone, Status, CreatedAt, is_activated) " +
+                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, user.getUserName());
+        ps.setString(2, user.getPassword());
+        ps.setInt(3, user.getRoleId());
+        ps.setString(4, user.getFullName());
+        ps.setString(5, user.getGender());
+        ps.setString(6, user.getEmail());
+        ps.setString(7, user.getPhone());
+        ps.setString(8, "Active");
+        ps.setTimestamp(9, new Timestamp(new java.util.Date().getTime()));
+        ps.setBoolean(10, true); // đã kích hoạt
+        return ps.executeUpdate() > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
     
     public static void main(String[] args) {
     UserDAO dao = new UserDAO();
