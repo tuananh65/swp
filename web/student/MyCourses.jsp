@@ -92,7 +92,8 @@
 
                 updatePaginationAndDisplayCourses();
             }
-
+            
+            // Phân chia trang sau khi nhập số trang 
             function updatePaginationAndDisplayCourses() {
                 let enteredValue = parseInt(coursesPerPageInput.val());
 
@@ -103,17 +104,22 @@
                 }
 
                 const totalPages = Math.ceil(courseCards.length / coursesPerPage);
+                // Không cho currentPage > TotalPage và <1
                 currentPage = Math.min(currentPage, totalPages > 0 ? totalPages : 1);
                 currentPage = Math.max(1, currentPage);
 
                 courseCards.hide();
+                // Tính vị trí bắt đầu và kết thúc
                 const startIndex = (currentPage - 1) * coursesPerPage;
+                // (1-1)*9 = 0
                 const endIndex = startIndex + coursesPerPage;
+                // 0 + 9 = 9
                 courseCards.slice(startIndex, endIndex).show();
 
                 renderPaginationButtons(totalPages);
             }
-
+            
+            // Tạo các nút phân trang
             function renderPaginationButtons(totalPages) {
                 paginationControls.empty();
 
@@ -128,14 +134,16 @@
                     paginationControls.append(prevButton);
 
                     for (let i = 1; i <= totalPages; i++) {
+                        // Thêm class active để tô màu cũ
                         const pageButton = $('<button>').text(i).addClass(i === currentPage ? 'active' : '');
                         pageButton.on('click', function() {
                             currentPage = i;
                             updatePaginationAndDisplayCourses();
                         });
+                        // Thêm nút trang cho giao diện
                         paginationControls.append(pageButton);
                     }
-
+                    // nút >> khi ở trang cuối sẽ bị ẩn
                     const nextButton = $('<button>').html('&raquo;').prop('disabled', currentPage === totalPages);
                     nextButton.on('click', function() {
                         if (currentPage < totalPages) {
@@ -143,10 +151,12 @@
                             updatePaginationAndDisplayCourses();
                         }
                     });
+                    // Thêm nút >> vào phân trang
                     paginationControls.append(nextButton);
                 }
             }
-
+            
+            // Sau khi tick hoặc bỏ thì applyFilter ẩn hiện đúng
             $('#toggleThumbnail').on('change', applyFilters);
             $('#toggleTitle').on('change', applyFilters);
             $('#toggleTagline').on('change', applyFilters);
@@ -164,7 +174,7 @@
                 }
             });
 
-            // Add an initial check for 'No courses found' display
+            // Nếu không có khóa học nào thì báo không có
             if (courseCards.length === 0) {
                  $('#courseGrid').html('<p style="text-align: center; color: #6c757d; padding: 20px;">No courses found.</p>');
                  paginationControls.empty(); // No pagination if no courses

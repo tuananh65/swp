@@ -69,7 +69,7 @@
             <tbody id="userTableBody">
                 <c:forEach var="dto" items="${userList}">
                     <tr>
-                        <td>${dto.user.userID}</td>
+                        <td>${dto.user.userId}</td>
                         <td><img src="${dto.user.avatarUrl}" style="width: 40px; height: 40px;"></td>
                         <td>${dto.user.fullName}</td>
                         <td class="role-cell">${dto.roleName}</td>
@@ -81,7 +81,7 @@
                         <td>
                             <button>Edit</button>
                             <form action="deleteUser" method="post" style="display:inline;">
-                                <input type="hidden" name="userID" value="${dto.user.userID}">
+                                <input type="hidden" name="userID" value="${dto.user.userId}">
                                 <button type="submit" class="delete-btn">Delete</button>
                             </form>
                         </td>
