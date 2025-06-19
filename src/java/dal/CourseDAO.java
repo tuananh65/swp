@@ -87,10 +87,10 @@ public class CourseDAO extends DBContext {
         }
     }
 
-    // Lấy các khóa học nổi bật
+    // Lấy 3 khóa học nổi bật
     public List<Course> getFeaturedCourses() {
         List<Course> list = new ArrayList<>();
-        String sql = "SELECT * FROM Course WHERE Featured = 1";
+        String sql = "SELECT * FROM Course WHERE Featured = 1 ORDER BY CreatedAt DESC OFFSET 0 ROWS FETCH NEXT 3 ROWS ONLY";
 
         try {
             conn = new DBContext().getConnection();
@@ -107,6 +107,7 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
+
 
     // ✅ Tìm kiếm, phân trang, sắp xếp
     public List<Course> searchCourses(String keyword, int offset, int pageSize, String sortBy) {
@@ -226,5 +227,8 @@ public class CourseDAO extends DBContext {
         for (Course c : list) {
             System.out.println("Tên khóa học: " + c.getCourseName());
         }
+        
+        List<Course> featuredCourses = dao.getFeaturedCourses();
+        featuredCourses.forEach(System.out::println);
     }
 }
