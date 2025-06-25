@@ -8,11 +8,12 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Soft Skills & Time Management - Nền tảng học kỹ năng mềm</title>
+        <title>Course Detail</title>
         <meta
             name="description"
             content="Nền tảng học trực tuyến giúp bạn phát triển kỹ năng mềm hiệu quả"
             />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myRegistrations.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cousrsedetail.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -44,207 +45,203 @@
 
        
     <!-- Nút toggle bên cạnh màn hình -->
- <!-- Nút tròn cố định bên trái giữa màn hình -->
-<button id="toggleMenuBtn" style="
-    position: fixed;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    z-index: 1000;
-    width: 50px;
-    height: 50px;
-    background-color: #6366f1;
-    color: #ffffff;
-    border: none;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-">
-    ☰
-</button>
-
-<!-- Container menu -->
-<div id="courseDropdownContainer" style="
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 60px;
-    transform: translateY(-50%);
-    background-color: #ffffff;
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
-    padding: 1rem;
-    border-radius: 1rem;
-    z-index: 999;
-    width: 280px;
-    max-height: 80vh;
-    overflow-y: auto;
-    font-family: 'Inter', sans-serif;
-">
-    <!-- Ô tìm kiếm -->
-    <input type="text" id="searchInput" placeholder="Tìm kiếm khóa học..." style="
-        width: 100%;
-        padding: 0.6rem 1rem;
-        margin-bottom: 1rem;
-        border: 1px solid #d1d5db;
-        border-radius: 0.75rem;
-        font-size: 1rem;
-        transition: box-shadow 0.2s;
-    " onfocus="this.style.boxShadow='0 0 0 2px #6366f1'" onblur="this.style.boxShadow='none'" />
-
-    <!-- Danh sách kết quả tìm kiếm -->
-    <div id="searchResult" style="display: none; flex-direction: column; gap: 0.5rem;"></div>
-
-    <!-- Thông báo khi không tìm thấy -->
-    <div id="noResultsMsg" style="display:none; color:#ef4444; font-weight:600; text-align:center; margin-top: 0.5rem;">
-        Không tìm thấy khóa học nào.
-    </div>
-
-    <!-- Dropdown thủ công -->
-    <div id="manualDropdowns" style="display: flex; flex-direction: column; gap: 1.5rem;">
-        <!-- Khóa học -->
-        <div>
-            <button class="dropdown-toggle" onclick="toggleDropdown(this)">
-                Khóa học <i class="fas fa-chevron-down" style="float: right;"></i>
-            </button>
-            <div class="dropdown-list" style="display: none;">
-                <c:forEach var="c" items="${courseList}">
-                    <a href="${pageContext.request.contextPath}/CourseDetailServlet?courseId=${c.courseID}" class="dropdown-item all-course-item">
-                        ${c.courseName}
-                    </a>
-                </c:forEach>
-            </div>
-        </div>
-
-        <!-- Featured -->
-        <div>
-            <button class="dropdown-toggle" onclick="toggleDropdown(this)">
-                Featured Courses <i class="fas fa-chevron-down" style="float: right;"></i>
-            </button>
-            <div class="dropdown-list" style="display: none;">
-                <c:forEach var="fc" items="${featuredCourses}">
-                    <a href="${pageContext.request.contextPath}/CourseDetailServlet?courseId=${fc.courseID}" class="dropdown-item all-course-item">
-                        ${fc.courseName}
-                    </a>
-                </c:forEach>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- CSS -->
-<style>
-    .dropdown-toggle {
+    <!-- Nút tròn cố định bên trái giữa màn hình -->
+    <button id="toggleMenuBtn" style="
+        position: fixed;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        z-index: 1000;
+        width: 50px;
+        height: 50px;
         background-color: #6366f1;
-        color: white;
+        color: #ffffff;
         border: none;
-        padding: 0.75rem 1rem;
-        border-radius: 0.75rem;
+        border-radius: 50%;
+        font-size: 1.5rem;
         cursor: pointer;
-        font-size: 1rem;
-        width: 100%;
-        text-align: left;
-        transition: background-color 250ms;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .dropdown-toggle:hover {
-        background-color: #4f46e5;
-    }
-
-    .dropdown-list {
-        margin-top: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-        max-height: 200px;
+        align-items: center;
+        justify-content: center;
+    ">
+        ☰
+    </button>
+
+    <!-- Container menu -->
+    <div id="courseDropdownContainer" style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 60px;
+        transform: translateY(-50%);
+        background-color: #ffffff;
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+        padding: 1rem;
+        border-radius: 1rem;
+        z-index: 999;
+        width: 280px;
+        max-height: 80vh;
         overflow-y: auto;
-    }
+        font-family: 'Inter', sans-serif;
+    ">
+        <!-- Ô tìm kiếm -->
+        <input type="text" id="searchInput" placeholder="Tìm kiếm khóa học..." style="
+            width: 100%;
+            padding: 0.6rem 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: box-shadow 0.2s;
+        " onfocus="this.style.boxShadow='0 0 0 2px #6366f1'" onblur="this.style.boxShadow='none'" />
 
-    .dropdown-item {
-        padding: 0.6rem 0.75rem;
-        border-radius: 0.5rem;
-        text-decoration: none;
-        color: #111827;
-        background-color: #f3f4f6;
-        display: block;
-        transition: background-color 200ms;
-        font-size: 0.95rem;
-    }
+        <!-- Danh sách kết quả tìm kiếm -->
+        <div id="searchResult" style="display: none; flex-direction: column; gap: 0.5rem;"></div>
 
-    .dropdown-item:hover {
-        background-color: #e5e7eb;
-    }
-</style>
+        <!-- Thông báo khi không tìm thấy -->
+        <div id="noResultsMsg" style="display:none; color:#ef4444; font-weight:600; text-align:center; margin-top: 0.5rem;">
+            Không tìm thấy khóa học nào.
+        </div>
 
-<!-- JavaScript -->
-<script>
-    const toggleMenuBtn = document.getElementById('toggleMenuBtn');
-    const menuContainer = document.getElementById('courseDropdownContainer');
-    const searchInput = document.getElementById('searchInput');
-    const searchResult = document.getElementById('searchResult');
-    const manualDropdowns = document.getElementById('manualDropdowns');
-    const noResultsMsg = document.getElementById('noResultsMsg');
+        <!-- Dropdown thủ công -->
+        <div id="manualDropdowns" style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <!-- Khóa học -->
+            <div>
+                <button class="dropdown-toggle" onclick="toggleDropdown(this)">
+                    Khóa học <i class="fas fa-chevron-down" style="float: right;"></i>
+                </button>
+                <div class="dropdown-list" style="display: none;">
+                    <c:forEach var="c" items="${courseList}">
+                        <a href="${pageContext.request.contextPath}/CourseDetailServlet?courseId=${c.courseID}" class="dropdown-item all-course-item">
+                            ${c.courseName}
+                        </a>
+                    </c:forEach>
+                </div>
+            </div>
 
-    toggleMenuBtn.addEventListener('click', () => {
-        const isVisible = menuContainer.style.display === 'block';
-        menuContainer.style.display = isVisible ? 'none' : 'block';
+            <!-- Featured -->
+            <div>
+                <button class="dropdown-toggle" onclick="toggleDropdown(this)">
+                    Featured Courses <i class="fas fa-chevron-down" style="float: right;"></i>
+                </button>
+                <div class="dropdown-list" style="display: none;">
+                    <c:forEach var="fc" items="${featuredCourses}">
+                        <a href="${pageContext.request.contextPath}/CourseDetailServlet?courseId=${fc.courseID}" class="dropdown-item all-course-item">
+                            ${fc.courseName}
+                        </a>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        if (isVisible) {
-            searchInput.value = '';
-            searchResult.style.display = 'none';
-            manualDropdowns.style.display = 'flex';
-            noResultsMsg.style.display = 'none';
-
-            const dropdowns = menuContainer.querySelectorAll('.dropdown-list');
-            dropdowns.forEach(d => d.style.display = 'none');
+    <!-- CSS -->
+    <style>
+        .dropdown-toggle {
+            background-color: #6366f1;
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            text-align: left;
+            transition: background-color 250ms;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-    });
 
-    function toggleDropdown(button) {
-        const dropdown = button.nextElementSibling;
-        const isVisible = dropdown.style.display === 'flex';
-        dropdown.style.display = isVisible ? 'none' : 'flex';
-    }
-
-    searchInput.addEventListener('input', function () {
-        const keyword = this.value.toLowerCase().trim();
-        const allCourses = document.querySelectorAll('.all-course-item');
-        searchResult.innerHTML = '';
-
-        if (keyword === '') {
-            searchResult.style.display = 'none';
-            noResultsMsg.style.display = 'none';
-            manualDropdowns.style.display = 'flex';
-            return;
+        .dropdown-toggle:hover {
+            background-color: #4f46e5;
         }
 
-        manualDropdowns.style.display = 'none';
-        searchResult.style.display = 'flex';
+        .dropdown-list {
+            margin-top: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
 
-        let foundCount = 0;
-        allCourses.forEach(item => {
-            const text = item.textContent.toLowerCase();
-            if (text.includes(keyword)) {
-                const cloned = item.cloneNode(true);
-                cloned.style.display = 'block';
-                searchResult.appendChild(cloned);
-                foundCount++;
+        .dropdown-item {
+            padding: 0.6rem 0.75rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            color: #111827;
+            background-color: #f3f4f6;
+            display: block;
+            transition: background-color 200ms;
+            font-size: 0.95rem;
+        }
+
+        .dropdown-item:hover {
+            background-color: #e5e7eb;
+        }
+    </style>
+
+    <!-- JavaScript -->
+    <script>
+        const toggleMenuBtn = document.getElementById('toggleMenuBtn');
+        const menuContainer = document.getElementById('courseDropdownContainer');
+        const searchInput = document.getElementById('searchInput');
+        const searchResult = document.getElementById('searchResult');
+        const manualDropdowns = document.getElementById('manualDropdowns');
+        const noResultsMsg = document.getElementById('noResultsMsg');
+
+        toggleMenuBtn.addEventListener('click', () => {
+            const isVisible = menuContainer.style.display === 'block';
+            menuContainer.style.display = isVisible ? 'none' : 'block';
+
+            if (isVisible) {
+                searchInput.value = '';
+                searchResult.style.display = 'none';
+                manualDropdowns.style.display = 'flex';
+                noResultsMsg.style.display = 'none';
+
+                const dropdowns = menuContainer.querySelectorAll('.dropdown-list');
+                dropdowns.forEach(d => d.style.display = 'none');
             }
         });
 
-        // Hiển thị thông báo nếu không tìm thấy kết quả
-        noResultsMsg.style.display = foundCount === 0 ? 'block' : 'none';
-    });
-</script>
+        function toggleDropdown(button) {
+            const dropdown = button.nextElementSibling;
+            const isVisible = dropdown.style.display === 'flex';
+            dropdown.style.display = isVisible ? 'none' : 'flex';
+        }
 
+        searchInput.addEventListener('input', function () {
+            const keyword = this.value.toLowerCase().trim();
+            const allCourses = document.querySelectorAll('.all-course-item');
+            searchResult.innerHTML = '';
 
+            if (keyword === '') {
+                searchResult.style.display = 'none';
+                noResultsMsg.style.display = 'none';
+                manualDropdowns.style.display = 'flex';
+                return;
+            }
 
-  
+            manualDropdowns.style.display = 'none';
+            searchResult.style.display = 'flex';
 
+            let foundCount = 0;
+            allCourses.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(keyword)) {
+                    const cloned = item.cloneNode(true);
+                    cloned.style.display = 'block';
+                    searchResult.appendChild(cloned);
+                    foundCount++;
+                }
+            });
+
+            // Hiển thị thông báo nếu không tìm thấy kết quả
+            noResultsMsg.style.display = foundCount === 0 ? 'block' : 'none';
+        });
+    </script>
+    <jsp:include page="/student/courseRegister.jsp" />
         <!-- Main Content -->
                     
         <main class="main-content">
@@ -277,24 +274,21 @@
                             <p><strong>Giá gốc:</strong> <span class="original-price">${course.originalPrice} VND</span></p>
                             <p><strong>Giá khuyến mãi:</strong> <span class="sale-price">${course.salePrice} VND</span></p>
                         </div>
-
-                        <form action="${pageContext.request.contextPath}/register-course" method="post" class="enroll-form">
-                            <input type="hidden" name="courseId" value="${course.courseID}" />
-                            <input type="hidden" name="basePrice" value="${course.salePrice}" />
-
-                            <div class="package-selection">
-                                <label for="packageId"><strong>Chọn gói học:</strong></label>
-                                <select name="packageId" id="packageId" onchange="updatePrice()">
-                                    <c:forEach var="pkg" items="${packageList}">
-                                        <option value="${pkg.packageId}" data-modifier="${pkg.priceModifier}">
-                                            ${pkg.name} (${pkg.durationInDays} ngày)
-                                        </option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-
-                            <button type="submit" class="enroll-button">Register Now</button>
-                        </form>
+                         
+                        <div class="package-selection">
+                            <label for="mainPackageId"><strong>Chọn gói học:</strong></label>
+                            <select id="mainPackageId" name="mainPackageId">
+                                <option value="">Select package</option>
+                                <c:forEach var="pkg" items="${packageList}">
+                                    <option value="${pkg.packageId}" data-modifier="${pkg.priceModifier}" data-duration="${pkg.durationInDays}">
+                                        ${pkg.name} (${pkg.durationInDays} days)
+                                    </option>
+                                </c:forEach>
+                            </select>
+                            <p><strong>Tổng giá:</strong> <span id="mainTotalPrice"></span></p>
+                        </div>
+                        
+                        <button type="button" class="enroll-button" onclick="openModal()">Register Now</button>
 
                         <div class="extra-info">
                             <p><strong>Ngày tạo:</strong> <fmt:formatDate value="${course.createdAt}" pattern="dd/MM/yyyy" /></p>
@@ -311,17 +305,143 @@
                 </div>
             </c:if>
         </main>
-        <script>
-function updatePrice() {
-    const select = document.getElementById('packageId');
-    const modifier = parseFloat(select.options[select.selectedIndex].dataset.modifier);
-    const originalPrice = parseFloat(${course.salePrice});
-    const totalPriceInput = document.querySelector('input[name="totalPrice"]');
-    totalPriceInput.value = (originalPrice * modifier).toFixed(2);
-}
-</script>
         <!-- Footer -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> 
         <jsp:include page="default/footer.jsp" />
+        <!-- JavaScript -->
+<script>
+// Package prices
+const packagePrices = {};
+<c:forEach var="pkg" items="${packageList}">
+    packagePrices['${pkg.packageId}'] = ${course.salePrice * pkg.priceModifier};
+</c:forEach>
+
+// Open modal and sync package selection
+function openModal() {
+    document.getElementById('modalOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Đồng bộ gói học từ main content sang pop-up
+    const mainPackageId = document.getElementById('mainPackageId').value;
+    const popupPackageId = document.getElementById('packageId');
+    const priceField = document.getElementById('price');
+
+    if (mainPackageId) {
+        popupPackageId.value = mainPackageId;
+        priceField.value = packagePrices[mainPackageId] 
+            ? packagePrices[mainPackageId].toLocaleString('vi-VN') + ' VND' 
+            : '';
+    } else {
+        popupPackageId.value = '';
+        priceField.value = '';
+    }
+}
+
+// Close modal
+function closeModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// Reset form and close modal
+function resetAndCloseModal() {
+    document.getElementById('registrationForm').reset();
+    document.getElementById('price').value = '';
+    document.getElementById('mainPackageId').value = '';
+    document.getElementById('mainTotalPrice').textContent = '';
+    closeModal();
+}
+
+// Update price in main content when package changes
+document.getElementById('mainPackageId').addEventListener('change', function() {
+    const selectedPackage = this.value;
+    const mainPriceField = document.getElementById('mainTotalPrice');
+    mainPriceField.textContent = packagePrices[selectedPackage] 
+        ? packagePrices[selectedPackage].toLocaleString('vi-VN') + ' VND' 
+        : '';
+});
+
+// Update price in popup when package changes
+document.getElementById('packageId').addEventListener('change', function() {
+    const selectedPackage = this.value;
+    const priceField = document.getElementById('price');
+    priceField.value = packagePrices[selectedPackage] 
+        ? packagePrices[selectedPackage].toLocaleString('vi-VN') + ' VND' 
+        : '';
+});
+
+// Form validation
+document.getElementById('registrationForm').addEventListener('submit', function(e) {
+    const requiredFields = ['subjectName', 'packageId', 'fullName', 'email'];
+    let isValid = true;
+
+    requiredFields.forEach(field => {
+        const input = document.getElementById(field);
+        if (!input.value.trim()) {
+            input.style.borderColor = '#e17055';
+            isValid = false;
+        } else {
+            input.style.borderColor = '#e9ecef';
+        }
+    });
+
+    if (!isValid) {
+        e.preventDefault();
+        alert('Vui lòng điền đầy đủ các trường bắt buộc!');
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+
+// Tự động mở modal nếu có lỗi
+<c:if test="${openModal}">
+    window.onload = function() {
+        openModal();
+    };
+</c:if>
+
+// Kiểm tra trạng thái đăng nhập khi nhấn Register Now
+document.querySelector('.enroll-button').addEventListener('click', function() {
+    const isLoggedIn = ${sessionScope.currentUser != null};
+    const courseId = ${course.courseID};
+    const packageId = document.getElementById('mainPackageId').value;
+    const basePrice = ${course.salePrice};
+
+    if (isLoggedIn) {
+        // Người dùng đã đăng nhập: Gửi yêu cầu trực tiếp đến servlet
+        if (!packageId) {
+            alert('Vui lòng chọn gói học trước khi đăng ký!');
+            return;
+        }
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '${pageContext.request.contextPath}/register-course';
+        form.style.display = 'none';
+        const inputs = [
+            { name: 'courseId', value: courseId },
+            { name: 'packageId', value: packageId },
+            { name: 'basePrice', value: basePrice }
+        ];
+        inputs.forEach(input => {
+            const el = document.createElement('input');
+            el.type = 'hidden';
+            el.name = input.name;
+            el.value = input.value;
+            form.appendChild(el);
+        });
+        document.body.appendChild(form);
+        form.submit();
+    } else {
+        // Người dùng chưa đăng nhập: Mở pop-up
+        openModal();
+    }
+});
+        </script>
     </body>
 </html>

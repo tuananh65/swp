@@ -39,11 +39,6 @@
         <!-- Navigation Bar -->
         <nav>
             <jsp:include page="/default/header.jsp"/>
-            <div class="login-register-links" id="userSection">
-                <a href="${pageContext.request.contextPath}/view/changePassword.jsp" class="custom-btn">Change Password</a>
-                <a href="${pageContext.request.contextPath}/profile?id=3" class="custom-btn">Profile</a>
-                <a href="${pageContext.request.contextPath}/logout" class="custom-btn">Đăng xuất</a>
-            </div>
         </nav>
 
         <!-- Hero Banner -->
@@ -86,7 +81,7 @@
                             <div class="dropdown-item">
                                 <button class="dropdown-btn">
                                     <i class="fas fa-user"></i>
-                                    <span>Hồ sơ cá nhân</span>
+                                    <span><a href="${pageContext.request.contextPath}/profile?id=${sessionScope.currentUser.userId}">Profile</a></span>
                                     <i class="fas fa-chevron-right dropdown-arrow"></i>
                                 </button>
                                 <div class="dropdown-content">
@@ -98,7 +93,14 @@
                             <div class="dropdown-item">
                                 <button class="dropdown-btn">
                                     <i class="fas fa-book"></i>
-                                    <span>Khóa học của tôi</span>
+                                    <span><a href="${pageContext.request.contextPath}/student/dashboard">My Registation</a></span>
+                                    <i class="fas fa-chevron-right dropdown-arrow"></i>
+                                </button>
+                            </div>
+                            <div class="dropdown-item">
+                                <button class="dropdown-btn">
+                                    <i class="fas fa-book"></i>
+                                    <span><a href="${pageContext.request.contextPath}/mycourses">My Course</a></span>
                                     <i class="fas fa-chevron-right dropdown-arrow"></i>
                                 </button>
                                 <div class="dropdown-content">
@@ -131,6 +133,13 @@
                                     <a href="#">Giao diện</a>
                                 </div>
                             </div>
+                            <div class="dropdown-item">
+                                <button class="dropdown-btn">
+                                    <i class="fas fa-cog"></i>
+                                    <span><a href="${pageContext.request.contextPath}/auth?action=logout">Sign out</a></span>
+                                    <i class="fas fa-chevron-right dropdown-arrow"></i>
+                                </button>
+                            </div>        
                         </div>
                     </nav>
                 </div>
@@ -212,7 +221,8 @@
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="userPassword">Password *</label>
-                                        <input type="password" id="userPassword" name="userPassword" placeholder="Enter password" required value="${user.getPassword()}" />
+                                        <!--<input type="password" id="userPassword" name="userPassword" placeholder="Enter password" required value="${user.getPassword()}" /> -->
+                                        <a href="${pageContext.request.contextPath}/view/changePassword.jsp">Change Password</a>
                                     </div>
                                     <div class="form-group">
                                         <label for="userPhone">Phone *</label>

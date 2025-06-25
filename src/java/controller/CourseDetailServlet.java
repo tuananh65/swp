@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.Course;
 import model.Package;
 
@@ -25,8 +26,8 @@ public class CourseDetailServlet extends HttpServlet {
 
         CourseDAO dao = new CourseDAO();
         PackageDAO packageDAO = new PackageDAO();
-List<Package> packageList = packageDAO.getAllPackages();
-request.setAttribute("packageList", packageList);
+        List<Package> packageList = packageDAO.getAllPackages();
+        request.setAttribute("packageList", packageList);
 
         // Lấy danh sách tất cả khóa học để hiển thị dropdown
         List<Course> courseList = dao.getAllCourses();
@@ -35,7 +36,6 @@ request.setAttribute("packageList", packageList);
         // Lấy danh sách featured course
         List<Course> featuredCourses = dao.getFeaturedCourses();
         request.setAttribute("featuredCourses", featuredCourses);
-
 
         String courseIdParam = request.getParameter("courseId");
 
@@ -61,6 +61,14 @@ request.setAttribute("packageList", packageList);
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "courseId không hợp lệ");
                 return;
             }
+        }
+
+        // Bổ sung: Kiểm tra lỗi từ RegisterCourseServlet
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("error") != null) {
+            request.setAttribute("error", session.getAttribute("error"));
+            session.removeAttribute("error"); // Xóa sau khi sử dụng
+            request.setAttribute("openModal", true); // Để JavaScript mở modal
         }
 
         request.getRequestDispatcher("coursedetail.jsp").forward(request, response);
