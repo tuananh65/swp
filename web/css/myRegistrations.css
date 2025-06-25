@@ -363,23 +363,6 @@
   color: white;
 }
 
-/* Footer */
-.myRegistrations-footer {
-  background: #333;
-  color: white;
-  padding: 20px 0;
-  text-align: center;
-}
-
-.myRegistrations-footer-text {
-  font-size: 14px;
-}
-
-.myRegistrations-brand {
-  color: #667eea;
-  font-weight: bold;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .myRegistrations-nav {
@@ -421,4 +404,186 @@
   .myRegistrations-card {
     padding: 20px;
   }
+}
+
+
+/* Modal Styles */
+.courseRegister-modal-overlay {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 10px;
+}
+
+.courseRegister-modal-overlay.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.courseRegister-modal-content {
+    background: white;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideIn 0.3s ease;
+}
+
+.courseRegister-modal-header {
+    background: linear-gradient(135deg, #6c5ce7, #5f3dc4);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.courseRegister-modal-title {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.courseRegister-modal-subtitle {
+    opacity: 0.9;
+}
+
+.courseRegister-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.courseRegister-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.courseRegister-modal-body {
+    padding: 30px;
+}
+
+.courseRegister-form-group {
+    margin-bottom: 10px;
+}
+
+.courseRegister-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #2d3436;
+    font-weight: 600;
+}
+
+.courseRegister-required {
+    color: #e17055;
+}
+
+.courseRegister-form-control {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s;
+    background: #f8f9fa;
+}
+
+.courseRegister-form-control:focus {
+    outline: none;
+    border-color: #6c5ce7;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+}
+
+.courseRegister-form-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.courseRegister-btn {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.courseRegister-btn-cancel {
+    background: #e17055;
+    color: white;
+}
+
+.courseRegister-btn-cancel:hover {
+    background: #d63031;
+    transform: translateY(-2px);
+}
+
+.courseRegister-btn-submit {
+    background: #6c5ce7;
+    color: white;
+}
+
+.courseRegister-btn-submit:hover {
+    background: #5f3dc4;
+    transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .courseRegister-nav-menu {
+        display: none;
+    }
+
+    .courseRegister-hero-title {
+        font-size: 36px;
+    }
+
+    .courseRegister-modal-content {
+        margin: 10px;
+    }
+
+    .courseRegister-modal-body {
+        margin-top: 10px;
+        padding: 5px;
+    }
+
+    .courseRegister-form-buttons {
+        flex-direction: column;
+    }
 }

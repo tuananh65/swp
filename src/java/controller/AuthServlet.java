@@ -45,6 +45,8 @@ public class AuthServlet extends HttpServlet {
             resetPasswordGet(request, response);
         } else if ("activate".equals(action) || request.getRequestURI().endsWith("/activate")) { // Handle /activate
             activateAccount(request, response);
+        } else if ("logout".equals(action)) {
+            logout(request, response);
         } else {
             processRequest(request, response);
         }
@@ -170,7 +172,7 @@ public class AuthServlet extends HttpServlet {
             int role = user.getRoleId();
             switch (role) {
                 case 3:
-                    response.sendRedirect("admin/dashboard.jsp");
+                    response.sendRedirect("settinglist");
                     break;
                 case 1:
                     response.sendRedirect("student/dashboard.jsp");
@@ -180,7 +182,7 @@ public class AuthServlet extends HttpServlet {
                     break;
                 default:
                     request.setAttribute("errorMessage", "Unknown role!");
-                    request.getRequestDispatcher("home.jsp").forward(request, response);
+                    request.getRequestDispatcher("home").forward(request, response);
             }
         }
     }
@@ -348,6 +350,19 @@ public class AuthServlet extends HttpServlet {
         } else {
             request.setAttribute("errorMessage", "Failed to change password. Please try again.");
             request.getRequestDispatcher("view/changePassword.jsp").forward(request, response);
+        }
+    }
+    
+    private void logout(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        try (PrintWriter out = response.getWriter()) {
+            if (session != null) {
+                session.invalidate();
+                response.sendRedirect("home");
+            } else {
+                response.sendRedirect("home");
+            }
         }
     }
 

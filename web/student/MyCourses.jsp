@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/MyCourses.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <%-- Xóa block <style> ở đây, tất cả CSS sẽ nằm trong MyCourses.css --%>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 </head>
 <body>
-    <jsp:include page="/default/header.jsp"/>
+    <nav>
+        <jsp:include page="/default/header.jsp"/>
+    </nav>
     <section class="hero-banner">
         <div class="hero-content">
             <div class="hero-overlay"></div>
@@ -23,6 +25,153 @@
             </div>
         </div>
     </section>
+            
+           <!-- Nút toggle bên cạnh màn hình -->
+ <!-- Nút tròn cố định bên trái giữa màn hình -->
+<button id="toggleMenuBtn" style="
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    background-color: #6366f1;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+"> <i class="bi bi-list"></i>
+</button>
+
+<!-- Container menu -->
+<div id="courseDropdownContainer" style="
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 60px;
+    transform: translateY(-50%);
+    background-color: #ffffff;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+    padding: 1rem;
+    border-radius: 1rem;
+    z-index: 999;
+    width: 280px;
+    max-height: 80vh;
+    overflow-y: auto;
+    font-family: 'Inter', sans-serif;
+">
+
+    <div id="userSection" style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div>
+            <button class="dropdown-toggle" onclick="toggleDropdown(this)">
+                <a href="${pageContext.request.contextPath}/view/changePassword.jsp">Change Password</a>
+            </button>
+        </div>
+        <div>
+            <button class="dropdown-toggle" onclick="toggleDropdown(this)">
+                <a href="${pageContext.request.contextPath}/profile?id=${sessionScope.currentUser.userId}">Profile</a>
+            </button>
+        </div>
+        <div>
+            <button class="dropdown-toggle" onclick="toggleDropdown(this)">
+                <a href="${pageContext.request.contextPath}/student/dashboard">My Registation</a>
+            </button>
+        </div>    
+        <div>
+            <button class="dropdown-toggle" onclick="toggleDropdown(this)">
+                <a href="${pageContext.request.contextPath}/auth?action=logout">Sign out</a>
+            </button>
+        </div> 
+    </div>
+</div>
+
+<!-- CSS -->
+<style>
+    .dropdown-toggle {
+        background-color: #6366f1;
+        color: #111827;
+        border: none;
+        padding: 0.75rem 1rem;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        font-size: 1rem;
+        width: 100%;
+        text-align: left;
+        transition: background-color 250ms;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .dropdown-toggle:hover {
+        background-color: #f3f4f6;
+    }
+</style>
+
+<!-- JavaScript -->
+<script>
+    const toggleMenuBtn = document.getElementById('toggleMenuBtn');
+    const menuContainer = document.getElementById('courseDropdownContainer');
+    const searchInput = document.getElementById('searchInput');
+    const searchResult = document.getElementById('searchResult');
+    const manualDropdowns = document.getElementById('manualDropdowns');
+    const noResultsMsg = document.getElementById('noResultsMsg');
+
+    toggleMenuBtn.addEventListener('click', () => {
+        const isVisible = menuContainer.style.display === 'block';
+        menuContainer.style.display = isVisible ? 'none' : 'block';
+
+        if (isVisible) {
+            searchInput.value = '';
+            searchResult.style.display = 'none';
+            manualDropdowns.style.display = 'flex';
+            noResultsMsg.style.display = 'none';
+
+            const dropdowns = menuContainer.querySelectorAll('.dropdown-list');
+            dropdowns.forEach(d => d.style.display = 'none');
+        }
+    });
+
+    function toggleDropdown(button) {
+        const dropdown = button.nextElementSibling;
+        const isVisible = dropdown.style.display === 'flex';
+        dropdown.style.display = isVisible ? 'none' : 'flex';
+    }
+
+    searchInput.addEventListener('input', function () {
+        const keyword = this.value.toLowerCase().trim();
+        const allCourses = document.querySelectorAll('.all-course-item');
+        searchResult.innerHTML = '';
+
+        if (keyword === '') {
+            searchResult.style.display = 'none';
+            noResultsMsg.style.display = 'none';
+            manualDropdowns.style.display = 'flex';
+            return;
+        }
+
+        manualDropdowns.style.display = 'none';
+        searchResult.style.display = 'flex';
+
+        let foundCount = 0;
+        allCourses.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(keyword)) {
+                const cloned = item.cloneNode(true);
+                cloned.style.display = 'block';
+                searchResult.appendChild(cloned);
+                foundCount++;
+            }
+        });
+
+        // Hiển thị thông báo nếu không tìm thấy kết quả
+        noResultsMsg.style.display = foundCount === 0 ? 'block' : 'none';
+    });
+</script>          
 
     <div class="controls">
         <label>
