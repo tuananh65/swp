@@ -8,20 +8,28 @@ import java.util.List;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import model.Course;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class EnrollmentDAO extends DBContext {
 
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+    private static final Logger logger = LogManager.getLogger(EnrollmentDAO.class);
 
     // Thêm mới một bản ghi Enrollment
-    public boolean insertEnrollment(Enrollment e) {
+    public boolean insertEnrollment(Enrollment e) throws SQLException {
         String sql = "INSERT INTO Enrollment (UserID, CourseID, EnrollmentDate, PackageID, TotalPrice, Status, ValidFrom, ValidTo, UpdatedByUserID, OrderID, Note) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            conn = getConnection();
-            ps = conn.prepareStatement(sql);
+        
+        logger.debug("Executing insertEnrollment for userId: {}, courseId: {}, packageId: {}", 
+                     e.getUserId(), e.getCourseId(), e.getPackageId());
+        logger.debug("Enrollment details: TotalPrice: {}, Status: {}, ValidFrom: {}, ValidTo: {}", 
+                     e.getTotalPrice(), e.getStatus(), e.getValidFrom(), e.getValidTo());
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, e.getUserId());
             ps.setInt(2, e.getCourseId());
             ps.setTimestamp(3, new Timestamp(e.getEnrollmentDate().getTime()));
@@ -34,12 +42,19 @@ public class EnrollmentDAO extends DBContext {
             ps.setObject(10, e.getOrderId(), Types.INTEGER);
             ps.setString(11, e.getNote());
 
-            return ps.executeUpdate() > 0;
+            logger.debug("PreparedStatement created with SQL: {}", sql);
+
+            int rowsAffected = ps.executeUpdate();
+            logger.debug("Insert operation affected {} rows", rowsAffected);
+
+            return rowsAffected > 0;
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            logger.error("SQLException occurred while inserting enrollment for userId: {}, courseId: {}. Error: {}", 
+                         e.getUserId(), e.getCourseId(), ex.getMessage());
+            throw ex; // Re-throw the exception to the caller
         }
-        return false;
     }
+
 
     // Lấy danh sách Enrollment của một User ( k có điều kiện )
     public List<Enrollment> getEnrollmentsByUserId(int userId) {

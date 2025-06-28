@@ -1,42 +1,45 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
+
+import java.util.List;
 
 public class Subject {
     private int subjectId;
     private String name;
-    private Integer categoryId;
-    private Boolean featured;
-    private Integer statusId;
+    private int categoryId;
+    private boolean featured;
     private String thumbnail;
     private String description;
+    private int numberOfLesson;
+    private String owner;
+    private String status;
 
-    // Constructor đầy đủ
-    public Subject(int subjectId, String name, Integer categoryId, Boolean featured, Integer statusId, String thumbnail, String description) {
+    // Quan hệ 1-n: Subject -> Course
+    private List<Course> courseList;
+
+    // Quan hệ 1-n: Subject -> Dimension
+    private List<Dimension> dimensionList;
+
+    // Quan hệ 1-n: Subject -> Package
+    private List<Package> packageList;
+
+    // Constructors
+    public Subject() {}
+
+    public Subject(int subjectId, String name, int categoryId, boolean featured,
+                   String thumbnail, String description, int numberOfLesson,
+                   String owner, String status) {
         this.subjectId = subjectId;
         this.name = name;
         this.categoryId = categoryId;
         this.featured = featured;
-        this.statusId = statusId;
         this.thumbnail = thumbnail;
         this.description = description;
+        this.numberOfLesson = numberOfLesson;
+        this.owner = owner;
+        this.status = status;
     }
 
-    // Constructor không có subjectId (dùng khi insert mới)
-    public Subject(String name, Integer categoryId, Boolean featured, Integer statusId, String thumbnail, String description) {
-        this.name = name;
-        this.categoryId = categoryId;
-        this.featured = featured;
-        this.statusId = statusId;
-        this.thumbnail = thumbnail;
-        this.description = description;
-    }
-    
-    
-    // Getters và setters ...
-
+    // Getters and Setters
     public int getSubjectId() {
         return subjectId;
     }
@@ -53,28 +56,20 @@ public class Subject {
         this.name = name;
     }
 
-    public Integer getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Integer categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
-    public Boolean getFeatured() {
+    public boolean isFeatured() {
         return featured;
     }
 
-    public void setFeatured(Boolean featured) {
+    public void setFeatured(boolean featured) {
         this.featured = featured;
-    }
-
-    public Integer getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(Integer statusId) {
-        this.statusId = statusId;
     }
 
     public String getThumbnail() {
@@ -91,5 +86,53 @@ public class Subject {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getNumberOfLesson() {
+        return numberOfLesson;
+    }
+
+    public void setNumberOfLesson(int numberOfLesson) {
+        this.numberOfLesson = numberOfLesson;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
+    }
+
+    public List<Dimension> getDimensionList() {
+        return dimensionList;
+    }
+
+    public void setDimensionList(List<Dimension> dimensionList) {
+        this.dimensionList = dimensionList;
+    }
+
+    public List<Package> getPackageList() {
+        return packageList;
+    }
+
+    public void setPackageList(List<Package> packageList) {
+        this.packageList = packageList;
     }
 }

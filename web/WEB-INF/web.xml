@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-                                 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+<web-app version="3.1"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
@@ -101,7 +105,8 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>AddSliderServlet</servlet-name>
-        <url-pattern>/addSlider</url-pattern> </servlet-mapping>
+        <url-pattern>/addSlider</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>HideSliderServlet</servlet-name>
@@ -166,6 +171,7 @@
         <url-pattern>/mycourses</url-pattern>
     </servlet-mapping>
 
+    <!-- SubjectLessonServlet -->
     <servlet>
         <servlet-name>SubjectLessonServlet</servlet-name>
         <servlet-class>controller.SubjectLessonServlet</servlet-class>
@@ -173,6 +179,16 @@
     <servlet-mapping>
         <servlet-name>SubjectLessonServlet</servlet-name>
         <url-pattern>/subjectlesson</url-pattern>
+    </servlet-mapping>
+
+    <!-- SubjectDetailServlet -->
+    <servlet>
+        <servlet-name>SubjectDetailServlet</servlet-name>
+        <servlet-class>controller.SubjectDetailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SubjectDetailServlet</servlet-name>
+        <url-pattern>/subjectDetail</url-pattern>
     </servlet-mapping>
 
 </web-app>
