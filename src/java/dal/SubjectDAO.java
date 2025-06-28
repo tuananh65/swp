@@ -13,8 +13,10 @@ public class SubjectDAO extends DBContext {
     public Subject getSubjectById(int subjectId) {
         Subject subject = null;
         System.out.println("Attempting to get subject with ID: " + subjectId);
-        String sql = "SELECT SubjectId, Name, CategoryId, Featured, StatusId, Thumbnail, Description "
+
+        String sql = "SELECT SubjectId, Name, CategoryId, Featured, Thumbnail, Description, NumberOfLesson, Owner, Status "
                    + "FROM Subject WHERE SubjectId = ?";
+
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -22,24 +24,29 @@ public class SubjectDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                // Xử lý nullable cho Integer và Boolean
+                Integer categoryId = rs.getObject("CategoryId") != null ? rs.getInt("CategoryId") : null;
+                Boolean featured = rs.getObject("Featured") != null ? rs.getBoolean("Featured") : null;
+                Integer numberOfLesson = rs.getObject("NumberOfLesson") != null ? rs.getInt("NumberOfLesson") : null;
+                String owner = rs.getString("Owner");
+                String status = rs.getString("Status");
+
                 subject = new Subject(
                     rs.getInt("SubjectId"),
                     rs.getString("Name"),
-                    // SỬA ĐỔI Ở ĐÂY: Dùng getInt() cho Integer và getBoolean() cho Boolean
-                    // Xử lý null cho các cột có thể null (Integer, Boolean)
-                    rs.getInt("CategoryId"), // Giả định CategoryId không null hoặc có giá trị mặc định là 0 nếu null
-                    rs.getBoolean("Featured"), // Giả định Featured không null hoặc có giá trị mặc định là false nếu null
-                    rs.getInt("StatusId"),   // Giả định StatusId không null hoặc có giá trị mặc định là 0 nếu null
+                    categoryId,
+                    featured,
                     rs.getString("Thumbnail"),
-                    rs.getString("Description")
+                    rs.getString("Description"),
+                    numberOfLesson,
+                    owner,
+                    status
                 );
-            } else {
-                // Có thể thêm log hoặc xử lý khi không tìm thấy Subject
             }
         } catch (SQLException ex) {
             Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // Xóa dòng closeConnection() ở đây nếu DBContext của bạn không yêu cầu hoặc getConnection() đã dùng connection pool
+
         return subject;
     }
 }
