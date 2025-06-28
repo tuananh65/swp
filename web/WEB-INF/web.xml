@@ -143,4 +143,12 @@
         <servlet-name>MyCoursesServlet</servlet-name>
         <url-pattern>/mycourses</url-pattern>
     </servlet-mapping>
+<!--    <servlet>
+    <servlet-name>SubjectDetailServlet</servlet-name>
+    <servlet-class>controller.SubjectDetailServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>SubjectDetailServlet</servlet-name>
+    <url-pattern>/subjectDetail</url-pattern>
+</servlet-mapping>-->
 </web-app>
