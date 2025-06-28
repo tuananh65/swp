@@ -554,9 +554,9 @@ public class SliderDAO extends DBContext {
         //     System.out.println("Updated slider 1: " + updated);
         // }
 
-        // Test updateSliderStatus
-        // System.out.println("\n--- Test updateSliderStatus ---");
-        // boolean updatedStatus = dao.updateSliderStatus(1, "active"); // Change status of slider 1 to active
-        // System.out.println("Slider 1 status updated to active: " + updatedStatus);
+         //Test updateSliderStatus
+         System.out.println("\n--- Test updateSliderStatus ---");
+         boolean updatedStatus = dao.updateSliderStatus(1, "active"); // Change status of slider 1 to active
+         System.out.println("Slider 1 status updated to active: " + updatedStatus);
     }
 }
