@@ -1,6 +1,7 @@
 package dal;
 
 import dto.EnrollmentDTO;
+import java.lang.System.Logger;
 import model.Enrollment;
 import java.sql.*;
 import java.util.ArrayList;
