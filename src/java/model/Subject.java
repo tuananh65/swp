@@ -1,7 +1,6 @@
 package model;
+
 import java.util.List;
-import model.Course;
-import model.Dimension;
 
 public class Subject {
     private int subjectId;
