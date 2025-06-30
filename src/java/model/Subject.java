@@ -5,13 +5,13 @@ import java.util.List;
 public class Subject {
     private int subjectId;
     private String name;
-    private int categoryId;
     private boolean featured;
     private String thumbnail;
     private String description;
     private int numberOfLesson;
-    private String owner;
     private String status;
+    private int ownerId;
+    private String categoryName;
 
     // Quan hệ 1-n: Subject -> Course
     private List<Course> courseList;
@@ -19,24 +19,21 @@ public class Subject {
     // Quan hệ 1-n: Subject -> Dimension
     private List<Dimension> dimensionList;
 
-    // Quan hệ 1-n: Subject -> Package
-    private List<Package> packageList;
-
     // Constructors
     public Subject() {}
 
-    public Subject(int subjectId, String name, int categoryId, boolean featured,
+    public Subject(int subjectId, String name, boolean featured,
                    String thumbnail, String description, int numberOfLesson,
-                   String owner, String status) {
+                   int ownerId, String status, String categoryName) {
         this.subjectId = subjectId;
         this.name = name;
-        this.categoryId = categoryId;
         this.featured = featured;
         this.thumbnail = thumbnail;
         this.description = description;
         this.numberOfLesson = numberOfLesson;
-        this.owner = owner;
+        this.ownerId = ownerId;
         this.status = status;
+        this.categoryName = categoryName;
     }
 
     // Getters and Setters
@@ -54,14 +51,6 @@ public class Subject {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
     }
 
     public boolean isFeatured() {
@@ -96,12 +85,12 @@ public class Subject {
         this.numberOfLesson = numberOfLesson;
     }
 
-    public String getOwner() {
-        return owner;
+    public int getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getStatus() {
@@ -110,6 +99,14 @@ public class Subject {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public List<Course> getCourseList() {
@@ -126,13 +123,5 @@ public class Subject {
 
     public void setDimensionList(List<Dimension> dimensionList) {
         this.dimensionList = dimensionList;
-    }
-
-    public List<Package> getPackageList() {
-        return packageList;
-    }
-
-    public void setPackageList(List<Package> packageList) {
-        this.packageList = packageList;
     }
 }

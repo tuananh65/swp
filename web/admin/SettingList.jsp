@@ -121,7 +121,14 @@
                         <a href="${pageContext.request.contextPath}/sliderlist">Slider List</a>
                     </button>
                 </div>
-                    <div>
+                    
+                <div>
+                    <button class="dropdown-toggle" onclick="toggleDropdown(this)">
+                        <a href="${pageContext.request.contextPath}/admin/subjectList">Subject List</a>
+                    </button>
+                </div>  
+                    
+                <div>
                     <button class="dropdown-toggle" onclick="toggleDropdown(this)">
                         <a href="${pageContext.request.contextPath}/subjectDetail">Subject Detail</a>
                     </button>

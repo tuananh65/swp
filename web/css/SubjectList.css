@@ -1,0 +1,418 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+  line-height: 1.6;
+}
+
+/* Banner Section */
+.subjectListBanner {
+  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #ddd6fe 100%);
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.subjectListBannerContent {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.subjectListBannerTitle {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.subjectListBannerDecorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.subjectListDecoration {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.subjectListDecoration1 {
+  width: 80px;
+  height: 80px;
+  background: #ff6b6b;
+  top: 20%;
+  left: 10%;
+  opacity: 0.7;
+}
+
+.subjectListDecoration2 {
+  width: 60px;
+  height: 60px;
+  background: #4ecdc4;
+  top: 60%;
+  right: 15%;
+  opacity: 0.6;
+}
+
+.subjectListDecoration3 {
+  width: 100px;
+  height: 100px;
+  background: #45b7d1;
+  bottom: 20%;
+  right: 5%;
+  opacity: 0.5;
+}
+
+/* Toggle Menu Button */
+.subjectListToggleBtn {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  background-color: #6366f1;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.subjectListToggleBtn:hover {
+  background-color: #5855eb;
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Menu Container */
+.subjectListMenuContainer {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 60px;
+  transform: translateY(-50%);
+  background-color: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  border-radius: 1rem;
+  z-index: 999;
+  width: 280px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.subjectListUserSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.subjectListDropdownToggle {
+  background-color: #6366f1;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+  text-align: left;
+  transition: background-color 250ms;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.subjectListDropdownToggle:hover {
+  background-color: #5855eb;
+}
+
+.subjectListDropdownToggle a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Main Content */
+.subjectListMain {
+  padding: 2rem 0;
+  min-height: calc(100vh - 400px);
+}
+
+.subjectListContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Filter Section */
+.subjectListFilterSection {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.subjectListFilterForm {
+  width: 100%;
+}
+
+.subjectListFilterRow {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.subjectListInputGroup,
+.subjectListSelectGroup {
+  flex: 1;
+  min-width: 200px;
+}
+
+.subjectListInput,
+.subjectListSelect {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  background-color: #ffffff;
+}
+
+.subjectListInput:focus,
+.subjectListSelect:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.subjectListSearchBtn {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.subjectListSearchBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.subjectListNewBtn {
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.subjectListNewBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+/* Table Container */
+.subjectListTableContainer {
+  background: #ffffff;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.subjectListTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.subjectListTableHeader {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #ffffff;
+}
+
+.subjectListTableHeader th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.subjectListTableBody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.2s ease;
+}
+
+.subjectListTableBody tr:hover {
+  background-color: #f8fafc;
+}
+
+.subjectListTableBody td {
+  padding: 1rem;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.subjectListActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.subjectListEditBtn {
+  background: #10b981;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.subjectListEditBtn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+.subjectListDeleteBtn {
+  background: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.subjectListDeleteBtn:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+/* Pagination */
+.subjectListPagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.subjectListPageBtn {
+  padding: 0.5rem 1rem;
+  border: 2px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.subjectListPageBtn:hover {
+  border-color: #6366f1;
+  color: #6366f1;
+}
+
+.subjectListPageActive {
+  background: #6366f1;
+  color: #ffffff;
+  border-color: #6366f1;
+}
+
+/* Footer */
+.subjectListFooter {
+  background: #1e293b;
+  color: #94a3b8;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 4rem;
+}
+
+.subjectListFooterLink {
+  color: #6366f1;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .subjectListBannerTitle {
+    font-size: 2.5rem;
+  }
+
+  .subjectListFilterRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .subjectListInputGroup,
+  .subjectListSelectGroup {
+    min-width: auto;
+  }
+
+  .subjectListTable {
+    font-size: 0.75rem;
+  }
+
+  .subjectListTableHeader th,
+  .subjectListTableBody td {
+    padding: 0.5rem;
+  }
+
+  .subjectListActions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .subjectListContainer {
+    padding: 0 0.5rem;
+  }
+
+  .subjectListFilterSection {
+    padding: 1rem;
+  }
+
+  .subjectListBannerTitle {
+    font-size: 2rem;
+  }
+}

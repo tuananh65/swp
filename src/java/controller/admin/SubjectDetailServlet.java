@@ -1,7 +1,7 @@
 package controller.admin;
 
 import model.Subject;
-import dal.SubjectDetailDAO;
+import dal.SubjectDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -20,11 +20,11 @@ import java.nio.file.Paths;
     maxRequestSize = 1024 * 1024 * 50
 )
 public class SubjectDetailServlet extends HttpServlet {
-    private SubjectDetailDAO subjectDAO;
+    private SubjectDAO subjectDAO;
 
     @Override
     public void init() {
-        subjectDAO = new SubjectDetailDAO();
+        subjectDAO = new SubjectDAO();
     }
 
     @Override
@@ -138,11 +138,11 @@ public class SubjectDetailServlet extends HttpServlet {
         Subject subject = new Subject();
         subject.setSubjectId(id);
         subject.setName(name);
-        subject.setCategoryId(categoryId);
+        subject.setCategoryName(categoryIdParam);
         subject.setFeatured(featured);
         subject.setThumbnail(thumbnail);
         subject.setDescription(description != null ? description : "");
-        subject.setOwner(owner != null ? owner : "");
+        subject.setOwnerId(0);
         subject.setNumberOfLesson(numberOfLesson);
         subject.setStatus(status);
 

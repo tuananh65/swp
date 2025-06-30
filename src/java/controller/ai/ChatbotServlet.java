@@ -50,7 +50,7 @@ public class ChatbotServlet extends HttpServlet {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Authorization", "Bearer " + API_KEY);
             conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("HTTP-Referer", "http://localhost:8080/SoftSkill21");
+            conn.setRequestProperty("HTTP-Referer", "http://localhost:8080/SoftSkill25");
             conn.setRequestProperty("X-Title", "SoftSkill Chatbot");
             conn.setDoOutput(true);
 
