@@ -1,5 +1,6 @@
 package dal;
 
+import java.math.BigDecimal;
 import model.Course;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -189,6 +190,20 @@ public class CourseDAO extends DBContext {
         }
 
         return null;
+    }
+    
+    public BigDecimal getCourseBasePrice(int courseId) {
+        String sql = "SELECT SalePrice FROM Course WHERE CourseID = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, courseId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getBigDecimal("SalePrice");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return BigDecimal.ZERO;
     }
 
     // Tạo Course từ ResultSet

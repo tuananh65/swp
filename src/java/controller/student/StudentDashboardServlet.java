@@ -5,6 +5,7 @@
 
 package controller.student;
 
+import dal.CourseDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,10 +13,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import dal.EnrollmentDAO;
+import dal.PackageDAO;
 import dto.EnrollmentDTO;
 import jakarta.servlet.*;
 import model.User;
 import jakarta.servlet.http.*;
+import java.math.BigDecimal;
 import java.util.List;
 /**
  *
@@ -59,41 +62,75 @@ public class StudentDashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Lấy session hiện tại, không tạo mới nếu chưa có
         HttpSession session = request.getSession(false);
         String search = request.getParameter("search");
         String category = request.getParameter("category");
+        String action = request.getParameter("action");
+        String enrollmentIdParam = request.getParameter("id");
 
-
-        // Kiểm tra người dùng đã đăng nhập hay chưa
+        // Check if user is logged in
         if (session == null || session.getAttribute("currentUser") == null) {
             response.sendRedirect(request.getContextPath() + "/view/SignIn.jsp");
             return;
         }
 
-        // Lấy người dùng hiện tại từ session
         User currentUser = (User) session.getAttribute("currentUser");
         int userId = currentUser.getUserId();
 
-        // Xử lý huỷ nếu có tham số action=cancel
-        String action = request.getParameter("action");
-        String enrollmentIdParam = request.getParameter("id");
+        // Handle edit action for AJAX
+        if ("edit".equals(action) && enrollmentIdParam != null) {
+            try {
+                int enrollmentId = Integer.parseInt(enrollmentIdParam);
+                EnrollmentDAO enrollmentDAO = new EnrollmentDAO();
+                EnrollmentDTO enrollment = enrollmentDAO.getEnrollmentDTOById(enrollmentId, userId);
+                if (enrollment == null) {
+                    response.setContentType("application/json");
+                    response.getWriter().write("{\"error\": \"Enrollment not found or you don't have permission to edit.\"}");
+                    return;
+                }
+
+                // Get basePrice from CourseDAO
+                CourseDAO courseDAO = new CourseDAO();
+                BigDecimal basePrice = courseDAO.getCourseBasePrice(enrollment.getCourseId());
+
+                // Return JSON response
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                PrintWriter out = response.getWriter();
+                out.append("{");
+                out.append("\"enrollmentId\": ").append(String.valueOf(enrollment.getEnrollmentId())).append(",");
+                out.append("\"courseId\": ").append(String.valueOf(enrollment.getCourseId())).append(",");
+                out.append("\"basePrice\": ").append(basePrice != null ? basePrice.toString() : "0").append(",");
+                out.append("\"courseName\": \"").append(escapeJson(enrollment.getCourseName())).append("\",");
+                out.append("\"totalPrice\": ").append(enrollment.getTotalPrice() != null ? enrollment.getTotalPrice().toString() : "0").append(",");
+                out.append("\"packageId\": ").append(String.valueOf(enrollment.getPackageId()));
+                out.append("}");
+                out.flush();
+                return;
+            } catch (NumberFormatException e) {
+                response.setContentType("application/json");
+                response.getWriter().write("{\"error\": \"Invalid enrollment ID.\"}");
+                return;
+            } catch (Exception e) {
+                response.setContentType("application/json");
+                response.getWriter().write("{\"error\": \"Server error: " + escapeJson(e.getMessage()) + "\"}");
+                return;
+            }
+        }
+
+        // Handle cancel or confirm actions
         if ("cancel".equals(action) && enrollmentIdParam != null) {
             try {
                 int enrollmentId = Integer.parseInt(enrollmentIdParam);
                 EnrollmentDAO dao = new EnrollmentDAO();
-
                 boolean deleted = dao.deleteEnrollment(enrollmentId, userId);
                 if (deleted) {
                     session.setAttribute("message", "Enrollment cancelled successfully.");
                 } else {
                     session.setAttribute("error", "Failed to cancel enrollment.");
                 }
-
-                // Redirect lại để tránh submit lại khi refresh
                 response.sendRedirect("dashboard");
                 return;
-
             } catch (NumberFormatException e) {
                 session.setAttribute("error", "Invalid enrollment ID.");
                 response.sendRedirect("dashboard");
@@ -118,24 +155,30 @@ public class StudentDashboardServlet extends HttpServlet {
             }
         }
 
-        // Gọi DAO để lấy danh sách khóa học đã đăng ký
+        // Load enrollments and packages
         EnrollmentDAO dao = new EnrollmentDAO();
         List<EnrollmentDTO> enrollments = dao.getListEnrollmentsWithFilterByUserId(
-            userId, 
-            category != null && !category.trim().isEmpty() ? category.trim() : null, // Lọc theo category
-            search != null && !search.trim().isEmpty() ? search.trim() : null, // Lọc theo search
-            null, null, null, null, null, null,
-            "EnrollmentID", "desc",
-            0, 50
+                userId,
+                category != null && !category.trim().isEmpty() ? category.trim() : null,
+                search != null && !search.trim().isEmpty() ? search.trim() : null,
+                null, null, null, null, null, null,
+                "EnrollmentID", "desc",
+                0, 50
         );
 
-        // Đưa danh sách vào request để truyền sang JSP
+        PackageDAO packageDAO = new PackageDAO();
+        List<model.Package> packageList = packageDAO.getAllPackages();
+        request.setAttribute("packageList", packageList);
+        request.setAttribute("currentUser", currentUser);
         request.setAttribute("myEnrollments", enrollments);
         request.setAttribute("search", search);
         request.setAttribute("category", category);
-
-        // Forward sang giao diện dashboard.jsp để hiển thị
         request.getRequestDispatcher("/student/dashboard.jsp").forward(request, response);
+    }
+
+    private String escapeJson(String str) {
+        if (str == null) return "";
+        return str.replace("\"", "\\\"").replace("\n", "\\n");
     }
 
     /** 
