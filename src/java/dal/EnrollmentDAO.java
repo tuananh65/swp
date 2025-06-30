@@ -1,7 +1,6 @@
 package dal;
 
 import dto.EnrollmentDTO;
-import java.lang.System.Logger;
 import model.Enrollment;
 import java.sql.*;
 import java.util.ArrayList;
@@ -571,6 +570,58 @@ public class EnrollmentDAO extends DBContext {
         }
 
         return courses;
+    }
+    
+    public EnrollmentDTO getEnrollmentDTOById(int enrollmentId, int userId) {
+        String sql = "SELECT e.EnrollmentID, " +
+                "       u.FullName AS UserFullName, " +
+                "       u.Email AS UserEmail, " +
+                "       c.CourseName, " +
+                "       c.CourseThumbnail, " +
+                "       p.Name AS PackageName, " +
+                "       e.TotalPrice, " +
+                "       e.Status, " +
+                "       e.EnrollmentDate, " +
+                "       e.ValidFrom, " +
+                "       e.ValidTo, " +
+                "       ub.FullName AS UpdatedByName, " +
+                "       e.OrderID, " +
+                "       e.PackageID, " +
+                "       e.CourseID " +
+                "FROM Enrollment e " +
+                "JOIN [User] u ON e.UserID = u.UserID " +
+                "JOIN Course c ON e.CourseID = c.CourseID " +
+                "JOIN Package p ON e.PackageID = p.PackageID " +
+                "LEFT JOIN [User] ub ON e.UpdatedByUserID = ub.UserID " +
+                "WHERE e.EnrollmentID = ? AND e.UserID = ?";
+
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, enrollmentId);
+            ps.setInt(2, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                EnrollmentDTO dto = new EnrollmentDTO();
+                dto.setEnrollmentId(rs.getInt("EnrollmentID"));
+                dto.setUserFullName(rs.getString("UserFullName"));
+                dto.setUserEmail(rs.getString("UserEmail"));
+                dto.setCourseName(rs.getString("CourseName"));
+                dto.setCourseThumbnail(rs.getString("CourseThumbnail"));
+                dto.setPackageName(rs.getString("PackageName"));
+                dto.setTotalPrice(rs.getBigDecimal("TotalPrice"));
+                dto.setStatus(rs.getString("Status"));
+                dto.setEnrollmentDate(rs.getTimestamp("EnrollmentDate"));
+                dto.setValidFrom(rs.getDate("ValidFrom"));
+                dto.setValidTo(rs.getDate("ValidTo"));
+                dto.setUpdatedByName(rs.getString("UpdatedByName"));
+                dto.setOrderId(rs.getObject("OrderID") != null ? rs.getInt("OrderID") : null);
+                dto.setPackageId(rs.getInt("PackageID"));
+                dto.setCourseId(rs.getInt("CourseID"));
+                return dto;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

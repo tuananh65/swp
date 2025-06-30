@@ -17,18 +17,20 @@ public class EnrollmentDTO {
     private String updatedByName;
     private Integer orderId;
     private String courseThumbnail;
+    private int packageId;
+    private int courseId;
 
     public EnrollmentDTO() {
     }
 
-    public EnrollmentDTO(int enrollmentId, String userFullName, String userEmail, String courseName,String courseThumbnail, String packageName,
-                         BigDecimal totalPrice, String status, Date enrollmentDate, Date validFrom, Date validTo,
-                         String updatedByName, Integer orderId) {
+    public EnrollmentDTO(int enrollmentId, String userFullName, String userEmail, String courseName, String courseThumbnail, 
+                         String packageName, BigDecimal totalPrice, String status, Date enrollmentDate, Date validFrom, 
+                         Date validTo, String updatedByName, Integer orderId, int packageId, int courseId) {
         this.enrollmentId = enrollmentId;
         this.userFullName = userFullName;
         this.userEmail = userEmail;
         this.courseName = courseName;
-        this.courseThumbnail=courseThumbnail;
+        this.courseThumbnail = courseThumbnail;
         this.packageName = packageName;
         this.totalPrice = totalPrice;
         this.status = status;
@@ -37,7 +39,9 @@ public class EnrollmentDTO {
         this.validTo = validTo;
         this.updatedByName = updatedByName;
         this.orderId = orderId;
-          }
+        this.packageId = packageId;
+        this.courseId = courseId;
+    }
 
     public String getCourseThumbnail() {
         return courseThumbnail;
@@ -144,6 +148,22 @@ public class EnrollmentDTO {
         this.orderId = orderId;
     }
 
+    public int getPackageId() {
+        return packageId;
+    }
+
+    public void setPackageId(int packageId) {
+        this.packageId = packageId;
+    }
+
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
+    }
+
     @Override
     public String toString() {
         return "EnrollmentDTO{" +
@@ -151,6 +171,7 @@ public class EnrollmentDTO {
                 ", userFullName='" + userFullName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", courseName='" + courseName + '\'' +
+                ", courseThumbnail='" + courseThumbnail + '\'' +
                 ", packageName='" + packageName + '\'' +
                 ", totalPrice=" + totalPrice +
                 ", status='" + status + '\'' +
@@ -159,6 +180,8 @@ public class EnrollmentDTO {
                 ", validTo=" + validTo +
                 ", updatedByName='" + updatedByName + '\'' +
                 ", orderId=" + orderId +
+                ", packageId=" + packageId +
+                ", courseId=" + courseId +
                 '}';
     }
 }

@@ -283,7 +283,7 @@
                                     </div>
                                     <c:if test="${e.status == 'Submitted'}">
                                         <div class="myRegistrations-card-actions">
-                                            <a href="edit-registration.jsp?id=${e.enrollmentId}" class="myRegistrations-btn myRegistrations-btn-edit">EDIT</a>
+                                            <button class="myRegistrations-btn myRegistrations-btn-edit" onclick="openModal(${e.enrollmentId})">EDIT</button>
                                             <a href="dashboard?action=cancel&id=${e.enrollmentId}" class="myRegistrations-btn myRegistrations-btn-delete"
                                                onclick="return confirm('Are you sure you want to cancel this registration?');">CANCEL</a>
                                         </div>
@@ -301,8 +301,78 @@
             </div>
         </div>
     </main>
+    <jsp:include page="/student/courseRegister.jsp"/>                        
     <!-- Footer -->
     <jsp:include page="/default/footer.jsp"/>            
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const toggleMenuBtn = document.getElementById('toggleMenuBtn');
+        const menuContainer = document.getElementById('courseDropdownContainer');
+
+        toggleMenuBtn.addEventListener('click', () => {
+            const isVisible = menuContainer.style.display === 'block';
+            menuContainer.style.display = isVisible ? 'none' : 'block';
+        });
+
+        function toggleDropdown(button) {
+            const dropdown = button.nextElementSibling;
+            const isVisible = dropdown && dropdown.style.display === 'flex';
+            if (dropdown) {
+                dropdown.style.display = isVisible ? 'none' : 'flex';
+            }
+        }
+
+        function openEditModal(enrollmentId) {
+        console.log('Opening edit modal for enrollmentId:', enrollmentId);
+        fetch('${pageContext.request.contextPath}/student/dashboard?action=edit&id=' + enrollmentId)
+            .then(response => {
+                console.log('Fetch response status:', response.status);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Fetched data:', data);
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                document.getElementById('editEnrollmentId').value = data.enrollmentId || '';
+                document.getElementById('editCourseId').value = data.courseId || '';
+                document.getElementById('editBasePrice').value = data.basePrice || '';
+                document.getElementById('editCourseName').value = data.courseName || '';
+                document.getElementById('editTotalPrice').value = data.totalPrice ? data.totalPrice.toLocaleString('vi-VN') + ' VND' : '';
+                document.getElementById('editPackageId').value = data.packageId || '';
+
+                document.getElementById('editRegistrationModal').classList.add('active');
+                console.log('Modal classList:', document.getElementById('editRegistrationModal').classList);
+                document.body.style.overflow = 'hidden';
+            })
+            .catch(error => {
+                console.error('Error fetching enrollment data:', error);
+                alert('Failed to load enrollment data: ' + error.message);
+            });
+    }
+
+        function updateTotalPrice() {
+            const basePriceInput = document.querySelector('input[name="basePrice"]');
+            const packageSelect = document.getElementById('packageId');
+            if (!basePriceInput || !packageSelect) {
+                console.error('Base price or package select not found');
+                return;
+            }
+            const basePrice = parseFloat(basePriceInput.value);
+            const selectedOption = packageSelect.options[packageSelect.selectedIndex];
+            const priceModifier = parseFloat(selectedOption.getAttribute('data-modifier'));
+            if (!isNaN(basePrice) && !isNaN(priceModifier)) {
+                const totalPrice = (basePrice * priceModifier).toFixed(2);
+                document.getElementById('totalPrice').value = totalPrice;
+            } else {
+                console.error('Invalid basePrice or priceModifier');
+            }
+        }
+    </script>
 </body>
 </html>

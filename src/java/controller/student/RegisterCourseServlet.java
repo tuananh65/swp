@@ -88,7 +88,7 @@ public class RegisterCourseServlet extends HttpServlet {
             PackageDAO packageDAO = new PackageDAO();
             Package selectedPackage = packageDAO.getPackageById(packageId);
             if (selectedPackage == null) {
-                session.setAttribute("error", "Gói học không hợp lệ.");
+                session.setAttribute("error", "Invalid package.");
                 response.sendRedirect(request.getContextPath() + "/CourseDetailServlet?courseId=" + courseId);
                 return;
             }
@@ -123,7 +123,7 @@ public class RegisterCourseServlet extends HttpServlet {
                     (phone != null && !phone.isEmpty() && !phone.equals(user.getPhone())) ||
                     (gender != null && !gender.isEmpty() && !gender.equals(user.getGender()))) {
                     // Thông tin không khớp
-                    session.setAttribute("error", "Thông tin không khớp với tài khoản nào. Vui lòng nhập lại hoặc đăng ký tài khoản.");
+                    session.setAttribute("error", "Information does not match any account. Please re-enter or register an account.");
                     session.setAttribute("courseId", courseId);
                     response.sendRedirect(request.getContextPath() + "/CourseDetailServlet?courseId=" + courseId);
                     return;
@@ -147,13 +147,13 @@ public class RegisterCourseServlet extends HttpServlet {
                 boolean success = enrollmentDAO.insertEnrollment(enrollment);
 
                 if (success) {
-                    session.setAttribute("message", "Đăng ký khóa học thành công!");
+                    session.setAttribute("message", "Course registration successful!");
                     session.setAttribute("pendingRegister_courseId", courseId);
                     session.setAttribute("pendingRegister_packageId", packageId);
                     session.setAttribute("pendingRegister_basePrice", basePriceStr);
                     response.sendRedirect(request.getContextPath() + "/CourseDetailServlet?courseId=" + courseId);
                 } else {
-                    session.setAttribute("error", "Đăng ký thất bại. Vui lòng thử lại.");
+                    session.setAttribute("error", "Registration failed. Please try again.");
                     response.sendRedirect(request.getContextPath() + "/CourseDetailServlet?courseId=" + courseId);
                 }
             } else {
@@ -175,17 +175,17 @@ public class RegisterCourseServlet extends HttpServlet {
                 boolean success = enrollmentDAO.insertEnrollment(enrollment);
 
                 if (success) {
-                    session.setAttribute("message", "Đăng ký khóa học thành công!");
+                    session.setAttribute("message", "Course registration successful!");
                     response.sendRedirect(request.getContextPath() + "/student/dashboard");
                 } else {
-                    session.setAttribute("error", "Đăng ký thất bại. Vui lòng thử lại.");
+                    session.setAttribute("error", "Registration failed. Please try again.");
                     response.sendRedirect(request.getContextPath() + "/CourseDetailServlet?courseId=" + courseId);
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            session.setAttribute("error", "Đã xảy ra lỗi trong quá trình đăng ký.");
+            session.setAttribute("error", "An error occurred during registration.");
             response.sendRedirect(request.getContextPath() + "/CourseDetailServlet?courseId=" + request.getParameter("courseId"));
         }
     }

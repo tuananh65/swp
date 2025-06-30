@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.1"
-         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee                              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet-mapping>
+        <servlet-name>EditStudentRegistration</servlet-name>
+        <url-pattern>/student/editRegistration</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
-
     <servlet>
         <servlet-name>AuthServlet</servlet-name>
         <servlet-class>controller.AuthServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditStudentRegistration</servlet-name>
+        <servlet-class>controller.student.EditStudentRegistration</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AuthServlet</servlet-name>
         <url-pattern>/auth</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>HomeServlet</servlet-name>
         <servlet-class>controller.HomeServlet</servlet-class>
@@ -26,7 +27,6 @@
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>TeacherServlet</servlet-name>
         <servlet-class>controller.TeacherServlet</servlet-class>
@@ -35,7 +35,6 @@
         <servlet-name>TeacherServlet</servlet-name>
         <url-pattern>/teacher</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>PoliceServlet</servlet-name>
         <servlet-class>controller.PoliceServlet</servlet-class>
@@ -44,7 +43,6 @@
         <servlet-name>PoliceServlet</servlet-name>
         <url-pattern>/police</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>AdminServlet</servlet-name>
         <servlet-class>controller.AdminServlet</servlet-class>
@@ -53,7 +51,6 @@
         <servlet-name>AdminServlet</servlet-name>
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>BlogServlet</servlet-name>
         <servlet-class>controller.BlogServlet</servlet-class>
@@ -62,7 +59,6 @@
         <servlet-name>BlogServlet</servlet-name>
         <url-pattern>/blog</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>PostDetailServlet</servlet-name>
         <servlet-class>controller.PostDetailServlet</servlet-class>
@@ -71,7 +67,6 @@
         <servlet-name>PostDetailServlet</servlet-name>
         <url-pattern>/post</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>CourseDetailServlet</servlet-name>
         <servlet-class>controller.CourseDetailServlet</servlet-class>
@@ -80,7 +75,6 @@
         <servlet-name>CourseDetailServlet</servlet-name>
         <url-pattern>/CourseDetailServlet</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>SliderListServlet</servlet-name>
         <servlet-class>controller.admin.SliderListServlet</servlet-class>
@@ -89,7 +83,6 @@
         <servlet-name>SliderListServlet</servlet-name>
         <url-pattern>/sliderlist</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>SliderDetailServlet</servlet-name>
         <servlet-class>controller.admin.SliderDetailServlet</servlet-class>
@@ -98,7 +91,6 @@
         <servlet-name>SliderDetailServlet</servlet-name>
         <url-pattern>/sliderdetail</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>AddSliderServlet</servlet-name>
         <servlet-class>controller.admin.AddSliderServlet</servlet-class>
@@ -107,7 +99,6 @@
         <servlet-name>AddSliderServlet</servlet-name>
         <url-pattern>/addSlider</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>HideSliderServlet</servlet-name>
         <servlet-class>controller.admin.HideSliderServlet</servlet-class>
@@ -116,7 +107,6 @@
         <servlet-name>HideSliderServlet</servlet-name>
         <url-pattern>/hideSlider</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>ShowSliderServlet</servlet-name>
         <servlet-class>controller.admin.ShowSliderServlet</servlet-class>
@@ -125,7 +115,6 @@
         <servlet-name>ShowSliderServlet</servlet-name>
         <url-pattern>/showSlider</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>DeleteSliderServlet</servlet-name>
         <servlet-class>controller.admin.DeleteSliderServlet</servlet-class>
@@ -134,7 +123,6 @@
         <servlet-name>DeleteSliderServlet</servlet-name>
         <url-pattern>/deleteSlider</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>CourseListServlet</servlet-name>
         <servlet-class>controller.CourseListServlet</servlet-class>
@@ -143,7 +131,6 @@
         <servlet-name>CourseListServlet</servlet-name>
         <url-pattern>/courseList</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>RegisterCourseServlet</servlet-name>
         <servlet-class>controller.student.RegisterCourseServlet</servlet-class>
@@ -152,7 +139,6 @@
         <servlet-name>RegisterCourseServlet</servlet-name>
         <url-pattern>/register-course</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>StudentDashboardServlet</servlet-name>
         <servlet-class>controller.student.StudentDashboardServlet</servlet-class>
@@ -161,7 +147,6 @@
         <servlet-name>StudentDashboardServlet</servlet-name>
         <url-pattern>/student/dashboard</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>MyCoursesServlet</servlet-name>
         <servlet-class>controller.MyCoursesServlet</servlet-class>
@@ -170,7 +155,6 @@
         <servlet-name>MyCoursesServlet</servlet-name>
         <url-pattern>/mycourses</url-pattern>
     </servlet-mapping>
-
     <!-- SubjectLessonServlet -->
     <servlet>
         <servlet-name>SubjectLessonServlet</servlet-name>
@@ -180,15 +164,13 @@
         <servlet-name>SubjectLessonServlet</servlet-name>
         <url-pattern>/subjectlesson</url-pattern>
     </servlet-mapping>
-
     <!-- SubjectDetailServlet -->
     <servlet>
         <servlet-name>SubjectDetailServlet</servlet-name>
-        <servlet-class>controller.SubjectDetailServlet</servlet-class>
+        <servlet-class>controller.admin.SubjectDetailServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SubjectDetailServlet</servlet-name>
         <url-pattern>/subjectDetail</url-pattern>
     </servlet-mapping>
-
 </web-app>

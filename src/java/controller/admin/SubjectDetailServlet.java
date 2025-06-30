@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import model.Subject;
 import dal.SubjectDetailDAO;
@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-@WebServlet("/subjectDetail")
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024 * 2,
     maxFileSize = 1024 * 1024 * 10,
