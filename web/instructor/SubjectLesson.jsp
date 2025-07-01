@@ -32,12 +32,15 @@
 
     <section class="content-section">
         <%-- Hiển thị thông báo thành công/lỗi từ Servlet (đọc từ request scope sau khi Servlet chuyển từ session) --%>
-        <c:if test="${not empty message}">
-            <div class="message-banner success-message">${message}</div>
-        </c:if>
-        <c:if test="${not empty error}">
-            <div class="message-banner error-message">${error}</div>
-        </c:if>
+        <%-- Message container cho các thông báo --%>
+        <div id="message-container">
+            <c:if test="${not empty message}">
+                <div class="message-banner success-message">${message}</div>
+            </c:if>
+            <c:if test="${not empty error}">
+                <div class="message-banner error-message">${error}</div>
+            </c:if>
+        </div>
 
         <%-- Course Title Block --%>
         <div class="course-title-block">
@@ -71,8 +74,8 @@
                     <button type="submit" class="search-filter-button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
-            <%-- Link đến trang thêm bài học, bạn sẽ cần một Servlet "addLesson" riêng --%>
-            <a href="${pageContext.request.contextPath}/addLesson?subjectId=${subjectId}" class="add-lesson-btn">
+            <%-- Link đến trang thêm bài học, sử dụng LessonDetailServlet với subjectId và không có lessonId --%>
+            <a href="${pageContext.request.contextPath}/instructor/lessondetail?subjectId=${subjectId}" class="add-lesson-btn">
                 <i class="fas fa-plus-circle"></i> Add Lesson
             </a>
         </div>
@@ -98,16 +101,18 @@
                         <td data-label="Type">${lesson.type}</td>
                         <td data-label="Status">
                             <%-- Thêm onclick để thay đổi trạng thái khi nhấp vào --%>
+                            <%-- Không cần ID cho thẻ span nếu không dùng AJAX để cập nhật DOM --%>
                             <span class="status ${lesson.status == 'Active' ? 'status-active' : 'status-inactive'}"
                                   onclick="toggleLessonStatus(${lesson.lessonId}, ${subjectId}, '${lesson.status}', 
-                                                            '${selectedType}', '${selectedStatus}', '${search}', ${currentPage})">
+                                                              '${selectedType}', '${selectedStatus}', '${search}', ${currentPage})">
                                 ${lesson.status}
                             </span>
                         </td>
                         <td data-label="FUNCTION" class="function-buttons">
-                            <%-- Các form này cần các Servlet riêng để xử lý editLesson --%>
-                            <form action="${pageContext.request.contextPath}/editLesson" method="get" style="display:inline;">
+                            <%-- Cập nhật action của form EDIT để trỏ đến LessonDetailServlet --%>
+                            <form action="${pageContext.request.contextPath}/instructor/lessondetail" method="get" style="display:inline;">
                                 <input type="hidden" name="lessonId" value="${lesson.lessonId}">
+                                <input type="hidden" name="subjectId" value="${subjectId}"> <%-- Đảm bảo truyền subjectId --%>
                                 <button type="submit" class="action-btn edit-btn">
                                     <i class="fas fa-edit"></i> EDIT
                                 </button>
@@ -115,7 +120,7 @@
                             <%-- Form Xóa: Gửi POST đến cùng SubjectLessonServlet với action="delete" --%>
                             <form action="${pageContext.request.contextPath}/subjectlesson" method="post" style="display:inline;" 
                                   onsubmit="return confirm('Are you sure you want to delete lesson ID ${lesson.lessonId} - \'${lesson.title}\'?');">
-                                <input type="hidden" name="action" value="delete"> <%-- THÊM DÒNG NÀY --%>
+                                <input type="hidden" name="action" value="delete"> 
                                 <input type="hidden" name="lessonId" value="${lesson.lessonId}">
                                 <input type="hidden" name="subjectId" value="${subjectId}">
                                 <input type="hidden" name="filterType" value="${selectedType}">
@@ -158,26 +163,37 @@
 
 <script>
     function toggleLessonStatus(lessonId, subjectId, currentStatus, filterType, filterStatus, searchQuery, currentPage) {
-        let action = (currentStatus === 'Active') ? 'deactivate' : 'activate';
-        let confirmMessage = (action === 'deactivate') ? 'Bạn có chắc chắn muốn vô hiệu hóa bài học này không?' : 'Bạn có chắc chắn muốn kích hoạt bài học này không?';
+        let newStatus = (currentStatus === 'Active') ? 'Inactive' : 'Active';
+        let confirmMessage = (newStatus === 'Inactive') ? 'Bạn có chắc chắn muốn vô hiệu hóa bài học này không?' : 'Bạn có chắc chắn muốn kích hoạt bài học này không?';
 
         if (confirm(confirmMessage)) {
             let form = document.createElement('form');
             form.method = 'POST';
-            form.action = '${pageContext.request.contextPath}/subjectlesson';
+            form.action = '${pageContext.request.contextPath}/subjectlesson'; // Gửi đến servlet
 
+            // Thêm các input ẩn vào form
+            // Action để servlet biết đây là yêu cầu thay đổi trạng thái
             let actionInput = document.createElement('input');
             actionInput.type = 'hidden';
             actionInput.name = 'action';
-            actionInput.value = action;
+            actionInput.value = 'toggleStatus'; // Giá trị này sẽ được servlet đọc
             form.appendChild(actionInput);
 
+            // Lesson ID của bài học cần thay đổi
             let lessonIdInput = document.createElement('input');
             lessonIdInput.type = 'hidden';
             lessonIdInput.name = 'lessonId';
             lessonIdInput.value = lessonId;
             form.appendChild(lessonIdInput);
 
+            // Trạng thái mới mà bạn muốn thiết lập
+            let newStatusInput = document.createElement('input');
+            newStatusInput.type = 'hidden';
+            newStatusInput.name = 'newStatus';
+            newStatusInput.value = newStatus;
+            form.appendChild(newStatusInput);
+
+            // Các tham số lọc, tìm kiếm, phân trang để duy trì trạng thái sau khi redirect
             let subjectIdInput = document.createElement('input');
             subjectIdInput.type = 'hidden';
             subjectIdInput.name = 'subjectId';
@@ -208,6 +224,7 @@
             pageInput.value = currentPage;
             form.appendChild(pageInput);
 
+            // Gắn form vào body và submit
             document.body.appendChild(form);
             form.submit();
         }
