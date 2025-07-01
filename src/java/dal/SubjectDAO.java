@@ -8,22 +8,43 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Lớp DAO để quản lý chi tiết và cập nhật thông tin môn học trong cơ sở dữ liệu.
- */
 public class SubjectDAO extends DBContext {
     private Connection conn = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
 
     /**
-     * Lấy thông tin môn học theo ID.
-     * @param subjectId ID của môn học
-     * @return Đối tượng Subject hoặc null nếu không tìm thấy
+     * Count the number of lessons for a given subject ID.
+     * @param subjectId ID of the subject
+     * @return Number of lessons associated with the subject
+     */
+    public int getLessonCountBySubjectId(int subjectId) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM Lesson WHERE SubjectId = ?";
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, subjectId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            // Log error here
+        } finally {
+            closeResources();
+        }
+        return count;
+    }
+
+    /**
+     * Get subject by ID.
+     * @param subjectId ID of the subject
+     * @return Subject object or null if not found
      */
     public Subject getSubjectById(int subjectId) {
         Subject subject = null;
-        String sql = "SELECT subjectid, name, featured, thumbnail, description, numberOfLesson, ownerID, status, categoryName " +
+        String sql = "SELECT subjectid, name, featured, thumbnail, description, ownerID, status, categoryName" +
                      "FROM Subject WHERE subjectid = ?";
 
         try {
@@ -39,13 +60,12 @@ public class SubjectDAO extends DBContext {
                 subject.setFeatured(rs.getBoolean("featured"));
                 subject.setThumbnail(rs.getString("thumbnail"));
                 subject.setDescription(rs.getString("description"));
-                subject.setNumberOfLesson(rs.getInt("numberOfLesson"));
                 subject.setOwnerId(rs.getInt("ownerID"));
                 subject.setStatus(rs.getString("status"));
                 subject.setCategoryName(rs.getString("categoryName"));
             }
         } catch (SQLException e) {
-            // Xử lý ngoại lệ (có thể log lỗi ở đây)
+            // Log error here
         } finally {
             closeResources();
         }
@@ -53,8 +73,8 @@ public class SubjectDAO extends DBContext {
     }
 
     /**
-     * Lấy danh sách tất cả các category duy nhất từ bảng Subject.
-     * @return Danh sách các categoryName
+     * Get all unique categories from the Subject table.
+     * @return List of category names
      */
     public List<String> getAllCategories() {
         List<String> categories = new ArrayList<>();
@@ -67,13 +87,17 @@ public class SubjectDAO extends DBContext {
                 categories.add(rs.getString("categoryName"));
             }
         } catch (SQLException e) {
-            // Xử lý ngoại lệ (có thể log lỗi ở đây)
+            // Log error here
         } finally {
             closeResources();
         }
         return categories;
     }
-    
+
+    /**
+     * Get all unique statuses from the Subject table.
+     * @return List of statuses
+     */
     public List<String> getAllStatuses() {
         List<String> statuses = new ArrayList<>();
         String sql = "SELECT DISTINCT status FROM Subject WHERE status IS NOT NULL";
@@ -93,12 +117,12 @@ public class SubjectDAO extends DBContext {
     }
 
     /**
-     * Cập nhật thông tin môn học.
-     * @param subject Đối tượng Subject chứa thông tin cần cập nhật
-     * @return true nếu cập nhật thành công, false nếu thất bại
+     * Update subject information.
+     * @param subject Subject object with updated information
+     * @return true if update successful, false otherwise
      */
     public boolean updateSubject(Subject subject) {
-        String sql = "UPDATE Subject SET name = ?, featured = ?, thumbnail = ?, description = ?, numberOfLesson = ?, " +
+        String sql = "UPDATE Subject SET name = ?, featured = ?, thumbnail = ?, description = ?, " +
                      "ownerID = ?, status = ?, categoryName = ? WHERE subjectid = ?";
         try {
             conn = getConnection();
@@ -107,11 +131,10 @@ public class SubjectDAO extends DBContext {
             ps.setBoolean(2, subject.isFeatured());
             ps.setString(3, subject.getThumbnail());
             ps.setString(4, subject.getDescription());
-            ps.setInt(5, subject.getNumberOfLesson());
-            ps.setInt(6, subject.getOwnerId());
-            ps.setString(7, subject.getStatus());
-            ps.setString(8, subject.getCategoryName());
-            ps.setInt(9, subject.getSubjectId());
+            ps.setInt(5, subject.getOwnerId());
+            ps.setString(6, subject.getStatus());
+            ps.setString(7, subject.getCategoryName());
+            ps.setInt(8, subject.getSubjectId());
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
@@ -120,7 +143,12 @@ public class SubjectDAO extends DBContext {
             closeResources();
         }
     }
-    
+
+    /**
+     * Delete a subject by ID.
+     * @param subjectId ID of the subject
+     * @return true if deletion successful, false otherwise
+     */
     public boolean deleteSubject(int subjectId) {
         String sql = "DELETE FROM Subject WHERE subjectid = ?";
         try {
@@ -136,10 +164,17 @@ public class SubjectDAO extends DBContext {
             closeResources();
         }
     }
-    
+
+    /**
+     * Get all subjects with optional filtering.
+     * @param category Category filter
+     * @param status Status filter
+     * @param search Search keyword
+     * @return List of subjects
+     */
     public List<Subject> getAllSubjects(String category, String status, String search) {
         List<Subject> subjects = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT subjectid, name, featured, thumbnail, description, numberOfLesson, ownerID, status, categoryName FROM Subject WHERE 1=1");
+        StringBuilder sql = new StringBuilder("SELECT subjectid, name, featured, thumbnail, description, ownerID, status, categoryName FROM Subject WHERE 1=1");
         
         if (category != null && !category.isEmpty()) {
             sql.append(" AND categoryName = ?");
@@ -174,7 +209,6 @@ public class SubjectDAO extends DBContext {
                 subject.setFeatured(rs.getBoolean("featured"));
                 subject.setThumbnail(rs.getString("thumbnail"));
                 subject.setDescription(rs.getString("description"));
-                subject.setNumberOfLesson(rs.getInt("numberOfLesson"));
                 subject.setOwnerId(rs.getInt("ownerID"));
                 subject.setStatus(rs.getString("status"));
                 subject.setCategoryName(rs.getString("categoryName"));
@@ -187,10 +221,9 @@ public class SubjectDAO extends DBContext {
         }
         return subjects;
     }
-    
 
     /**
-     * Đóng các tài nguyên kết nối cơ sở dữ liệu.
+     * Close database resources.
      */
     private void closeResources() {
         try {
@@ -198,7 +231,7 @@ public class SubjectDAO extends DBContext {
             if (ps != null) ps.close();
             if (conn != null) conn.close();
         } catch (SQLException e) {
-            // Xử lý ngoại lệ (có thể log lỗi ở đây)
+            // Log error here
         }
     }
 }
