@@ -16,86 +16,144 @@ public class LessonDAO extends DBContext {
 
     private static final Logger LOGGER = Logger.getLogger(LessonDAO.class.getName());
 
-    public boolean deleteLesson(int lessonId) {
-        String sql = "DELETE FROM Lesson WHERE LessonId = ?";
+    public Lesson getLessonById(int lessonId) {
+        Lesson lesson = null;
+        String sql = "SELECT LessonId, SubjectId, Title, Content, VideoUrl, Status, [Order], Type "
+                   + "FROM Lesson WHERE LessonId = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, lessonId);
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0; // Trả về true nếu có ít nhất 1 hàng bị ảnh hưởng (đã xóa)
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, "Error deleting lesson with ID: " + lessonId + ". " + ex.getMessage(), ex);
-            return false;
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    lesson = new Lesson();
+                    lesson.setLessonId(rs.getInt("LessonId"));
+                    lesson.setSubjectId(rs.getInt("SubjectId"));
+                    lesson.setTitle(rs.getString("Title"));
+                    lesson.setContent(rs.getString("Content"));
+                    lesson.setVideoUrl(rs.getString("VideoUrl"));
+                    lesson.setStatus(rs.getString("Status"));
+                    lesson.setOrder(rs.getInt("Order")); // Sử dụng getInt cho Order
+                    lesson.setType(rs.getString("Type"));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error getting lesson by ID: " + lessonId, e);
         }
+        return lesson;
     }
-    // Phương thức đã sửa đổi của bạn
-    public List<Lesson> getLessonsByCourseId(int subjectId, String lessonGroup, String status, String searchKeyword, int offset, int limit) {
+
+    public List<Lesson> getLessonsByCourseId(int subjectId, String lessonType, String status, String searchKeyword, int offset, int limit) {
         List<Lesson> lessons = new ArrayList<>();
-        String sql = "SELECT LessonId, SubjectId, Title, Content, VideoUrl, SortOrder, Status, [Order], Type "
-                + "FROM Lesson WHERE SubjectId = ?";
+        StringBuilder sql = new StringBuilder("SELECT LessonId, SubjectId, Title, Content, VideoUrl, Status, [Order], Type FROM Lesson WHERE SubjectId = ?");
 
         List<Object> params = new ArrayList<>();
         params.add(subjectId);
 
-        if (lessonGroup != null && !lessonGroup.isEmpty() && !lessonGroup.equals("All Lesson Groups")) {
-            sql += " AND Type = ?";
-            params.add(lessonGroup);
+        if (lessonType != null && !lessonType.isEmpty()) {
+            sql.append(" AND Type = ?");
+            params.add(lessonType);
         }
-
-        if (status != null && !status.isEmpty() && !status.equals("All Statuses")) {
-            sql += " AND Status = ?";
+        if (status != null && !status.isEmpty()) {
+            sql.append(" AND Status = ?");
             params.add(status);
         }
-
-        if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-            sql += " AND Title LIKE ?";
-            params.add("%" + searchKeyword.trim() + "%");
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            sql.append(" AND Title LIKE ?");
+            params.add("%" + searchKeyword + "%");
         }
 
-        sql += " ORDER BY [Order] ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        sql.append(" ORDER BY [Order] ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
         params.add(offset);
         params.add(limit);
 
+        LOGGER.log(Level.INFO, "Executing SQL for getLessonsByCourseId: {0}", sql.toString());
+        LOGGER.log(Level.INFO, "Parameters: {0}", params); // <-- Thêm dòng này để log các tham số
+
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
 
             for (int i = 0; i < params.size(); i++) {
                 ps.setObject(i + 1, params.get(i));
             }
 
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Lesson lesson = new Lesson();
-                lesson.setLessonId(rs.getInt("LessonId"));
-                lesson.setCourseId(rs.getInt("SubjectId")); // Changed from CourseId to SubjectId based on your database schema
-                lesson.setTitle(rs.getString("Title"));
-                lesson.setContent(rs.getString("Content"));
-                lesson.setVideoUrl(rs.getString("VideoUrl"));
-
-                Integer sortOrder = rs.getInt("SortOrder");
-                if (rs.wasNull()) {
-                    sortOrder = null;
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Lesson lesson = new Lesson();
+                    lesson.setLessonId(rs.getInt("LessonId"));
+                    lesson.setSubjectId(rs.getInt("SubjectId"));
+                    lesson.setTitle(rs.getString("Title"));
+                    lesson.setContent(rs.getString("Content"));
+                    lesson.setVideoUrl(rs.getString("VideoUrl"));
+                    lesson.setStatus(rs.getString("Status"));
+                    lesson.setOrder(rs.getInt("Order"));
+                    lesson.setType(rs.getString("Type"));
+                    lessons.add(lesson);
                 }
-                lesson.setSortOrder(sortOrder);
-
-                lesson.setStatus(rs.getString("Status"));
-
-                Integer order = rs.getInt("Order");
-                if (rs.wasNull()) {
-                    order = null;
-                }
-                lesson.setOrder(order);
-
-                lesson.setType(rs.getString("Type"));
-                lessons.add(lesson);
             }
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, "Error in getLessonsByCourseId: " + ex.getMessage(), ex);
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error getting lessons for subject ID: " + subjectId, e);
         }
         return lessons;
     }
 
-    // 1. Phương thức updateLessonStatus
+    public int getTotalLessons(int subjectId, String lessonType, String status, String searchKeyword) {
+        int total = 0;
+        StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM Lesson WHERE SubjectId = ?");
+
+        List<Object> params = new ArrayList<>();
+        params.add(subjectId);
+
+        if (lessonType != null && !lessonType.isEmpty()) {
+            sql.append(" AND Type = ?");
+            params.add(lessonType);
+        }
+        if (status != null && !status.isEmpty()) {
+            sql.append(" AND Status = ?");
+            params.add(status);
+        }
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            sql.append(" AND Title LIKE ?");
+            params.add("%" + searchKeyword + "%");
+        }
+
+        LOGGER.log(Level.INFO, "Executing SQL for getTotalLessons: {0}", sql.toString());
+        LOGGER.log(Level.INFO, "Parameters: {0}", params); // <-- Thêm dòng này để log các tham số
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    total = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error getting total lessons for subject ID: " + subjectId, e);
+        }
+        return total;
+    }
+
+    public Set<String> getUniqueLessonTypesByCourseId(int subjectId) {
+        Set<String> uniqueTypes = new HashSet<>();
+        String sql = "SELECT DISTINCT Type FROM Lesson WHERE SubjectId = ? AND Type IS NOT NULL AND Type <> ''";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, subjectId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    uniqueTypes.add(rs.getString("Type"));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error getting unique lesson types for subject ID: " + subjectId, e);
+        }
+        return uniqueTypes;
+    }
+
     public boolean updateLessonStatus(int lessonId, String newStatus) {
         String sql = "UPDATE Lesson SET Status = ? WHERE LessonId = ?";
         try (Connection conn = getConnection();
@@ -104,65 +162,63 @@ public class LessonDAO extends DBContext {
             ps.setInt(2, lessonId);
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, "Error updating lesson status for Lesson ID " + lessonId + ": " + ex.getMessage(), ex);
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error updating lesson status for ID: " + lessonId + " to " + newStatus, e);
+            return false;
+        }
+    }
+    
+    public boolean deleteLesson(int lessonId) {
+        String sql = "DELETE FROM Lesson WHERE LessonId = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, lessonId);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error deleting lesson with ID: " + lessonId, e);
+            return false;
+        }
+    }
+    
+    // Phương thức thêm mới bài học (ADD) - Bạn sẽ cần gọi nó từ Servlet
+    public boolean addLesson(Lesson lesson) {
+        String sql = "INSERT INTO Lesson (SubjectId, Title, Content, VideoUrl, Status, [Order], Type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, lesson.getSubjectId());
+            ps.setString(2, lesson.getTitle());
+            ps.setString(3, lesson.getContent());
+            ps.setString(4, lesson.getVideoUrl());
+            ps.setString(5, lesson.getStatus());
+            ps.setInt(6, lesson.getOrder());
+            ps.setString(7, lesson.getType());
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error adding new lesson: " + lesson.getTitle(), e);
             return false;
         }
     }
 
-    // 2. Phương thức getTotalLessons
-    public int getTotalLessons(int subjectId, String lessonGroup, String status, String searchKeyword) {
-        int total = 0;
-        String sql = "SELECT COUNT(*) FROM Lesson WHERE SubjectId = ?";
-        List<Object> params = new ArrayList<>();
-        params.add(subjectId);
-
-        if (lessonGroup != null && !lessonGroup.isEmpty() && !lessonGroup.equals("All Lesson Groups")) {
-            sql += " AND Type = ?";
-            params.add(lessonGroup);
-        }
-
-        if (status != null && !status.isEmpty() && !status.equals("All Statuses")) {
-            sql += " AND Status = ?";
-            params.add(status);
-        }
-
-        if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-            sql += " AND Title LIKE ?";
-            params.add("%" + searchKeyword.trim() + "%");
-        }
-
+    // Phương thức cập nhật bài học (UPDATE) - Bạn sẽ cần gọi nó từ Servlet
+    public boolean updateLesson(Lesson lesson) {
+        String sql = "UPDATE Lesson SET SubjectId = ?, Title = ?, Content = ?, VideoUrl = ?, Status = ?, [Order] = ?, Type = ? WHERE LessonId = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            for (int i = 0; i < params.size(); i++) {
-                ps.setObject(i + 1, params.get(i));
-            }
-
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                total = rs.getInt(1);
-            }
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, "Error getting total lessons for Subject ID " + subjectId + ": " + ex.getMessage(), ex);
+            ps.setInt(1, lesson.getSubjectId());
+            ps.setString(2, lesson.getTitle());
+            ps.setString(3, lesson.getContent());
+            ps.setString(4, lesson.getVideoUrl());
+            ps.setString(5, lesson.getStatus());
+            ps.setInt(6, lesson.getOrder());
+            ps.setString(7, lesson.getType());
+            ps.setInt(8, lesson.getLessonId());
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error updating lesson: " + lesson.getLessonId(), e);
+            return false;
         }
-        return total;
-    }
-
-    // 3. Phương thức getUniqueLessonTypesByCourseId
-    public Set<String> getUniqueLessonTypesByCourseId(int subjectId) {
-        Set<String> uniqueTypes = new HashSet<>();
-        String sql = "SELECT DISTINCT Type FROM Lesson WHERE SubjectId = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, subjectId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                uniqueTypes.add(rs.getString("Type"));
-            }
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, "Error getting unique lesson types for Subject ID " + subjectId + ": " + ex.getMessage(), ex);
-        }
-        return uniqueTypes;
     }
 }

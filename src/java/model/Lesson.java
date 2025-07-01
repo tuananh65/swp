@@ -1,127 +1,77 @@
 package model;
 
-import java.sql.Timestamp; // Not strictly needed for the current fields, but good practice for date/time if added later
+import java.sql.Timestamp;
 
 public class Lesson {
     private int lessonId;
-    private int courseId;
+    private int subjectId; // ĐÃ ĐỔI TỪ courseId THÀNH subjectId
     private String title;
     private String content;
     private String videoUrl;
-    private Integer sortOrder; // Use Integer for nullable int
+    // private Integer sortOrder; // ĐÃ XÓA/COMMENT DÒNG NÀY ĐỂ CHỈ DÙNG 'order'
     private String status;
-    private Integer order;     // Use Integer for nullable int
-    private String type;       // String is nullable by default in Java
-
-
+    private Integer order;    // GIỮ LẠI DÒNG NÀY
+    private String type;
 
     public Lesson() {
-
     }
 
-    public Lesson(int lessonId, int courseId, String title, String content, String videoUrl, Integer sortOrder, String status, Integer order, String type) {
+    // Constructor đầy đủ: Đã bỏ sortOrder, đổi courseId thành subjectId
+    public Lesson(int lessonId, int subjectId, String title, String content, String videoUrl, String status, Integer order, String type) {
         this.lessonId = lessonId;
-        this.courseId = courseId;
+        this.subjectId = subjectId;
         this.title = title;
         this.content = content;
         this.videoUrl = videoUrl;
-        this.sortOrder = sortOrder;
         this.status = status;
         this.order = order;
         this.type = type;
     }
 
-    public Lesson(int courseId, String title, String content, String videoUrl, Integer sortOrder, String status, Integer order, String type) {
-        this.courseId = courseId;
+    // Constructor khi thêm mới (không có lessonId): Đã bỏ sortOrder, đổi courseId thành subjectId
+    public Lesson(int subjectId, String title, String content, String videoUrl, String status, Integer order, String type) {
+        this.subjectId = subjectId;
         this.title = title;
         this.content = content;
         this.videoUrl = videoUrl;
-        this.sortOrder = sortOrder;
         this.status = status;
         this.order = order;
         this.type = type;
     }
 
-
-    public Lesson(int courseId, String title) {
-        this.courseId = courseId;
+    // Constructor tối thiểu: Đã đổi courseId thành subjectId
+    public Lesson(int subjectId, String title) {
+        this.subjectId = subjectId;
         this.title = title;
-        this.status = "Active"; // Assuming active by default
-        // Other nullable fields remain null by default
+        this.status = "Active";
     }
-
 
     // ===== Getters and Setters =====
 
-    public int getLessonId() {
-        return lessonId;
-    }
+    public int getLessonId() { return lessonId; }
+    public void setLessonId(int lessonId) { this.lessonId = lessonId; }
 
-    public void setLessonId(int lessonId) {
-        this.lessonId = lessonId;
-    }
+    public int getSubjectId() { return subjectId; } // ĐÃ ĐỔI TỪ getCourseId THÀNH getSubjectId
+    public void setSubjectId(int subjectId) { this.subjectId = subjectId; } // ĐÃ ĐỔI TỪ setCourseId THÀNH setSubjectId
 
-    public int getCourseId() {
-        return courseId;
-    }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
-    }
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getVideoUrl() { return videoUrl; }
+    public void setVideoUrl(String videoUrl) { this.videoUrl = videoUrl; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    // public Integer getSortOrder() { return sortOrder; } // ĐÃ XÓA/COMMENT
+    // public void setSortOrder(Integer sortOrder) { this.sortOrder = sortOrder; } // ĐÃ XÓA/COMMENT
 
-    public String getContent() {
-        return content;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+    public Integer getOrder() { return order; }
+    public void setOrder(Integer order) { this.order = order; }
 
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
-
-    public Integer getSortOrder() {
-        return sortOrder;
-    }
-
-    public void setSortOrder(Integer sortOrder) {
-        this.sortOrder = sortOrder;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Integer getOrder() {
-        return order;
-    }
-
-    public void setOrder(Integer order) {
-        this.order = order;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
 }
