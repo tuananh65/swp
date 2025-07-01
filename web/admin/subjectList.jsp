@@ -255,7 +255,11 @@
                                     <td>${subject.subjectId}</td>
                                     <td>${subject.name}</td>
                                     <td>${subject.categoryName}</td>
-                                    <td>${subject.numberOfLesson}</td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/subjectlesson?subjectId=${subject.subjectId}" style="text-decoration: none;">
+                                            ${subject.lessonCount}
+                                        </a>
+                                    </td>
                                     <td>${subject.ownerId}</td>
                                     <td>${subject.status}</td>
                                     <td class="subjectListActions">

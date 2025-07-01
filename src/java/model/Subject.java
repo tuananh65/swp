@@ -8,10 +8,10 @@ public class Subject {
     private boolean featured;
     private String thumbnail;
     private String description;
-    private int numberOfLesson;
     private String status;
     private int ownerId;
     private String categoryName;
+    private int lessonCount; // Added to store lesson count temporarily
 
     // Quan hệ 1-n: Subject -> Course
     private List<Course> courseList;
@@ -23,14 +23,13 @@ public class Subject {
     public Subject() {}
 
     public Subject(int subjectId, String name, boolean featured,
-                   String thumbnail, String description, int numberOfLesson,
+                   String thumbnail, String description, 
                    int ownerId, String status, String categoryName) {
         this.subjectId = subjectId;
         this.name = name;
         this.featured = featured;
         this.thumbnail = thumbnail;
         this.description = description;
-        this.numberOfLesson = numberOfLesson;
         this.ownerId = ownerId;
         this.status = status;
         this.categoryName = categoryName;
@@ -77,14 +76,6 @@ public class Subject {
         this.description = description;
     }
 
-    public int getNumberOfLesson() {
-        return numberOfLesson;
-    }
-
-    public void setNumberOfLesson(int numberOfLesson) {
-        this.numberOfLesson = numberOfLesson;
-    }
-
     public int getOwnerId() {
         return ownerId;
     }
@@ -123,5 +114,14 @@ public class Subject {
 
     public void setDimensionList(List<Dimension> dimensionList) {
         this.dimensionList = dimensionList;
+    }
+
+    // Added getter and setter for lessonCount
+    public int getLessonCount() {
+        return lessonCount;
+    }
+
+    public void setLessonCount(int lessonCount) {
+        this.lessonCount = lessonCount;
     }
 }

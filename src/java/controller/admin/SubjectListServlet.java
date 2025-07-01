@@ -107,6 +107,11 @@ public class SubjectListServlet extends HttpServlet {
         String search = request.getParameter("search");
 
         List<Subject> allSubjects = subjectDAO.getAllSubjects(category, status, search);
+        for (Subject subject : allSubjects) {
+            int lessonCount = subjectDAO.getLessonCountBySubjectId(subject.getSubjectId());
+            subject.setLessonCount(lessonCount);
+        }
+        
         int totalSubjects = allSubjects.size();
         int totalPages = (int) Math.ceil((double) totalSubjects / pageSize);
 
@@ -172,7 +177,6 @@ public class SubjectListServlet extends HttpServlet {
         subject.setFeatured(Boolean.parseBoolean(request.getParameter("featured")));
         subject.setThumbnail(request.getParameter("thumbnail"));
         subject.setDescription(request.getParameter("description"));
-        subject.setNumberOfLesson(Integer.parseInt(request.getParameter("numberOfLesson")));
         subject.setOwnerId(Integer.parseInt(request.getParameter("ownerId")));
         subject.setStatus(request.getParameter("status"));
         subject.setCategoryName(request.getParameter("categoryName"));
