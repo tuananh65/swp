@@ -160,13 +160,10 @@ public class SubjectListServlet extends HttpServlet {
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Subject subject = subjectDAO.getSubjectById(id);
-        request.setAttribute("subject", subject);
-        request.setAttribute("categories", subjectDAO.getAllCategories());
-        request.getRequestDispatcher("subjectForm.jsp").forward(request, response);
-    }
+        throws ServletException, IOException {
+    int id = Integer.parseInt(request.getParameter("id"));
+    response.sendRedirect(request.getContextPath() + "/subjectDetail?subjectId=" + id);
+}
 
     private void saveSubject(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
