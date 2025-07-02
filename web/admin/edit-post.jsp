@@ -66,7 +66,7 @@
                 <!-- Category -->
                 <div class="p-6 bg-gray-50 border border-gray-200 rounded-xl space-y-4 shadow-sm" >
                     <label class="block text-sm font-semibold text-gray-700">Category</label>
-                    <input type="text" name="category" placeholder="Enter category"
+                    <input type="text" name="category" required placeholder="Enter category"
                            value="${post != null ? post.category : ''}"
                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white shadow-sm">
                 </div>
@@ -74,7 +74,7 @@
                 <!-- Brief Info -->
                 <div class="p-6 bg-gray-50 border border-gray-200 rounded-xl space-y-4 shadow-sm" >
                     <label class="block text-sm font-semibold text-gray-700">Brief Info</label>
-                    <textarea name="briefInfo" rows="2" placeholder="Short description"
+                    <textarea name="briefInfo" rows="2" required placeholder="Short description"
                               class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 bg-white shadow-sm">${post != null ? post.briefInfo : ''}</textarea>
                 </div>
 
@@ -89,7 +89,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div class="p-6 bg-gray-50 border border-gray-200 rounded-xl space-y-4 shadow-sm" >
                         <label class="block text-sm font-semibold text-gray-700">Author</label>
-                        <input type="text" name="author" placeholder="Author name"
+                        <input type="text" name="author" required placeholder="Author name"
                                value="${post != null ? post.author : ''}"
                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 bg-white shadow-sm">
                     </div>
