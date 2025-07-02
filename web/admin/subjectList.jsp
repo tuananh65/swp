@@ -100,12 +100,6 @@
 
                 <div>
                     <button class="dropdown-toggle" onclick="toggleDropdown(this)">
-                        <a href="${pageContext.request.contextPath}/subjectDetail">Subject Detail</a>
-                    </button>
-                </div>
-
-                <div>
-                    <button class="dropdown-toggle" onclick="toggleDropdown(this)">
                         <a href="${pageContext.request.contextPath}/admin/registrations">Registation List</a>
                     </button>
                 </div> 
@@ -263,9 +257,10 @@
                                     <td>${subject.ownerId}</td>
                                     <td>${subject.status}</td>
                                     <td class="subjectListActions">
-                                        <a href="subjectList?action=edit&id=${subject.subjectId}" style="text-decoration: none;">
-                                            <button class="subjectListEditBtn">EDIT</button>
+                                        <a href="${pageContext.request.contextPath}/subjectDetail?subjectId=${subject.subjectId}" style="text-decoration: none;">
+                                                   <button class="subjectListEditBtn">EDIT</button>
                                         </a>
+
                                         <a href="subjectList?action=delete&id=${subject.subjectId}" 
                                            style="text-decoration: none;"
                                            onclick="return confirm('Are you sure you want to delete this subject?')">
