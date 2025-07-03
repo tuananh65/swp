@@ -181,4 +181,13 @@
         <servlet-name>SubjectDetailServlet</servlet-name>
         <url-pattern>/subjectDetail</url-pattern>
     </servlet-mapping>
+    <servlet>
+    <servlet-name>PricePackageServlet</servlet-name>
+    <servlet-class>controller.PricePackageServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>PricePackageServlet</servlet-name>
+    <url-pattern>/pricePackageList</url-pattern>
+</servlet-mapping>
 </web-app>
