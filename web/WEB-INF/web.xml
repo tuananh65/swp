@@ -4,6 +4,10 @@
         <servlet-name>SubjectListServlet</servlet-name>
         <servlet-class>controller.admin.SubjectListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CourseChatServlet</servlet-name>
+        <servlet-class>controller.ai.CourseChatServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EditStudentRegistration</servlet-name>
         <url-pattern>/student/editRegistration</url-pattern>
@@ -11,6 +15,10 @@
     <servlet-mapping>
         <servlet-name>SubjectListServlet</servlet-name>
         <url-pattern>/admin/subjectList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseChatServlet</servlet-name>
+        <url-pattern>/courseChatbot</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
@@ -182,12 +190,11 @@
         <url-pattern>/subjectDetail</url-pattern>
     </servlet-mapping>
     <servlet>
-    <servlet-name>PricePackageServlet</servlet-name>
-    <servlet-class>controller.PricePackageServlet</servlet-class>
-</servlet>
-
-<servlet-mapping>
-    <servlet-name>PricePackageServlet</servlet-name>
-    <url-pattern>/pricePackageList</url-pattern>
-</servlet-mapping>
+        <servlet-name>PricePackageServlet</servlet-name>
+        <servlet-class>controller.PricePackageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PricePackageServlet</servlet-name>
+        <url-pattern>/pricePackageList</url-pattern>
+    </servlet-mapping>
 </web-app>

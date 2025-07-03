@@ -11,12 +11,13 @@
     <title>Danh Sách Khóa Học - Soft Skills</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/courselist.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/chatbot.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <jsp:include page="/default/header.jsp"/>
-
+    
      <section class="banner">
         <div class="container">
             <div class="banner-content">
@@ -50,7 +51,7 @@
                 <div class="contact-item"><i class="fas fa-envelope"></i><span>contact@gmail.com</span></div>
             </div>
         </aside>
-
+        <jsp:include page="/chatbot/chatbot.jsp"/>        
         <main class="main-content">
             <form id="filterForm" action="${pageContext.request.contextPath}/courseList" method="get">
                 <div class="filter-options">
