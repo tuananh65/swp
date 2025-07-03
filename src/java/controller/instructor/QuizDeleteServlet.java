@@ -21,20 +21,21 @@ public class QuizDeleteServlet extends HttpServlet {
             return;
         }
 
-        int quizId;
         try {
-            quizId = Integer.parseInt(idRaw);
+            int quizId = Integer.parseInt(idRaw);
+
+            try (Connection conn = new DBContext().getConnection()) {
+                QuizDAO dao = new QuizDAO(conn);
+                dao.deleteQuiz(quizId);
+                // Sau khi xoá, quay lại list
+                response.sendRedirect(request.getContextPath() + "/instructor/quiz-list");
+            }
+
         } catch (NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Quiz ID.");
-            return;
-        }
-
-        try (Connection conn = new DBContext().getConnection()) {
-            QuizDAO dao = new QuizDAO(conn);
-            dao.deleteQuiz(quizId);
-            response.sendRedirect(request.getContextPath() + "/instructor/quizzes");
         } catch (Exception e) {
             throw new ServletException(e);
         }
     }
 }
+

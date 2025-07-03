@@ -16,6 +16,15 @@ public class Quiz {
     private String difficulty;
     private int duration;
     private boolean active;
+    private String courseName;
+
+public String getCourseName() {
+    return courseName;
+}
+public void setCourseName(String courseName) {
+    this.courseName = courseName;
+}
+
 
     public int getTestID() {
         return testID;

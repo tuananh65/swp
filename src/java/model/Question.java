@@ -1,43 +1,37 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 /**
- *
- * @author Admin
+ * Model đại diện cho câu hỏi trong hệ thống Quiz.
  */
 public class Question {
-     private int questionID;
-    private int testID;
-    private String content;
-    private int points;
+    private int questionID;  // Khóa chính của bảng Question
+    private String content;  // Nội dung câu hỏi
+    private int points;      // Số điểm cho câu hỏi này
+    private int courseID;
 
-    // Getter và Setter
-    // ...
+public int getCourseID() { return courseID; }
+public void setCourseID(int courseID) { this.courseID = courseID; }
 
-    public Question(int questionID, int testID, String content, int points) {
-        this.questionID = questionID;
-        this.testID = testID;
-        this.content = content;
-        this.points = points;
+
+    // ==== Constructors ====
+    public Question() {
     }
 
+    public Question(int questionID, int courseID, String content, int points) {
+    this.questionID = questionID;
+    this.courseID = courseID;
+    this.content = content;
+    this.points = points;
+}
+
+
+    // ==== Getter và Setter ====
     public int getQuestionID() {
         return questionID;
     }
 
     public void setQuestionID(int questionID) {
         this.questionID = questionID;
-    }
-
-    public int getTestID() {
-        return testID;
-    }
-
-    public void setTestID(int testID) {
-        this.testID = testID;
     }
 
     public String getContent() {
@@ -56,16 +50,15 @@ public class Question {
         this.points = points;
     }
 
+    // ==== toString để debug dễ dàng ====
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Question{");
-        sb.append("questionID=").append(questionID);
-        sb.append(", testID=").append(testID);
-        sb.append(", content=").append(content);
-        sb.append(", points=").append(points);
-        sb.append('}');
-        return sb.toString();
+        return "Question{" +
+                "questionID=" + questionID +
+                ", content='" + content + '\'' +
+                ", points=" + points +
+                '}';
     }
+
     
 }
