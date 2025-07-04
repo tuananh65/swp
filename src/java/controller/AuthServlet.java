@@ -172,13 +172,13 @@ public class AuthServlet extends HttpServlet {
             int role = user.getRoleId();
             switch (role) {
                 case 3:
-                    response.sendRedirect("settinglist");
+                    response.sendRedirect("admin/settinglist");
                     break;
                 case 1:
                     response.sendRedirect("student/dashboard.jsp");
                     break;
                 case 2:
-                    response.sendRedirect("instructor/dashboard.jsp");
+                    response.sendRedirect("instructor/quiz-list");
                     break;
                 default:
                     request.setAttribute("errorMessage", "Unknown role!");
