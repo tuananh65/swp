@@ -36,7 +36,7 @@
 <button class="chatbot-toggle" onclick="toggleChatbot()">
     <i class="fas fa-robot"></i>
 </button>
-
+<script src="https://www.subbot.io.vn/widget.js" api-key="gECK4hfgiHRxdu251RAVuERzz5FV8fkp"></script>
 <script>
     async function sendMessageToServlet(message) {
         try {
