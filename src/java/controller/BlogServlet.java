@@ -10,8 +10,11 @@ import model.Post;
 import model.User;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BlogServlet extends HttpServlet {
     private static final int PAGE_SIZE = 3; // 3 posts per page
@@ -32,22 +35,30 @@ public class BlogServlet extends HttpServlet {
             }
         }
 
-        List<Post> posts;
-        int totalPosts;
+        List<Post> posts = null;
+        int totalPosts = 0;
         if (search != null && !search.trim().isEmpty()) {
             // Handle search
             posts = postDAO.searchPosts(search, page, PAGE_SIZE);
             totalPosts = postDAO.getTotalSearchPosts(search);
             request.setAttribute("search", search);
         } else if (category != null && !category.isEmpty()) {
-            // Handle category filter
-            posts = postDAO.getPostsByCategory(category, page, PAGE_SIZE);
-            totalPosts = postDAO.getTotalPostsByCategory(category);
-            request.setAttribute("selectedCategory", category);
+            try {
+                // Handle category filter
+                posts = postDAO.getPostsByCategory(category, page, PAGE_SIZE);
+                totalPosts = postDAO.getTotalPostsByCategory(category);
+                request.setAttribute("selectedCategory", category);
+            } catch (SQLException ex) {
+                Logger.getLogger(BlogServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             // Default: all posts
             posts = postDAO.getPaginatedPosts(page, PAGE_SIZE);
-            totalPosts = postDAO.getTotalPosts();
+            try {
+                totalPosts = postDAO.getTotalPosts();
+            } catch (SQLException ex) {
+                Logger.getLogger(BlogServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         // Get recent posts for sidebar
