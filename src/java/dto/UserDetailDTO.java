@@ -18,4 +18,25 @@ public class UserDetailDTO {
     public String getRoleName() {
         return roleName;
     }
+
+    @Override
+    public String toString() {
+        // Kiểm tra user có null không trước khi truy cập
+        String userDetails = (user != null) ?
+                             "userId=" + user.getUserId() +
+                             ", userName='" + user.getUserName() + '\'' +
+                             ", fullName='" + user.getFullName() + '\'' +
+                             ", email='" + user.getEmail() + '\'' +
+                             ", phone='" + user.getPhone() + '\'' +
+                             ", address='" + user.getAddress() + '\'' +
+                             ", gender='" + user.getGender() + '\'' +
+                             ", status='" + user.getStatus() + '\'' +
+                             ", avatarUrl='" + user.getAvatarUrl() + '\''
+                             : "null";
+
+        return "UserDetailDTO{" +
+                "user=[" + userDetails +
+                "], roleName='" + roleName + '\'' +
+                '}';
+    }
 }

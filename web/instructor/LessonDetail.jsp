@@ -22,9 +22,6 @@
             <img class="hero-image" src="${pageContext.request.contextPath}/images/Banner.jpg" alt="Banner">
             <div class="hero-text">
                 <h1>LESSON DETAILS</h1>
-                <div class="hero-subtitle">
-                    <p>Home / Shop</p>
-                </div>
             </div>
         </div>
     </section>

@@ -24,7 +24,7 @@
                 <img src="${pageContext.request.contextPath}/image/${loggedInUser.avatarUrl}" alt="${loggedInUser.fullName}">
                 <div class="user-info">
                     <h2>${loggedInUser.fullName} <span class="status ${loggedInUser.status.toLowerCase()}">${loggedInUser.status}</span></h2>
-                    <p class="role-display">Role: <span id="currentRole">${roleName == '1' ? 'Student' : (roleName == '2' ? 'Teacher' : roleName)}</span></p>
+                    <p class="role-display">Role: <span id="currentRole">${roleName}</span></p> <%-- RoleName is already a string --%>
                     <p class="status-display">Status: <span id="currentStatus">${loggedInUser.status}</span></p>
                     <p class="gender">${loggedInUser.gender}</p>
                     <p class="contact">📞 <a href="tel:${loggedInUser.phone}">${loggedInUser.phone}</a></p>
@@ -40,13 +40,14 @@
             <div id="editRoleStatusForm" class="edit-role-status" style="display: none; margin-top: 15px;">
                 <h3>Edit Role and Status</h3>
                 <form action="${pageContext.request.contextPath}/updateUserRoleStatus" method="post">
-                    <input type="hidden" name="userId" value="${loggedInUser.userID}">
+                    <input type="hidden" name="userId" value="${loggedInUser.userId}"> <%-- Changed to userId (lowercase i) --%>
 
                     <div class="form-group">
                         <label for="roleId">Role:</label>
                         <select id="roleId" name="roleId">
                             <option value="1">Student</option>
                             <option value="2">Instructor</option>
+                            <option value="3">Admin</option> <%-- Added Admin role option if applicable --%>
                         </select>
                     </div>
 
@@ -70,11 +71,11 @@
                     <h3>Other Users</h3>
                     <div class="four_user">
                         <c:forEach var="otherUser" items="${otherUsers}">
-                            <a href="${pageContext.request.contextPath}/userdetail?id=${otherUser.user.userID}" class="other-user-link">
+                            <a href="${pageContext.request.contextPath}/userdetail?id=${otherUser.user.userId}" class="other-user-link"> <%-- Changed to userId (lowercase i) and link to servlet --%>
                                 <div class="other-user-card">
                                     <img src="${pageContext.request.contextPath}/image/${otherUser.user.avatarUrl}" alt="${otherUser.user.fullName}">
                                     <h4>${otherUser.user.fullName}</h4>
-                                    <p class="role">${otherUser.roleName == '1' ? 'Admin' : (otherUser.roleName == '2' ? 'Teacher' : otherUser.roleName)}</p>
+                                    <p class="role">${otherUser.roleName}</p> <%-- RoleName is already a string --%>
                                 </div>
                             </a>
                         </c:forEach>
@@ -98,8 +99,12 @@
             // Set giá trị mặc định cho select boxes khi form hiển thị
             if (currentRole === 'Student') {
                 roleSelect.value = '1';
-            } else if (currentRole === 'Teacher') {
+            } else if (currentRole === 'Instructor') { // Changed 'Teacher' to 'Instructor' based on common role names
                 roleSelect.value = '2';
+            } else if (currentRole === 'Admin') { // Added Admin case
+                roleSelect.value = '3';
+            } else {
+                roleSelect.value = ''; // Default or handle other roles
             }
 
             statusSelect.value = currentStatus;
