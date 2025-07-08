@@ -58,4 +58,44 @@ public class PackageDAO extends DBContext {
         }
         return null;
     }
+    public void insertPackage(Package pkg) {
+        String sql = "INSERT INTO Package (Name, DurationInDays, PriceModifier) VALUES (?, ?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, pkg.getName());
+            ps.setInt(2, pkg.getDurationInDays());
+            ps.setDouble(3, pkg.getPriceModifier());
+
+            int rows = ps.executeUpdate();
+            System.out.println("Inserted " + rows + " row(s) into Package.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void deletePackage(int id) {
+    String sql = "DELETE FROM Package WHERE PackageID = ?";
+    try (Connection conn = getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, id);
+        ps.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+
+public void updatePackage(Package p) {
+    String sql = "UPDATE Package SET Name = ?, DurationInDays = ?, PriceModifier = ? WHERE PackageID = ?";
+    try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, p.getName());
+        ps.setInt(2, p.getDurationInDays());
+        ps.setDouble(3, p.getPriceModifier());
+        ps.setInt(4, p.getPackageId());
+        ps.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
 }
