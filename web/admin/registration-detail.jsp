@@ -17,7 +17,7 @@
 
 
     <style>
-        @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
+/*        @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');*/
 
         /* Custom animations */
         @keyframes slideInFromLeft {

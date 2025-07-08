@@ -57,7 +57,6 @@
                 <img class="hero-image" src="${pageContext.request.contextPath}/images/Banner.jpg" alt="Banner">
                 <div class="hero-text">
                     <h1>SETTINGS LIST</h1>
-                    <p><a href="${pageContext.request.contextPath}/home">Home</a> / Settings</p>
                 </div>
             </div>
         </section>
