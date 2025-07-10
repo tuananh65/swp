@@ -1,0 +1,500 @@
+/* SettingLi.css */
+
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font hiện đại hơn */
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* Nền sáng hơn một chút */
+    color: #343a40; /* Màu chữ mặc định */
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Hero Banner (Dùng chung từ MyCourses.css, các chỉnh sửa nhỏ ở đây) */
+/* Đảm bảo MyCourses.css được load trước để các style này override nếu cần */
+.hero-banner {
+    width: 100%;
+    height: 300px; /* Có thể điều chỉnh chiều cao nếu muốn */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff; /* Màu chữ trắng cho banner */
+    overflow: hidden; /* Đảm bảo hình ảnh không tràn */
+    margin-bottom: 30px; /* Khoảng cách với phần nội dung chính */
+    margin-top: 88px; /* Để banner không bị che bởi header cố định */
+}
+
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh phủ đầy banner */
+    z-index: 0;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* Đảm bảo nội dung ngang giữa */
+}
+
+.hero-text h1 {
+    font-size: 3.5em; /* Kích thước chữ lớn cho tiêu đề */
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: #fff; /* Chữ trắng */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4); /* Đổ bóng chữ nhẹ */
+}
+
+.hero-text p {
+    font-size: 1.1em;
+    margin-top: 10px;
+    color: #eee; /* Màu chữ nhạt hơn */
+}
+
+.hero-text p a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.hero-text p a:hover {
+    color: #ffc107; /* Màu vàng khi hover */
+}
+
+
+/* Content Area & Wrapper */
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px 0; /* Padding trên dưới */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.content {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px; /* Padding tổng thể cho nội dung */
+    width: 100%;
+    max-width: 1200px; /* Giới hạn chiều rộng tối đa */
+    box-sizing: border-box;
+}
+
+/* Messages (Success/Error) */
+.success-message, .error-message {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.success-message {
+    background-color: #d4edda; /* Light green */
+    color: #155724; /* Dark green */
+    border: 1px solid #c3e6cb;
+}
+
+.error-message {
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red */
+    border: 1px solid #f5c6cb;
+}
+
+/* Search and Add Container */
+.search-container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 15px; /* Khoảng cách giữa các phần tử */
+}
+
+.search-form {
+    display: flex;
+    flex-grow: 1;
+    max-width: 450px; /* Tăng chiều rộng ô tìm kiếm */
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    overflow: hidden; /* Đảm bảo border-radius hoạt động với button */
+}
+
+.search-input {
+    padding: 12px 15px;
+    border: none;
+    flex-grow: 1;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-button {
+    padding: 12px 18px;
+    background-color: #6c757d; /* Màu xám */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 16px;
+}
+
+.search-button:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+}
+
+.search-button i {
+    margin-left: 0; /* Đảm bảo icon căn giữa button */
+}
+
+/* Add Button */
+.add-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 20px;
+    background-color: #28a745; /* Màu xanh lá cây */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.add-btn i {
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+.add-btn:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Table Styles */
+table {
+    width: 100%; /* Chiếm toàn bộ chiều rộng của content */
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    border-radius: 8px; /* Bo tròn góc bảng */
+    /* overflow: hidden; /* Bỏ cái này nếu gặp vấn đề với border riêng lẻ của td/th */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #E8E8F4; /* Viền tổng thể cho bảng */
+}
+
+thead th {
+    background-color: #7768E5; /* Màu tím chủ đạo */
+    color: white;
+    padding: 15px; /* Tăng padding */
+    text-align: left;
+    font-weight: 600;
+    font-size: 15px;
+    border: 1px solid #E8E8F4; /* Viền cho từng ô tiêu đề */
+}
+
+tbody td {
+    padding: 12px 15px;
+    border: 1px solid #E8E8F4; /* Viền cho từng ô dữ liệu */
+    text-align: left; /* Đặt text-align mặc định cho td */
+    vertical-align: middle; /* Căn giữa theo chiều dọc */
+    font-size: 15px;
+}
+
+/* Để căn giữa nội dung của cột Status */
+.status-cell {
+    text-align: center;
+}
+
+tbody tr:nth-child(even) { /* Màu xen kẽ cho hàng */
+    background-color: #fcfdff;
+}
+
+tbody tr:hover {
+    background-color: #e2f0fd; /* Màu xanh nhạt khi hover */
+}
+
+.no-results {
+    text-align: center;
+    padding: 20px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Column Widths */
+thead th:nth-child(1),
+tbody td:nth-child(1) {
+    width: 80px; /* SettingID */
+}
+thead th:nth-child(6),
+tbody td:nth-child(6) {
+    width: 120px; /* Actions */
+}
+
+/* Filter Selects in Table Header */
+thead th select {
+    background-color: #7768E5;
+    color: white;
+    border: none;
+    border-radius: 0;
+    width: calc(100% + 2px); /* +2px để bù lại border-collapse */
+    padding: 15px; /* Cùng padding với th */
+    margin: -1px; /* Để select chồng lên border của th nếu cần */
+    box-sizing: border-box;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='12'%3E%3Cpath%20fill='white'%20d='M0%200l6%206%206-6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+}
+
+thead th select:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5); /* Border trắng nhạt khi focus */
+}
+
+thead th select option {
+    color: #343a40; /* Màu chữ đen cho option */
+    background-color: #fff; /* Nền trắng cho option */
+    padding: 10px;
+}
+
+/* Adjust padding for th cells containing selects */
+thead th:has(select) { /* Selector :has() cần trình duyệt hiện đại */
+    padding: 0;
+}
+
+
+/* Status Span */
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-active {
+    background-color: #e6ffe6; /* Light green background */
+    color: #28a745; /* Darker green text */
+    border: 1px solid #28a745;
+}
+
+.status-inactive {
+    background-color: #ffe6e6; /* Light red background */
+    color: #dc3545; /* Darker red text */
+    border: 1px solid #dc3545;
+}
+
+
+/* Action Buttons (View/Edit, Delete) */
+.action-buttons {
+    white-space: nowrap; /* Ngăn các nút xuống dòng */
+}
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px; /* Kích thước cố định cho nút vuông */
+    height: 34px;
+    padding: 0;
+    margin-right: 8px;
+    border: none;
+    border-radius: 50%; /* Làm tròn nút */
+    cursor: pointer;
+    font-size: 15px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.action-btn i {
+    font-size: 15px; /* Đảm bảo icon có kích thước phù hợp */
+}
+
+.view-btn {
+    background-color: #007bff; /* Blue */
+}
+
+.view-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.delete-btn {
+    background-color: #dc3545; /* Red */
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    gap: 8px; /* Khoảng cách giữa các nút */
+    flex-wrap: wrap; /* Cho phép xuống dòng nếu quá nhiều nút */
+}
+
+.page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px; /* Chiều rộng tối thiểu */
+    height: 40px; /* Chiều cao */
+    padding: 8px 12px;
+    border: 1px solid #dee2e6; /* Màu border nhạt */
+    border-radius: 5px;
+    color: #007bff; /* Màu xanh dương cho text */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.page-link:hover {
+    background-color: #e9ecef; /* Màu nền khi hover */
+    border-color: #007bff;
+    color: #0056b3;
+}
+
+.page-link.active {
+    background-color: #7768E5; /* Màu tím chủ đạo khi active */
+    color: white;
+    border-color: #7768E5;
+    font-weight: 700;
+    box-shadow: 0 3px 8px rgba(119, 104, 229, 0.3);
+}
+
+/* Footer (từ footer.jsp) */
+/* Đảm bảo footer của bạn có đủ style, hoặc import một file CSS chung cho footer */
+
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .content {
+        padding: 20px;
+    }
+    .hero-text h1 {
+        font-size: 2.8em;
+    }
+    thead th, tbody td {
+        padding: 10px;
+        font-size: 14px;
+    }
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .search-form {
+        max-width: 100%;
+    }
+    .add-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    .action-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-banner {
+        height: 250px;
+    }
+    .hero-text h1 {
+        font-size: 2.2em;
+    }
+    .hero-text p {
+        font-size: 1em;
+    }
+    table {
+        font-size: 14px;
+        display: block; /* Cho phép bảng cuộn ngang */
+        overflow-x: auto; /* Bật cuộn ngang */
+        white-space: nowrap; /* Giữ nội dung không xuống dòng */
+    }
+    /* Các cột có thể bị thu hẹp hoặc ẩn trên màn hình nhỏ nếu cần */
+    thead th:nth-child(3), tbody td:nth-child(3) { /* Value column */
+        min-width: 150px; /* Đảm bảo đủ rộng */
+    }
+    .action-buttons {
+        min-width: 80px; /* Đảm bảo đủ chỗ cho nút */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-banner {
+        height: 200px;
+    }
+    .hero-text h1 {
+        font-size: 1.8em;
+    }
+    .hero-text p {
+        font-size: 0.9em;
+    }
+    .content {
+        padding: 15px;
+    }
+    .search-input, .search-button, .add-btn {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+    .page-link {
+        min-width: 35px;
+        height: 35px;
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}

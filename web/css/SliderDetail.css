@@ -1,0 +1,344 @@
+/* SliderDetail.css */
+
+/* General Body and Wrapper Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Content Section - để căn giữa nội dung carousel */
+.content {
+    padding: 20px 0; /* Padding trên dưới, 0 trái phải để carousel chiếm toàn bộ chiều rộng */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Căn nội dung lên đầu */
+    min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
+}
+
+/* Message Styles (Optional) */
+.success-message, .error-message {
+    padding: 10px 15px;
+    margin: 10px auto;
+    border-radius: 5px;
+    text-align: center;
+    width: 80%;
+    max-width: 600px;
+}
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* CSS cho thông báo lỗi từ Servlet */
+.error-message-display {
+    color: red;
+    padding: 10px;
+    border: 1px solid red;
+    background-color: #ffebeb; /* Nền nhạt để dễ nhìn */
+    margin: 20px auto; /* Canh giữa và tạo khoảng cách */
+    width: 80%; /* Chiều rộng phù hợp */
+    max-width: 600px; /* Giới hạn chiều rộng */
+    border-radius: 5px; /* Bo góc */
+    text-align: center; /* Canh giữa chữ */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Thêm bóng đổ */
+}
+
+
+/* Slider Carousel Container - Main display area */
+.slider-carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 1000px; /* Max width của carousel */
+    height: 450px; /* Chiều cao cố định cho carousel */
+    overflow: hidden; /* Rất quan trọng để ẩn các slide không hiển thị */
+    background-color: #000; /* Nền đen khi ảnh chưa load */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+}
+
+/* Container bên trong chứa tất cả các slides (nếu bạn sử dụng JavaScript để trượt thay vì fade) */
+/* Nếu bạn đang dùng hiệu ứng fade như code JSP ban đầu, phần này không cần thiết */
+/* .carousel-inner {
+    display: flex;
+    width: fit-content;
+    height: 100%;
+    transition: transform 0.8s ease-in-out;
+} */
+
+/* Các slide của carousel */
+.carousel-slide {
+    position: absolute; /* Đặt vị trí tuyệt đối để các slide chồng lên nhau */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Mặc định ẩn tất cả các slide */
+    transition: opacity 1.5s ease-in-out; /* Hiệu ứng chuyển đổi (1.5 giây) */
+
+    /* Dùng flexbox để căn chỉnh ảnh và caption */
+    display: flex; /* Mặc định là flex để transition hoạt động */
+    flex-direction: column;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều ngang (cho ảnh) */
+    text-align: center; /* Căn giữa chữ trong slide */
+}
+
+.carousel-slide.active {
+    opacity: 1; /* Hiển thị hoàn toàn khi active */
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh bao phủ toàn bộ khung mà không bị méo */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1; /* Ảnh ở layer 1 */
+    filter: brightness(70%); /* Giảm độ sáng để caption nổi bật */
+}
+
+
+
+.carousel-caption {
+    position: absolute;
+    z-index: 2;
+    color: white;
+    padding: 20px;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    border-radius: 10px;
+    text-align: left;
+    max-width: 500px;
+    top: 48%;
+    left: 12%;
+    transform: translateY(-50%);
+}
+
+.carousel-caption .welcome-text-carousel {
+    font-size: 1.1em;
+    color: #a7f7ff;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.carousel-caption h1 {
+    font-size: 3em; /* To hơn để nổi bật */
+    margin: 0 0 15px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+.carousel-caption h1 .highlight {
+    color: #00e0ff;
+}
+
+.carousel-caption .description-text-carousel {
+    font-size: 1.1em;
+    color: #f0f0f0;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.carousel-caption .discover-more-btn-carousel {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #38b69a; /* Màu xanh teal */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    font-size: 1em;
+    text-transform: uppercase;
+}
+
+.carousel-caption .discover-more-btn-carousel:hover {
+    background-color: #2e9b81;
+}
+
+/* Status Text */
+.carousel-caption .status-text {
+    font-size: 1em;
+    color: #fff;
+    margin-top: 15px; /* Add some space above status */
+    font-weight: bold;
+}
+
+/* Navigation arrows */
+.prev-btn, .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.5em;
+    transition: background-color 0.3s ease;
+    z-index: 3; /* Trên cả caption và ảnh */
+    cursor: pointer;
+}
+
+.prev-btn {
+    left: 20px;
+}
+
+.next-btn {
+    right: 20px;
+}
+
+.prev-btn:hover, .next-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Bottom Back to List Button (Nếu có) */
+.back-to-list-section {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.back-btn-bottom {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 25px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn-bottom i {
+    margin-right: 8px;
+}
+
+.back-btn-bottom:hover {
+    background-color: #5a6268;
+}
+
+/* Carousel Dots (Chỉ báo slide) */
+.carousel-dots {
+    text-align: center;
+    padding: 10px 0;
+    position: absolute; /* Đặt chấm nằm trên carousel */
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: #00e0ff; /* Màu xanh nổi bật */
+    transform: scale(1.2); /* Phóng to chấm đang active */
+}
+
+.dot:hover {
+    background-color: #00b0d3; /* Màu xanh đậm hơn khi hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .slider-carousel-container {
+        height: 380px;
+    }
+    .carousel-caption h1 {
+        font-size: 2.5em;
+    }
+    .carousel-caption .description-text-carousel {
+        font-size: 1em;
+    }
+    /* Đảm bảo carousel-slide vẫn hiển thị đúng nếu bạn dùng flex-basis */
+    /* .carousel-slide {
+        flex: 0 0 100%;
+        width: 100%;
+    } */
+}
+
+@media (max-width: 768px) {
+    .slider-carousel-container {
+        width: 95%;
+        height: 300px;
+    }
+    .carousel-caption {
+        left: 5%; /* Giữ nguyên hoặc điều chỉnh thêm nếu cần */
+        right: 5%;
+        max-width: 90%;
+        text-align: center;
+        padding: 15px;
+        transform: translateY(-50%) translateX(0);
+        top: 45%; /* Điều chỉnh thêm cho responsive nếu cần */
+    }
+    .carousel-caption h1 {
+        font-size: 2em;
+    }
+    .carousel-caption .description-text-carousel {
+        font-size: 0.9em;
+    }
+    .prev-btn, .next-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .slider-carousel-container {
+        height: 250px;
+    }
+    .carousel-caption h1 {
+        font-size: 1.5em;
+    }
+    .carousel-caption .welcome-text-carousel,
+    .carousel-caption .description-text-carousel,
+    .carousel-caption .status-text {
+        font-size: 0.8em;
+    }
+    .carousel-caption .discover-more-btn-carousel {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+    .prev-btn, .next-btn {
+        display: none;
+    }
+    .carousel-dots {
+        bottom: 5px;
+    }
+    .carousel-caption {
+        top: 35%; /* Điều chỉnh thêm cho responsive nếu cần */
+    }
+}

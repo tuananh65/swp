@@ -1,0 +1,107 @@
+/* addSetting.css */
+
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.hero-banner {
+    margin-top: 89px;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    display: flex
+;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #0E2A46;
+    margin-bottom: 30px;
+}
+
+.content {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+}
+
+.error-message {
+    background-color: #ffe0e0;
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+form input[type="text"],
+form input[type="number"],
+form select {
+    width: calc(100% - 12px);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+form select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg fill="%23555" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    cursor: pointer;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center; /* Căn giữa các nút theo chiều ngang */
+    gap: 10px; /* Thêm khoảng cách giữa các nút */
+    margin-top: 20px; /* Thêm khoảng cách phía trên nhóm nút */
+}
+
+form button.add-user-btn,
+form a.cancel-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+form button.add-user-btn {
+    background-color: #007bff;
+}
+
+form button.add-user-btn:hover {
+    background-color: #0056b3;
+}
+
+form a.cancel-btn {
+    background-color: #6c757d;
+}
+
+form a.cancel-btn:hover {
+    background-color: #545b62;
+}

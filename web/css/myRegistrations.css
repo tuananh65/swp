@@ -1,0 +1,589 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.myRegistrations-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header Styles */
+.myRegistrations-header {
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.myRegistrations-header .myRegistrations-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+}
+
+.myRegistrations-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.myRegistrations-logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+}
+
+.myRegistrations-logo-text {
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+}
+
+.myRegistrations-nav-list {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.myRegistrations-nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.myRegistrations-nav-link:hover {
+  color: #667eea;
+}
+
+.myRegistrations-header-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.myRegistrations-search-btn,
+.myRegistrations-menu-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.myRegistrations-search-btn:hover,
+.myRegistrations-menu-btn:hover {
+  color: #667eea;
+}
+
+/* Hero Section */
+.myRegistrations-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.myRegistrations-hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.1;
+}
+
+.myRegistrations-decorative-element {
+  position: absolute;
+  color: white;
+  font-size: 24px;
+}
+
+.myRegistrations-element-1 {
+  top: 20%;
+  left: 10%;
+  color: #ff6b6b;
+}
+
+.myRegistrations-element-2 {
+  top: 15%;
+  right: 10%;
+  color: #4ecdc4;
+}
+
+.myRegistrations-element-3 {
+  bottom: 30%;
+  left: 15%;
+  color: #45b7d1;
+}
+
+.myRegistrations-element-4 {
+  bottom: 20%;
+  right: 15%;
+  color: #f9ca24;
+}
+
+.myRegistrations-hero-title {
+  text-align: center;
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Main Content */
+.myRegistrations-main {
+  padding: 60px 0;
+  background: #f8f9fa;
+  min-height: 60vh;
+}
+
+.myRegistrations-content-wrapper {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+}
+
+/* Sidebar */
+.myRegistrations-sidebar {
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.myRegistrations-search-section {
+  margin-bottom: 30px;
+}
+
+.myRegistrations-search-box {
+  position: relative;
+}
+
+.myRegistrations-search-input {
+  width: 100%;
+  padding: 12px 45px 12px 15px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.myRegistrations-search-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.myRegistrations-search-submit {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.myRegistrations-category-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.myRegistrations-category-list {
+  list-style: none;
+}
+
+.myRegistrations-category-item {
+  margin-bottom: 10px;
+}
+
+.myRegistrations-category-item.myRegistrations-active {
+  background: #667eea;
+  border-radius: 8px;
+}
+
+.myRegistrations-category-item.myRegistrations-active .myRegistrations-category-link {
+  color: white;
+}
+
+.myRegistrations-category-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.myRegistrations-category-link:hover {
+  background: #f8f9fa;
+  color: #667eea;
+}
+
+.myRegistrations-alert {
+    padding: 12px 20px;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    border-left: 6px solid;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.myRegistrations-alert-success {
+    background-color: #e6f7e6;
+    color: #2e7d32;
+    border-color: #2e7d32;
+}
+
+.myRegistrations-alert-danger {
+    background-color: #fbeaea;
+    color: #c62828;
+    border-color: #c62828;
+}
+
+
+/* Registration Cards */
+.myRegistrations-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.myRegistrations-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.myRegistrations-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.myRegistrations-card-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.myRegistrations-card-info p,
+.myRegistrations-card-details p {
+  margin-bottom: 8px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.myRegistrations-card-info strong,
+.myRegistrations-card-details strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.myRegistrations-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.myRegistrations-status.myRegistrations-submitted {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.myRegistrations-status.myRegistrations-confirmed {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.myRegistrations-card-actions {
+  display: flex;
+  gap: 15px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+.myRegistrations-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.myRegistrations-btn-edit {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.myRegistrations-btn-edit:hover {
+  background: #1976d2;
+  color: white;
+}
+
+.myRegistrations-btn-delete {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.myRegistrations-btn-delete:hover {
+  background: #d32f2f;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .myRegistrations-nav {
+    display: none;
+  }
+
+  .myRegistrations-hero-title {
+    font-size: 32px;
+  }
+
+  .myRegistrations-content-wrapper {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .myRegistrations-card-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .myRegistrations-card-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .myRegistrations-container {
+    padding: 0 15px;
+  }
+
+  .myRegistrations-hero-title {
+    font-size: 24px;
+  }
+
+  .myRegistrations-sidebar {
+    padding: 20px;
+  }
+
+  .myRegistrations-card {
+    padding: 20px;
+  }
+}
+
+
+/* Modal Styles */
+.courseRegister-modal-overlay {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 10px;
+}
+
+.courseRegister-modal-overlay.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.courseRegister-modal-content {
+    background: white;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideIn 0.3s ease;
+}
+
+.courseRegister-modal-header {
+    background: linear-gradient(135deg, #6c5ce7, #5f3dc4);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.courseRegister-modal-title {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.courseRegister-modal-subtitle {
+    opacity: 0.9;
+}
+
+.courseRegister-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.courseRegister-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.courseRegister-modal-body {
+    padding: 30px;
+}
+
+.courseRegister-form-group {
+    margin-bottom: 10px;
+}
+
+.courseRegister-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #2d3436;
+    font-weight: 600;
+}
+
+.courseRegister-required {
+    color: #e17055;
+}
+
+.courseRegister-form-control {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s;
+    background: #f8f9fa;
+}
+
+.courseRegister-form-control:focus {
+    outline: none;
+    border-color: #6c5ce7;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+}
+
+.courseRegister-form-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.courseRegister-btn {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.courseRegister-btn-cancel {
+    background: #e17055;
+    color: white;
+}
+
+.courseRegister-btn-cancel:hover {
+    background: #d63031;
+    transform: translateY(-2px);
+}
+
+.courseRegister-btn-submit {
+    background: #6c5ce7;
+    color: white;
+}
+
+.courseRegister-btn-submit:hover {
+    background: #5f3dc4;
+    transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .courseRegister-nav-menu {
+        display: none;
+    }
+
+    .courseRegister-hero-title {
+        font-size: 36px;
+    }
+
+    .courseRegister-modal-content {
+        margin: 10px;
+    }
+
+    .courseRegister-modal-body {
+        margin-top: 10px;
+        padding: 5px;
+    }
+
+    .courseRegister-form-buttons {
+        flex-direction: column;
+    }
+}

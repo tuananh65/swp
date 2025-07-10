@@ -1,0 +1,64 @@
+.post-list-main {
+    padding: 20px;
+    background-color: #f8f9fa; /* màu nền nhẹ */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.post-list-main .btn {
+    font-weight: 600;
+}
+
+.post-list-main .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.post-list-main .table th, 
+.post-list-main .table td {
+    border: 1px solid #dee2e6;
+    padding: 12px 15px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.post-list-main .table thead {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.post-list-main .table tbody tr:hover {
+    background-color: #f1f3f5;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.post-list-main .pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.post-list-main .pagination .page-item {
+    margin: 0 4px;
+}
+
+.post-list-main .pagination .page-link {
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: #007bff;
+    border: 1px solid #dee2e6;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.post-list-main .pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.post-list-main .pagination .page-link:hover {
+    background-color: #e9ecef;
+}
