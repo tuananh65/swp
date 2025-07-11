@@ -11,8 +11,12 @@ public class Post {
     private String content;
     private String author;
     private Timestamp updatedDate; // Thay đổi từ String sang Timestamp
-    private boolean featured;    // Thêm thuộc tính featured
-    private String status;       // Thêm thuộc tính status
+    private boolean featured;      // Thêm thuộc tính featured
+    private String status;         // Thêm thuộc tính status
+
+    // Constructor mặc định (no-arg constructor) - RẤT QUAN TRỌNG nếu bạn tạo Post không tham số
+    public Post() {
+    }
 
     // Constructor đầy đủ tham số
     public Post(int id, String title, String thumbnail, String category, String briefInfo, String content, String author, Timestamp updatedDate, boolean featured, String status) {
@@ -26,10 +30,6 @@ public class Post {
         this.updatedDate = updatedDate;
         this.featured = featured;
         this.status = status;
-    }
-
-    // Constructor mặc định (no-arg constructor) - RẤT QUAN TRỌNG nếu bạn tạo Post không tham số
-    public Post() {
     }
 
     // Getters and Setters

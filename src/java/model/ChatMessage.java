@@ -15,7 +15,7 @@ public class ChatMessage {
     }
 
     public ChatMessage(String sessionId, String userMessage, String botResponse, 
-                      String intent, double confidence) {
+                       String intent, double confidence) {
         this.sessionId = sessionId;
         this.userMessage = userMessage;
         this.botResponse = botResponse;
