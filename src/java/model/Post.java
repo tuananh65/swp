@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.Timestamp; // Import Timestamp
+
 public class Post {
     private int id;
     private String title;
@@ -8,10 +10,12 @@ public class Post {
     private String briefInfo;
     private String content;
     private String author;
-    private String updatedDate;
+    private Timestamp updatedDate; // Thay đổi từ String sang Timestamp
+    private boolean featured;    // Thêm thuộc tính featured
+    private String status;       // Thêm thuộc tính status
 
-    // Constructor
-    public Post(int id, String title, String thumbnail, String category, String briefInfo, String content, String author, String updatedDate) {
+    // Constructor đầy đủ tham số
+    public Post(int id, String title, String thumbnail, String category, String briefInfo, String content, String author, Timestamp updatedDate, boolean featured, String status) {
         this.id = id;
         this.title = title;
         this.thumbnail = thumbnail;
@@ -20,6 +24,12 @@ public class Post {
         this.content = content;
         this.author = author;
         this.updatedDate = updatedDate;
+        this.featured = featured;
+        this.status = status;
+    }
+
+    // Constructor mặc định (no-arg constructor) - RẤT QUAN TRỌNG nếu bạn tạo Post không tham số
+    public Post() {
     }
 
     // Getters and Setters
@@ -79,11 +89,27 @@ public class Post {
         this.author = author;
     }
 
-    public String getUpdatedDate() {
+    public Timestamp getUpdatedDate() { // Thay đổi kiểu trả về
         return updatedDate;
     }
 
-    public void setUpdatedDate(String updatedDate) {
+    public void setUpdatedDate(Timestamp updatedDate) { // Thay đổi kiểu tham số
         this.updatedDate = updatedDate;
+    }
+
+    public boolean isFeatured() { // Getter cho boolean thường là is<PropertyName>
+        return featured;
+    }
+
+    public void setFeatured(boolean featured) {
+        this.featured = featured;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

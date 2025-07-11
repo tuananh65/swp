@@ -1,6 +1,8 @@
 package model;
 
-import java.sql.Date;
+// Nên dùng java.util.Date cho các trường ngày tháng trong model
+// java.sql.Date chỉ nên dùng khi tương tác trực tiếp với JDBC PreparedStatement.setDate() và ResultSet.getDate()
+import java.util.Date; // <-- Đổi từ java.sql.Date sang java.util.Date để linh hoạt hơn
 
 public class Course {
     private int courseID;
@@ -11,15 +13,19 @@ public class Course {
     private double originalPrice;
     private double salePrice;
     private String courseThumbnail;
-   private Date createdAt; // Sử dụng java.util.Date
+    private Date createdAt; // Sử dụng java.util.Date
     private Date updatedAt; // Sử dụng java.util.Date
     private int userID;
     private boolean featured;
+    private int subjectId; // <-- ĐÃ THÊM DÒNG NÀY VÀO MODEL
 
     public Course() {
     }
 
-    public Course(int courseID, String courseName, String tagLine, String briefInfo, String description, double originalPrice, double salePrice, String courseThumbnail, Date createdAt, Date updatedAt, int userID, boolean featured) {
+    // Constructor đầy đủ đã được CẬP NHẬT để bao gồm subjectId
+    public Course(int courseID, String courseName, String tagLine, String briefInfo, String description,
+                  double originalPrice, double salePrice, String courseThumbnail, Date createdAt,
+                  Date updatedAt, int userID, boolean featured, int subjectId) { // <-- THÊM subjectId VÀO CONSTRUCTOR
         this.courseID = courseID;
         this.courseName = courseName;
         this.tagLine = tagLine;
@@ -32,9 +38,8 @@ public class Course {
         this.updatedAt = updatedAt;
         this.userID = userID;
         this.featured = featured;
+        this.subjectId = subjectId; // <-- GÁN GIÁ TRỊ CHO subjectId
     }
-    
-    
 
     // Getters and Setters
     public int getCourseID() { return courseID; }
@@ -73,13 +78,31 @@ public class Course {
     public boolean isFeatured() { return featured; }
     public void setFeatured(boolean featured) { this.featured = featured; }
 
+    // Getters and Setters cho subjectId
+    public int getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(int subjectId) {
+        this.subjectId = subjectId;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
                 "courseID=" + courseID +
                 ", courseName='" + courseName + '\'' +
                 ", tagLine='" + tagLine + '\'' +
+                ", briefInfo='" + briefInfo + '\'' +
+                ", description='" + description + '\'' +
+                ", originalPrice=" + originalPrice +
+                ", salePrice=" + salePrice +
+                ", courseThumbnail='" + courseThumbnail + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", userID=" + userID +
                 ", featured=" + featured +
+                ", subjectId=" + subjectId + // <-- THÊM subjectId VÀO toString
                 '}';
     }
 }
