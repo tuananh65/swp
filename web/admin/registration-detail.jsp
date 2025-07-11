@@ -8,7 +8,7 @@
 </jsp:include>
 
 <jsp:include page="/default/banner.jsp">
-    <jsp:param name="bannerTitle" value="REGISTRATION LIST"/>
+    <jsp:param name="bannerTitle" value="REGISTRATION DETAIL"/>
 </jsp:include>
 
 <jsp:include page="/default/sidebar.jsp" />
@@ -17,7 +17,7 @@
 
 
     <style>
-        @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
+/*        @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');*/
 
         /* Custom animations */
         @keyframes slideInFromLeft {
