@@ -1,0 +1,6 @@
+projectKey=my_netbean_swp_project
+serverUrl=http://localhost:9000
+serverVersion=25.5.0.107428
+dashboardUrl=http://localhost:9000/dashboard?id=my_netbean_swp_project
+ceTaskId=c2e8b019-59bd-4754-9089-f4e933993773
+ceTaskUrl=http://localhost:9000/api/ce/task?id=c2e8b019-59bd-4754-9089-f4e933993773
