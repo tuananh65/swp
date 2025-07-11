@@ -2,4 +2,4 @@
 <project name="SoftSkill25" default="default" basedir=".">
     <description>Builds, tests, and runs the project SoftSkill25.</description>
     <import file="nbproject/build-impl.xml"/>
-    </project>
+</project>
