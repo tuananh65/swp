@@ -79,8 +79,8 @@ public class CourseDAO extends DBContext {
             ps.setDouble(6, course.getSalePrice());
             ps.setString(7, course.getCourseThumbnail());
             // Chuyển đổi java.util.Date sang java.sql.Date khi set vào PreparedStatement
-            ps.setDate(8, new java.sql.Date(course.getCreatedAt().getTime()));
-            ps.setDate(9, new java.sql.Date(course.getUpdatedAt().getTime()));
+            ps.setDate(8, course.getCreatedAt() != null ? new java.sql.Date(course.getCreatedAt().getTime()) : null);
+            ps.setDate(9, course.getUpdatedAt() != null ? new java.sql.Date(course.getUpdatedAt().getTime()) : null);
             ps.setInt(10, course.getUserID());
             ps.setBoolean(11, course.isFeatured());
             ps.setInt(12, course.getSubjectId()); // <-- Thêm giá trị cho SubjectId
@@ -218,7 +218,6 @@ public class CourseDAO extends DBContext {
     }
 
     // Tạo Course từ ResultSet
-    // Tạo Course từ ResultSet
     public static Course extractCourse(ResultSet rs) throws SQLException {
         Course c = new Course();
         c.setCourseID(rs.getInt("CourseID"));
@@ -252,11 +251,20 @@ public class CourseDAO extends DBContext {
         c.setFeatured(rs.getBoolean("Featured"));
 
         // Đọc giá trị SubjectId từ ResultSet
-        Object subjectIdObj = rs.getObject("SubjectId");
-        if (subjectIdObj != null) {
-            c.setSubjectId(rs.getInt("SubjectId"));
-        } else {
-            c.setSubjectId(0); // Hoặc một giá trị mặc định khác nếu subject_id có thể NULL trong DB
+        // Luôn kiểm tra xem cột có tồn tại không trước khi đọc (đặc biệt nếu thay đổi schema DB)
+        // Hoặc đảm bảo câu lệnh SQL SELECT đã chọn tất cả các cột cần thiết
+        try {
+            Object subjectIdObj = rs.getObject("SubjectId");
+            if (subjectIdObj != null) {
+                c.setSubjectId(rs.getInt("SubjectId"));
+            } else {
+                c.setSubjectId(0); // Hoặc một giá trị mặc định khác nếu subject_id có thể NULL trong DB
+            }
+        } catch (SQLException e) {
+            // Cột 'SubjectId' có thể không tồn tại trong ResultSet nếu câu SQL SELECT không chọn nó
+            // hoặc schema DB không có cột này.
+            System.err.println("Warning: Column 'SubjectId' not found or null in ResultSet. Setting to default. " + e.getMessage());
+            c.setSubjectId(0); // Set a default or handle as needed
         }
         return c;
     }

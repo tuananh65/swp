@@ -257,7 +257,7 @@
 
                     const revenueCtx = document.getElementById('revenueByCategoryChart');
                     if (revenueCtx) {
-                         new Chart(revenueCtx.getContext('2d'), {
+                           new Chart(revenueCtx.getContext('2d'), {
                             type: 'pie',
                             data: {
                                 labels: categoryNames,
