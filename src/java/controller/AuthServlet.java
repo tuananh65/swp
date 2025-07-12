@@ -172,7 +172,7 @@ public class AuthServlet extends HttpServlet {
             int role = user.getRoleId();
             switch (role) {
                 case 3:
-                    response.sendRedirect("admin/settinglist");
+                    response.sendRedirect("settinglist"); // ĐÃ THAY ĐỔI TỪ "admin/settinglist" SANG "settinglist"
                     break;
                 case 1:
                     response.sendRedirect("student/dashboard.jsp");
