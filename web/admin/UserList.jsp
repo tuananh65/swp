@@ -24,7 +24,7 @@
     <section class="hero-banner">
         <div class="hero-content">
             <%-- Đảm bảo đường dẫn ảnh là chính xác và hình ảnh phù hợp với banner --%>
-            <img class="hero-image" src="${pageContext.request.contextPath}/images/nen.jpg" alt="Banner Image">
+            <img class="hero-image" src="${pageContext.request.contextPath}/images/Banner.jpg" alt="Banner">
             <div class="hero-overlay"></div> <%-- ĐÃ THÊM LỚP PHỦ NÀY ĐỂ KHỚP VỚI SETTING LIST --%>
             <div class="hero-text">
                 <h1>USERS LIST</h1>
@@ -58,8 +58,8 @@
                     <input type="hidden" name="gender" id="hiddenFilterGender" value="${filterGender}">
                     <input type="hidden" name="status" id="hiddenFilterStatus" value="${filterStatus}">
                 </form>
-                <a href="${pageContext.request.contextPath}/addUser" class="add-user-btn"> <%-- Cập nhật class --%>
-                    <i class="fas fa-plus-circle"></i> Add User <%-- Thêm icon --%>
+                <a href="${pageContext.request.contextPath}/addUser" class="add-user-btn">
+                    <i class="fas fa-plus-circle"></i> Add User
                 </a>
             </div>
 
@@ -76,7 +76,7 @@
                                 <option value="Admin" ${filterRole eq 'Admin' ? 'selected' : ''}>Admin</option>
                                 <option value="Instructor" ${filterRole eq 'Instructor' ? 'selected' : ''}>Instructor</option>
                                 <option value="Student" ${filterRole eq 'Student' ? 'selected' : ''}>Student</option>
-                                <%-- You should dynamically populate these roles from your backend --%>
+                                <%-- Bạn nên động popuplate các vai trò này từ backend của mình nếu có thể --%>
                             </select>
                         </th>
                         <th>
@@ -92,8 +92,8 @@
                             <%-- Select lọc Status --%>
                             <select id="filterStatus" onchange="applyFilters()">
                                 <option value="">Status</option>
-                                <option value="active" ${filterStatus eq 'active' ? 'selected' : ''}>Active</option>
-                                <option value="inactive" ${filterStatus eq 'inactive' ? 'selected' : ''}>Inactive</option>
+                                <option value="Active" ${filterStatus eq 'Active' ? 'selected' : ''}>Active</option>
+                                <option value="Inactive" ${filterStatus eq 'Inactive' ? 'selected' : ''}>Inactive</option>
                             </select>
                         </th>
                         <th>Email</th>
@@ -118,21 +118,22 @@
                             <td data-label="Role">${dto.roleName}</td>
                             <td data-label="Gender">${dto.user.gender}</td>
                             <td data-label="Status" class="status-cell">
-                                <span class="status ${dto.user.status eq 'active' ? 'status-active' : 'status-inactive'}">
+                                <span class="status ${dto.user.status eq 'Active' ? 'status-active' : 'status-inactive'}">
                                     ${dto.user.status}
                                 </span>
                             </td>
                             <td data-label="Email">${dto.user.email}</td>
                             <td data-label="Phone">${dto.user.phone}</td>
                             <td data-label="Address">${dto.user.address}</td>
-                            <td data-label="Actions" class="action-buttons"> <%-- Cập nhật class --%>
+                            <td data-label="Actions" class="action-buttons">
+                                <%-- ĐÃ THAY ĐỔI ĐƯỜNG DẪN TẠI ĐÂY TỪ "/profile" SANG "/userdetail" --%>
                                 <a href="${pageContext.request.contextPath}/userdetail?id=${dto.user.userId}" class="action-btn edit-btn" title="View/Edit User">
-                                    <i class="fas fa-eye"></i> <%-- Thêm icon --%>
+                                    <i class="fas fa-eye"></i>
                                 </a>
                                 <form action="deleteUser" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete user ID: ${dto.user.userId}?');">
                                     <input type="hidden" name="userID" value="${dto.user.userId}">
                                     <button type="submit" class="action-btn delete-btn" title="Delete User">
-                                        <i class="fas fa-trash-alt"></i> <%-- Thêm icon --%>
+                                        <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </form>
                             </td>
@@ -162,23 +163,24 @@
 
 <script>
     function applyFilters() {
+        // Lấy giá trị từ ô tìm kiếm
         const searchInput = document.querySelector('.search-input').value;
+        // Lấy giá trị từ các dropdown lọc
         const filterRole = document.getElementById('filterRole').value;
         const filterGender = document.getElementById('filterGender').value;
         const filterStatus = document.getElementById('filterStatus').value;
 
-        // Update hidden input fields for the form submission
+        // Cập nhật các trường input ẩn trong form tìm kiếm
         document.getElementById('hiddenFilterRole').value = filterRole;
         document.getElementById('hiddenFilterGender').value = filterGender;
         document.getElementById('hiddenFilterStatus').value = filterStatus;
 
-        // Submit the search form to trigger a server-side filter
+        // Gửi form tìm kiếm để áp dụng các bộ lọc mới
         document.querySelector('.search-form').submit();
     }
 
-    // Initial setting of dropdown values based on server-side parameters (if any)
+    // Thiết lập giá trị ban đầu cho các dropdown dựa trên tham số từ server khi trang tải
     document.addEventListener('DOMContentLoaded', function() {
-        // Retrieve current filter values from the URL or request attributes if available
         const currentRole = "${filterRole}";
         const currentGender = "${filterGender}";
         const currentStatus = "${filterStatus}";

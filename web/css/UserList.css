@@ -1,441 +1,338 @@
-/* UserList.css - Cập nhật lại toàn bộ để banner khớp Y HỆT SettingLi.css */
+/* UserList.css - Đây là nội dung ví dụ sau khi bạn thêm CSS cho banner */
 
-/* General Body and Wrapper Styles */
+/* General Body and Wrapper Styles (giữ nguyên hoặc điều chỉnh theo ý bạn) */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
-    line-height: 1.6;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f8f9fa; /* Light background for the whole page */
-    color: #343a40; /* Default text color */
+    background-color: #f5f5f5;
+    color: #333;
 }
 
 .wrapper {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensures footer stays at the bottom */
+    min-height: 100vh;
 }
 
-/* Header - (Assuming this is handled by header.css or included globally) */
-/* These header styles are from your original UserList.css/SettingLi.css snippets.
-   If you have a global header.css, you might remove these specific header styles from here. */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background: #ffffff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    position: fixed; /* Make header fixed */
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000; /* Ensure header is on top */
-}
-
-.logo img {
-    height: 40px;
-    vertical-align: middle;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-}
-
-nav ul li {
-    margin-left: 20px;
-}
-
-.nav-item {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    padding: 5px 0;
-    transition: color 0.3s ease, border-bottom 0.3s ease;
-}
-
-.nav-item:hover {
-    color: #7768E5;
-    border-bottom: 2px solid #7768E5;
-}
-
-.tranchi-btn {
-    background-color: #7768E5;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    text-decoration: none; /* For links used as buttons */
-    transition: background-color 0.3s ease;
-    display: inline-block; /* For proper padding and alignment */
-}
-
-.tranchi-btn:hover {
-    background-color: #5d4fb1;
-}
-
-/* Hero Banner - ĐÃ LÀM LẠI Y HỆT TỪ SETTINGLI.CSS */
+/* --- Hero Banner Section (for User List - Copied from SliderLi.css) --- */
 .hero-banner {
     width: 100%;
-    height: 300px; /* Chiều cao banner */
-    position: relative;
-    display: flex;
+    height: 300px; /* Chiều cao tương tự banner trên course detail */
+    overflow: hidden; /* Đảm bảo mọi thứ nằm gọn trong khung */
+    position: relative; /* Quan trọng để các phần tử con có position: absolute có thể căn chỉnh */
+    display: flex; /* Dùng flexbox để căn giữa hero-content */
     justify-content: center;
     align-items: center;
-    text-align: center;
-    color: #fff; /* Màu chữ trắng */
-    overflow: hidden; /* Đảm bảo ảnh không tràn */
-    margin-bottom: 30px; /* Khoảng cách với nội dung chính */
-    margin-top: 60px; /* Điều chỉnh nếu header của bạn cao hơn/thấp hơn */
+    text-align: center; /* Căn giữa văn bản trong hero-text */
+    color: #fff; /* Màu chữ mặc định là trắng */
+    margin-bottom: 30px; /* Khoảng cách với nội dung bên dưới */
 }
 
-.hero-image {
+.hero-banner .hero-content {
+    position: absolute; /* Đặt hero-content để nó chiếm toàn bộ không gian của hero-banner */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex; /* Dùng flexbox để căn giữa nội dung bên trong nó */
+    flex-direction: column; /* Đặt các mục theo chiều dọc */
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-banner .hero-image {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Đảm bảo ảnh phủ đầy banner và giữ tỷ lệ */
-    z-index: 0; /* Đặt ảnh ở lớp dưới cùng */
+    object-fit: cover; /* Đảm bảo ảnh bao phủ toàn bộ vùng */
+    z-index: 0; /* Nằm dưới văn bản (hoặc các lớp phủ khác nếu có) */
 }
 
-.hero-overlay { /* LỚP PHỦ NÀY ĐƯỢC TẠO RA BỞI THẺ DIV TRONG HTML */
+/* ĐÃ LOẠI BỎ background-color TẠI ĐÂY để không còn lớp phủ xám */
+.hero-banner .hero-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4); /* Màu đen trong suốt */
-    z-index: 1; /* Đặt lớp phủ trên ảnh nhưng dưới nội dung */
+    /* background-color: rgba(0, 0, 0, 0.5);  <-- DÒNG NÀY ĐÃ ĐƯỢC XÓA HOẶC BÌNH LUẬN */
+    z-index: 1; /* Vẫn giữ z-index để hero-text nằm trên nó, dù nó trong suốt */
 }
 
-.hero-content {
-    position: relative;
-    z-index: 2; /* Đảm bảo nội dung (text) hiển thị trên lớp phủ */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%; /* Đảm bảo nội dung ngang giữa */
-    height: 100%; /* Chiếm toàn bộ chiều cao của banner để căn giữa dọc */
+.hero-banner .hero-text {
+    position: relative; /* Đảm bảo văn bản nằm trên lớp phủ (nếu có) và ảnh */
+    z-index: 2; /* Nằm trên lớp phủ và ảnh */
+    padding: 20px;
+    box-sizing: border-box; /* Đảm bảo padding không làm tràn ra ngoài */
 }
 
-.hero-text h1 {
-    font-size: 3.5em; /* Kích thước chữ lớn cho tiêu đề */
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 700;
-    color: #fff; /* Chữ trắng */
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.4); /* Đổ bóng chữ nhẹ */
+.hero-banner .hero-text h1 {
+    font-size: 3em; /* Kích thước chữ lớn */
+    margin: 0; /* Loại bỏ margin mặc định của h1 */
+    text-transform: uppercase; /* Chuyển thành chữ hoa */
+    color: #fff; /* Đảm bảo màu trắng */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Thêm đổ bóng cho chữ để dễ đọc hơn trên nền ảnh */
 }
 
-.hero-text p {
-    font-size: 1.1em;
-    margin-top: 10px; /* Khoảng cách với H1 */
-    color: #eee; /* Màu chữ nhạt hơn */
+.hero-banner .hero-text p {
+    font-size: 1.2em;
+    margin-top: 10px;
+    color: #fff;
 }
 
-.hero-text p a {
+.hero-banner .hero-text p a {
     color: #fff;
     text-decoration: none;
-    transition: color 0.3s ease;
+}
+.hero-banner .hero-text p a:hover {
+    text-decoration: underline;
 }
 
-.hero-text p a:hover {
-    color: #ffc107; /* Màu vàng khi hover */
-}
-
-/* Content Area & Wrapper */
+/* --- Content Section (giữ nguyên các style hiện có của UserList.css) --- */
 .content-wrapper {
-    flex-grow: 1; /* Allows content area to take up available space */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 20px 0;
-    width: 100%;
-    box-sizing: border-box;
+    /* Đảm bảo có style cho content-wrapper nếu bạn đã thêm nó */
+    width: 100%; /* Ví dụ, đặt chiều rộng tối đa */
+    margin: 0 auto; /* Căn giữa */
+    padding: 20px;
 }
 
 .content {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    width: 100%;
-    max-width: 1200px;
-    box-sizing: border-box;
+    padding: 0 20px 20px;
+    flex: 1;
 }
 
 /* Messages (Success/Error) */
-.success-message, .error-message {
-    margin-top: 0;
-    margin-bottom: 20px;
-    padding: 15px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: 500;
-    text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
 .success-message {
     background-color: #d4edda;
     color: #155724;
     border: 1px solid #c3e6cb;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+    display: flex; /* Thêm để căn giữa icon và text */
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Khoảng cách giữa icon và text */
 }
 
 .error-message {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+    display: flex; /* Thêm để căn giữa icon và text */
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Khoảng cách giữa icon và text */
 }
 
-/* Search and Add Button Container */
+/* Search Container */
 .search-container {
-    margin-top: 20px;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     gap: 15px;
+    flex-wrap: wrap;
 }
 
+/* Cập nhật styles cho form tìm kiếm và nút để trông hiện đại hơn */
 .search-form {
     display: flex;
     flex-grow: 1;
-    max-width: 450px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    overflow: hidden;
+    max-width: 400px; /* Đặt chiều rộng tối đa cho thanh tìm kiếm */
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Bo tròn các góc của thanh tìm kiếm */
+    overflow: hidden; /* Đảm bảo input và button nằm gọn trong border-radius */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Thêm đổ bóng nhẹ */
 }
 
 .search-input {
-    padding: 12px 15px;
-    border: none;
+    padding: 10px 15px;
+    border: none; /* Bỏ border mặc định */
+    font-size: 1em;
     flex-grow: 1;
-    font-size: 16px;
-    outline: none;
+    outline: none; /* Bỏ outline khi focus */
 }
 
 .search-button {
-    padding: 12px 18px;
-    background-color: #6c757d;
+    padding: 10px 15px;
+    background-color: #7768E5; /* Màu sắc phù hợp với header */
     color: white;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-size: 16px;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    display: flex; /* Để căn giữa icon */
+    align-items: center;
+    justify-content: center;
 }
 
 .search-button:hover {
-    background-color: #5a6268;
-    transform: translateY(-1px);
+    background-color: #635ac2; /* Màu đậm hơn khi hover */
 }
 
-.search-button i {
-    margin-left: 0;
-}
-
-/* Add User Button */
+/* Add User Button (giữ nguyên hoặc điều chỉnh) */
 .add-user-btn {
     display: inline-flex;
     align-items: center;
-    padding: 12px 20px;
+    padding: 10px 18px; /* Tăng padding để nút lớn hơn */
     background-color: #28a745;
     color: white;
     text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0 0.3s ease;
+    border-radius: 8px; /* Bo tròn tương tự search form */
+    font-size: 1em; /* Kích thước font phù hợp */
+    transition: all 0.3s ease;
     border: none;
     cursor: pointer;
-}
-
-.add-user-btn i {
-    margin-right: 8px;
-    font-size: 14px;
+    font-weight: 600; /* Đậm hơn */
+    white-space: nowrap;
+    gap: 8px; /* Khoảng cách giữa icon và text */
 }
 
 .add-user-btn:hover {
     background-color: #218838;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Đổ bóng mạnh hơn khi hover */
+    transform: translateY(-1px); /* Hiệu ứng nhấc nhẹ */
 }
 
-/* Table Styles */
+/* Table Styles (giữ nguyên hoặc điều chỉnh) */
 table {
-    width: 100%;
+    width: 90%; /* Hoặc 100% nếu bạn muốn nó full width trong content-wrapper */
+    margin: 20px auto; /* Căn giữa và có khoảng cách trên dưới */
     border-collapse: collapse;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border: 1px solid #E8E8F4;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng mạnh hơn cho bảng */
+    border-radius: 8px; /* Bo tròn góc bảng */
+    overflow: hidden; /* Đảm bảo bo tròn áp dụng cho cả nội dung */
+    border: 1px solid #eee; /* Đường viền nhẹ */
 }
 
-thead th {
+thead {
     background-color: #7768E5;
     color: white;
-    padding: 15px;
-    text-align: left;
-    font-weight: 600;
-    font-size: 15px;
-    border: 1px solid #E8E8F4;
 }
 
-tbody td {
-    padding: 12px 15px;
-    border: 1px solid #E8E8F4;
+th, td {
+    padding: 12px 15px; /* Tăng padding */
     text-align: left;
+    border-bottom: 1px solid #ddd; /* Chỉ có border dưới */
     vertical-align: middle;
-    font-size: 15px;
-    color: #343a40;
 }
 
-tbody td img {
-    border-radius: 50%; /* Round avatars */
-    object-fit: cover;
-    border: 1px solid #eee; /* Subtle border for avatars */
+th:first-child, td:first-child { border-left: none; }
+th:last-child, td:last-child { border-right: none; }
+
+th {
+    font-weight: bold;
+    font-size: 1em; /* Kích thước chữ chuẩn */
+    text-transform: uppercase; /* Chữ hoa cho tiêu đề */
 }
 
 tbody tr:nth-child(even) {
-    background-color: #fcfdff;
+    background-color: #f9f9f9;
 }
 
 tbody tr:hover {
-    background-color: #e2f0fd;
+    background-color: #f0f0f0; /* Màu nền nhẹ hơn khi hover */
 }
 
-.no-results {
-    text-align: center;
-    padding: 20px;
-    color: #6c757d;
-    font-style: italic;
-}
-
-/* Filter Selects in Table Header */
-thead th select {
-    background-color: #7768E5;
-    color: white;
-    border: none;
-    border-radius: 0;
-    width: calc(100% + 2px); /* +2px to potentially cover collapsed borders */
-    padding: 15px;
-    margin: -1px; /* Negative margin to fill the th cell */
-    box-sizing: border-box;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    appearance: none; /* Hide default dropdown arrow */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    /* Custom arrow using SVG background-image */
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='12'%3E%3Cpath%20fill='white'%20d='M0%200l6%206%206-6z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 12px;
-}
-
-thead th select:focus {
-    outline: none;
-    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5); /* Inner white shadow on focus */
-}
-
-thead th select option {
-    color: #343a40; /* Black text for options */
-    background-color: #fff; /* White background for options */
-    padding: 10px;
-}
-
-/* Adjust padding for th cells containing selects (if :has() is supported or manually) */
-/* This is a modern CSS selector, might need fallback for older browsers */
-thead th:has(select) {
-    padding: 0; /* Remove padding from th if it contains a select to let select fill it */
-}
-
-
-/* Status Span (for User Status: Active/Inactive) */
-.status {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
+/* Specific cell styles */
+.status-cell .status {
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-weight: bold;
     text-transform: capitalize;
-    text-align: center;
+    font-size: 0.9em;
 }
 
 .status-active {
-    background-color: #e6ffe6;
-    color: #28a745;
-    border: 1px solid #28a745;
+    background-color: #e6ffe6; /* Màu xanh nhạt */
+    color: #008000; /* Màu xanh đậm */
+    border: 1px solid #c2f0c2;
 }
 
 .status-inactive {
-    background-color: #ffe6e6;
-    color: #dc3545;
-    border: 1px solid #dc3545;
+    background-color: #ffe6e6; /* Màu đỏ nhạt */
+    color: #cc0000; /* Màu đỏ đậm */
+    border: 1px solid #f0c2c2;
 }
 
-/* Action Buttons (Edit, Delete) */
+/* Action Buttons */
 .action-buttons {
-    white-space: nowrap;
-    display: flex;
-    gap: 8px; /* Space between buttons */
-    justify-content: center; /* Center buttons within their cell */
+    white-space: nowrap; /* Ngăn các nút bị xuống dòng */
 }
 
 .action-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
-    padding: 0;
+    padding: 8px; /* Kích thước nhỏ hơn, chỉ cho icon */
+    margin: 0 3px;
     border: none;
-    border-radius: 50%;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 15px;
-    text-decoration: none;
-    color: white;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    color: white; /* Màu icon mặc định là trắng */
 }
 
 .action-btn i {
-    font-size: 15px;
+    pointer-events: none; /* Đảm bảo click vào nút chứ không phải icon */
 }
 
 .edit-btn {
-    background-color: #007bff;
+    background-color: #007bff; /* Xanh dương */
 }
-
 .edit-btn:hover {
     background-color: #0056b3;
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transform: translateY(-1px);
 }
 
 .delete-btn {
-    background-color: #dc3545;
+    background-color: #dc3545; /* Đỏ */
+}
+.delete-btn:hover {
+    background-color: #bd2130;
+    transform: translateY(-1px);
 }
 
-.delete-btn:hover {
-    background-color: #c82333;
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+/* Dropdown Filters in Table Header */
+th select {
+    background-color: #7768E5;
+    color: white;
+    border: none;
+    border-radius: 0;
+    width: 100%; /* Chiếm toàn bộ chiều rộng của tiêu đề */
+    padding: 6px 10px;
+    margin: 0;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='10'%20height='10'%3E%3Cpath%20fill='white'%20d='M0%200l5%205%205-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+}
+
+th select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(119, 104, 229, 0.5); /* Hiệu ứng focus */
+}
+
+th select option {
+    color: black;
+    background-color: white;
 }
 
 /* Pagination */
@@ -443,181 +340,127 @@ thead th:has(select) {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
-    gap: 8px;
-    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    gap: 8px; /* Khoảng cách giữa các nút phân trang */
 }
 
-.page-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    height: 40px;
-    padding: 8px 12px;
-    border: 1px solid #dee2e6;
+.pagination .page-btn {
+    display: inline-block;
+    padding: 8px 15px;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    color: #007bff;
     text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    transition: all 0.3s ease;
+    color: #7768E5;
     background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    min-width: 40px;
+    text-align: center;
 }
 
-.page-btn:hover {
-    background-color: #e9ecef;
-    border-color: #007bff;
-    color: #0056b3;
-}
-
-.page-btn.active {
+.pagination .page-btn:hover {
     background-color: #7768E5;
     color: white;
     border-color: #7768E5;
-    font-weight: 700;
-    box-shadow: 0 3px 8px rgba(119, 104, 229, 0.3);
 }
 
-/* Footer (Assuming this is handled by footer.css or included globally) */
-footer {
-    text-align: center;
-    padding: 15px;
-    background-color: #333;
+.pagination .page-btn.active {
+    background-color: #7768E5;
     color: white;
-    width: 100%;
-    margin-top: auto; /* Pushes footer to the bottom of the flex column */
-    font-size: 14px;
+    border-color: #7768E5;
+    font-weight: bold;
+    cursor: default;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 992px) {
-    .content {
-        padding: 20px;
+.pagination .page-btn.active:hover {
+    background-color: #7768E5; /* Giữ nguyên màu khi hover nếu active */
+    color: white;
+}
+
+
+/* Responsive Design (adjust as needed) */
+@media (max-width: 768px) {
+    .hero-banner {
+        height: 200px; /* Chiều cao nhỏ hơn trên mobile */
     }
-    .hero-text h1 {
-        font-size: 2.8em;
+
+    .hero-banner .hero-text h1 {
+        font-size: 2.2em;
     }
-    thead th, tbody td {
-        padding: 10px;
-        font-size: 14px;
+
+    .hero-banner .hero-text p {
+        font-size: 1em;
     }
+
     .search-container {
         flex-direction: column;
         align-items: stretch;
     }
-    .search-form {
+
+    .search-container form {
         max-width: 100%;
     }
+
     .add-user-btn {
         width: 100%;
         justify-content: center;
     }
-    .action-btn {
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
-    }
-}
 
-@media (max-width: 768px) {
-    .hero-banner {
-        height: 250px;
-    }
-    .hero-text h1 {
-        font-size: 2.2em;
-    }
-    .hero-text p {
-        font-size: 1em;
-    }
     table {
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    /* Stack table headers and data on small screens */
+    table, thead, tbody, th, td, tr {
         display: block;
-        overflow-x: auto;
-        white-space: nowrap; /* Prevents content wrapping inside cells */
     }
 
-    /* Convert table to "cards" on small screens */
-    thead {
-        display: none; /* Hide the actual table header */
-    }
-
-    tbody, tr, td {
-        display: block; /* Make tbody, tr, td behave like blocks */
-        width: 100%; /* Take full width */
-    }
-
-    tbody tr {
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        padding: 10px;
-        box-sizing: border-box;
-    }
-
-    tbody td {
-        border: none; /* Remove individual cell borders */
-        position: relative;
-        padding-left: 50%; /* Make space for the data label */
-        text-align: right;
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-
-    tbody td::before {
-        content: attr(data-label); /* Use data-label for pseudo-elements */
+    thead tr {
         position: absolute;
-        left: 15px;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
         width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        text-align: left;
+        padding-left: 15px;
         font-weight: bold;
+        text-align: left;
         color: #555;
     }
 
-    /* Specific data labels for each column in User List */
-    td:nth-of-type(1)::before { content: "UserID:"; }
-    td:nth-of-type(2)::before { content: "Avatar:"; }
-    td:nth-of-type(3)::before { content: "Full Name:"; }
-    td:nth-of-type(4)::before { content: "Role:"; }
-    td:nth-of-type(5)::before { content: "Gender:"; }
-    td:nth-of-type(6)::before { content: "Status:"; }
-    td:nth-of-type(7)::before { content: "Email:"; }
-    td:nth-of-type(8)::before { content: "Phone:"; }
-    td:nth-of-type(9)::before { content: "Address:"; }
-    td:nth-of-type(10)::before { content: "Actions:"; }
+    .image-cell img {
+        margin: 5px 0 5px auto; /* Căn phải ảnh trong mobile view */
+    }
 
     .action-buttons {
-        justify-content: flex-end; /* Align action buttons to the right */
-        padding-top: 10px;
-        border-top: 1px solid #eee; /* Separator for actions */
-        margin-top: 10px;
+        display: flex;
+        justify-content: flex-end; /* Căn phải các nút hành động */
+        padding-right: 15px;
     }
-}
 
-@media (max-width: 480px) {
-    .hero-banner {
-        height: 200px;
-    }
-    .hero-text h1 {
-        font-size: 1.8em;
-    }
-    .hero-text p {
-        font-size: 0.9em;
-    }
-    .content {
-        padding: 15px;
-    }
-    .search-input, .search-button, .add-user-btn {
-        font-size: 14px;
-        padding: 10px 15px;
-    }
-    .page-btn {
-        min-width: 35px;
-        height: 35px;
-        font-size: 14px;
-        padding: 6px 10px;
+    th select {
+        width: calc(100% - 30px); /* Điều chỉnh cho padding */
+        margin: 5px 15px;
+        border-radius: 5px;
     }
 }

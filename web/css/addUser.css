@@ -1,0 +1,326 @@
+/* addUser.css */
+
+/* General Body and Layout */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Consistent font with UserDetail */
+    background-color: #f8f9fa; /* Light background for consistency */
+    margin: 0;
+    padding: 0;
+    color: #343a40; /* Darker text color for readability */
+    line-height: 1.6;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure footer sticks to bottom */
+}
+
+.content-wrapper {
+    flex: 1; /* Allows content to take available space */
+    padding: 40px 20px; /* Increased padding top/bottom */
+    max-width: 900px; /* Max width for the main content area */
+    margin: 0 auto; /* Center the content */
+    box-sizing: border-box;
+}
+
+/* Hero Banner Section (Re-styling for a consistent look with other pages) */
+.hero-banner {
+    position: relative;
+    width: 100%;
+    height: 250px; /* Consistent height */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 40px; /* Space below banner */
+}
+
+.hero-banner .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.hero-banner .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: 2;
+}
+
+.hero-banner .hero-text {
+    position: relative;
+    z-index: 3;
+    color: white;
+    padding: 15px; /* Add some padding */
+}
+
+.hero-banner .hero-text h1 {
+    font-size: 2.8em; /* Slightly larger title */
+    margin-bottom: 10px;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Subtle text shadow */
+    text-transform: uppercase;
+}
+
+.hero-banner .hero-text p {
+    font-size: 1.1em;
+    color: white;
+    margin: 0;
+}
+
+.hero-banner .hero-text a {
+    color: #ffd700; /* A contrasting color for links in banner */
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.hero-banner .hero-text a:hover {
+    color: #ffeb3b;
+    text-decoration: underline;
+}
+
+
+/* Add User Form Container */
+.add-user-form-container {
+    max-width: 750px; /* Slightly wider form */
+    margin: 0 auto; /* Center the form within content-wrapper */
+    padding: 35px; /* Increased padding */
+    background-color: #ffffff;
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+    box-sizing: border-box; /* Ensures padding doesn't increase total width */
+}
+
+.add-user-form-container h2 {
+    text-align: center;
+    margin-bottom: 35px; /* Increased margin */
+    color: #1a237e; /* Deeper blue for heading */
+    font-size: 2.2em; /* Larger heading */
+    font-weight: 700;
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 25px; /* Increased spacing between form groups */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px; /* Increased space below label */
+    font-weight: 600; /* Bolder labels */
+    color: #495057; /* Slightly darker grey for labels */
+    font-size: 1.05em; /* Slightly larger label font */
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="tel"],
+.form-group select {
+    width: 100%; /* Full width */
+    padding: 14px; /* Increased padding */
+    border: 1px solid #ced4da; /* Lighter border */
+    border-radius: 8px; /* More rounded input fields */
+    font-size: 1.05em; /* Slightly larger input font */
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fdfdfd; /* Very light background for inputs */
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus,
+.form-group input[type="tel"]:focus,
+.form-group select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Focus shadow */
+    outline: none;
+}
+
+/* Radio Group for Gender */
+.form-group .radio-group {
+    display: flex; /* Use flexbox for horizontal alignment */
+    gap: 25px; /* Space between radio buttons */
+    margin-top: 5px; /* Space below "Gender" label */
+}
+
+.form-group .radio-group label {
+    display: flex; /* Align checkbox/radio with text */
+    align-items: center;
+    margin-bottom: 0; /* Remove default margin for inline labels */
+    font-weight: normal; /* Normal weight for radio labels */
+    color: #333;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.form-group input[type="radio"] {
+    margin-right: 8px; /* Space between radio button and text */
+    transform: scale(1.1); /* Slightly larger radio buttons */
+    cursor: pointer;
+}
+
+/* Form Actions (Buttons) */
+.form-actions {
+    text-align: center;
+    margin-top: 40px; /* More space above buttons */
+    display: flex; /* Use flexbox for button layout */
+    justify-content: center; /* Center buttons */
+    gap: 20px; /* Space between buttons */
+}
+
+.form-actions button {
+    padding: 14px 30px; /* Larger padding for buttons */
+    border: none;
+    border-radius: 8px; /* More rounded buttons */
+    cursor: pointer;
+    font-size: 1.1em; /* Larger button text */
+    font-weight: 600; /* Bolder button text */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Space between icon and text */
+    color: white; /* Ensure text color is white */
+}
+
+.form-actions button[type="submit"] {
+    background-color: #28a745; /* Green for Add button */
+}
+
+.form-actions button[type="submit"]:hover {
+    background-color: #218838;
+    transform: translateY(-3px); /* Lift effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.form-actions .cancel-btn {
+    background-color: #6c757d; /* Grey for Cancel button */
+}
+
+.form-actions .cancel-btn:hover {
+    background-color: #5a6268;
+    transform: translateY(-3px); /* Lift effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Error Message Styling */
+.error-message {
+    color: #dc3545; /* Red color */
+    font-size: 0.95em; /* Slightly larger font */
+    margin-top: -15px; /* Adjust margin to pull it closer to the input if needed */
+    margin-bottom: 25px; /* Space below error message */
+    padding: 12px 15px; /* Increased padding */
+    background-color: #f8d7da; /* Light red background */
+    border: 1px solid #f5c6cb; /* Red border */
+    border-radius: 8px; /* More rounded corners */
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Space between icon and text */
+    font-weight: 500;
+}
+
+.error-message i {
+    color: #dc3545;
+    font-size: 1.2em; /* Larger icon */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-banner {
+        height: 200px;
+        margin-bottom: 30px;
+    }
+    .hero-banner .hero-text h1 {
+        font-size: 2.2em;
+    }
+    .hero-banner .hero-text p {
+        font-size: 0.95em;
+    }
+
+    .content-wrapper {
+        padding: 20px 15px;
+    }
+
+    .add-user-form-container {
+        padding: 25px;
+        margin: 0 auto;
+    }
+
+    .add-user-form-container h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="password"],
+    .form-group input[type="tel"],
+    .form-group select {
+        padding: 10px;
+        font-size: 1em;
+    }
+
+    .form-group .radio-group {
+        flex-direction: column; /* Stack radio buttons vertically on small screens */
+        gap: 10px;
+    }
+
+    .form-actions {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .form-actions button {
+        width: 100%; /* Full width buttons */
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+
+    .error-message {
+        font-size: 0.9em;
+        padding: 10px;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-banner {
+        height: 180px;
+    }
+    .hero-banner .hero-text h1 {
+        font-size: 1.8em;
+    }
+    .hero-banner .hero-text p {
+        font-size: 0.9em;
+    }
+
+    .add-user-form-container {
+        padding: 15px;
+    }
+
+    .add-user-form-container h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 0.95em;
+    }
+}
