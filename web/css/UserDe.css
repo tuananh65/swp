@@ -1,277 +1,512 @@
 /* UserDe.css */
 
-/* USER DETAIL */
+/* USER DETAIL - Base Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font chữ hiện đại hơn */
     margin: 0;
     padding: 0;
-    background-color: #fff;
+    background-color: #f8f9fa; /* Nền sáng nhẹ */
+    color: #343a40; /* Màu chữ tối hơn, dễ đọc */
+    line-height: 1.6; /* Tăng khoảng cách dòng để dễ đọc */
 }
 
-.user-details {
+/* --- Hero Banner Section (GIỮ NGUYÊN - TUYỆT ĐỐI KHÔNG SỬA) --- */
+.hero-banner {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    padding: 50px 20px;
-    background: #fff;
+    color: #fff;
+    margin-bottom: 30px;
 }
 
+.hero-banner .hero-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-banner .hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.hero-banner .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(0, 0, 0, 0.5); */ /* Giữ nguyên hoặc bỏ comment nếu muốn lớp phủ */
+    z-index: 1;
+}
+
+.hero-banner .hero-text {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.hero-banner .hero-text h1 {
+    font-size: 3em;
+    margin: 0;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero-banner .hero-text p {
+    font-size: 1.2em;
+    margin-top: 10px;
+    color: #fff;
+}
+
+.hero-banner .hero-text p a {
+    color: #fff;
+    text-decoration: none;
+}
+.hero-banner .hero-text p a:hover {
+    text-decoration: underline;
+}
+
+/* Ẩn banner cũ (nếu có) */
+.user-details .banner {
+    display: none;
+}
+/* --- END Hero Banner Section --- */
+
+
+/* Container chính cho toàn bộ nội dung chi tiết người dùng */
+.user-details-container {
+    max-width: 1200px; /* Tăng chiều rộng tối đa cho container tổng thể */
+    margin: 30px auto; /* Căn giữa và tạo khoảng cách trên dưới */
+    padding: 0 20px; /* Padding hai bên */
+    box-sizing: border-box;
+}
+
+/* Section chi tiết người dùng */
+.user-details {
+    padding: 0; /* Loại bỏ padding ở đây để card tự căn chỉnh */
+    background: transparent; /* Đảm bảo không có nền thừa */
+    text-align: center; /* Căn giữa nội dung trong section */
+}
+
+/* Thẻ thông tin người dùng */
 .user-card {
-    align-items: flex-start; /* Căn các phần tử con từ trên xuống */
-    background: #fff;
+    background: #ffffff;
     padding: 30px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    max-width: 700px;
+    border: 1px solid #e0e0e0; /* Border mềm mại hơn */
+    border-radius: 12px; /* Bo góc nhiều hơn */
+    max-width: 800px; /* Tăng chiều rộng tối đa cho card */
     margin: 0 auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex; /* Thêm flex để sắp xếp wrapper và action buttons */
-    flex-direction: column; /* Xếp wrapper và action buttons theo chiều dọc */
-    align-items: center; /* Căn giữa wrapper và action buttons theo chiều ngang */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08); /* Đổ bóng chuyên nghiệp hơn */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px; /* Khoảng cách dưới card */
 }
 
 .user-details-wrapper {
-    display: flex; /* Sử dụng flex để xếp ảnh và user-info theo hàng ngang */
-    align-items: center; /* Căn giữa ảnh và user-info theo chiều dọc */
-    margin-bottom: 15px; /* Tạo khoảng cách giữa phần thông tin và nút action */
-    width: 100%; /* Đảm bảo wrapper chiếm hết chiều rộng của user-card */
-    /* justify-content: center; /* Bỏ căn giữa nếu muốn ảnh trái, info phải */
+    display: flex;
+    flex-direction: column; /* Đặt ảnh và info theo chiều dọc trên mobile */
+    align-items: center;
+    margin-bottom: 25px; /* Tăng khoảng cách dưới wrapper */
+    width: 100%;
+    text-align: center; /* Căn giữa nội dung trong wrapper khi flex-direction: column */
 }
 
 .user-card img {
-    width: 45%; /* Chiếm 45% chiều ngang của wrapper */
-    max-width: 150px; /* Giữ kích thước tối đa của ảnh */
-    height: auto; /* Để tỷ lệ khung hình không bị méo */
+    width: 180px; /* Kích thước ảnh lớn hơn */
+    height: 180px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 10%; /* Khoảng cách nhỏ giữa ảnh và thông tin */
+    border: 4px solid #7768E5; /* Viền ảnh đẹp hơn, màu chủ đạo */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho ảnh */
+    margin-bottom: 20px; /* Khoảng cách dưới ảnh */
 }
 
 .user-info {
-    text-align: left; /* Căn trái nội dung trong user-info */
-    width: 53%; /* Chiếm 55% chiều ngang còn lại (100% - 45% - 2% margin) */
-    flex-grow: 1; /* Cho phép user-info mở rộng nếu cần */
+    text-align: center; /* Căn giữa thông tin */
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    padding: 0 15px; /* Padding để nội dung không chạm biên */
+    box-sizing: border-box;
 }
 
 .user-info h2 {
-    font-size: 28px;
+    font-size: 2.2em; /* Kích thước tiêu đề lớn hơn */
     color: #1a237e;
-    margin: 0 0 5px;
-    display: block; /* Đảm bảo h2 chiếm toàn bộ chiều rộng */
+    margin: 0 0 10px;
+    font-weight: 700; /* Đậm hơn */
 }
 
-/* Ẩn status bên cạnh tên */
 .user-info h2 .status {
-    display: none;
+    display: inline-block; /* Hiện lại status bên cạnh tên, nếu muốn */
+    margin-left: 10px;
+    padding: 4px 10px;
+    border-radius: 20px; /* Bo tròn hoàn toàn */
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+    vertical-align: middle; /* Căn giữa theo chiều dọc với chữ */
 }
 
-.user-info .role-display,
-.user-info .status-display,
-.user-info .gender,
-.user-info .contact,
-.user-info .location,
-.user-info .email {
-    margin: 5px 0;
-    color: #333; /* Đổi màu chữ cho dễ đọc trên nền trắng */
-    font-size: 16px;
-    text-align: left; /* Căn trái */
+.user-info .status.active {
+    background-color: #e6ffe6;
+    color: #28a745; /* Màu xanh lá cây đậm */
+    border: 1px solid #c3e6cb;
 }
 
-/* CSS cho status Active màu xanh lá cây */
-.user-info .status-display .active {
-    color: #00e676;
-    font-weight: bold;
+.user-info .status.inactive {
+    background-color: #ffe6e6;
+    color: #dc3545; /* Màu đỏ đậm */
+    border: 1px solid #f5c6cb;
 }
 
-/* CSS cho status Inactive màu đỏ */
-.user-info .status-display .inactive {
-    color: #f44336;
-    font-weight: bold;
+
+.user-info p {
+    margin: 8px 0; /* Khoảng cách giữa các dòng thông tin */
+    color: #555;
+    font-size: 1.1em; /* Kích thước font tổng thể lớn hơn một chút */
+    display: flex; /* Dùng flex để căn giữa icon và text */
+    align-items: center;
+    justify-content: center; /* Căn giữa nội dung p */
+    gap: 10px; /* Khoảng cách giữa icon và text */
+}
+
+.user-info p i { /* Style cho các icon */
+    color: #7768E5; /* Màu icon theo màu chủ đạo */
+    font-size: 1.2em;
 }
 
 .user-info .contact a,
 .user-info .email a {
-    color: #f4511e;
+    color: #007bff; /* Màu link mặc định */
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .user-info .contact a:hover,
 .user-info .email a:hover {
+    color: #0056b3;
     text-decoration: underline;
 }
 
+/* Action Buttons */
 .action-buttons {
     display: flex;
-    gap: 10px; /* Khoảng cách giữa các nút */
-    margin-top: 15px; /* Thêm khoảng cách phía trên nút action */
-    justify-content: flex-end; /* Căn các nút về phía bên phải */
-    width: 100%; /* Đảm bảo action buttons chiếm hết chiều rộng */
+    gap: 15px; /* Khoảng cách giữa các nút */
+    margin-top: 25px; /* Thêm khoảng cách phía trên nút action */
+    justify-content: center; /* Căn giữa các nút */
+    width: 100%;
 }
 
-.action-buttons a {
-    display: inline-block;
-    padding: 10px 20px;
+.action-buttons a,
+.action-buttons button {
+    display: inline-flex; /* Dùng inline-flex để căn icon */
+    align-items: center;
+    justify-content: center;
+    padding: 12px 25px; /* Padding lớn hơn cho nút */
     text-decoration: none;
     color: #fff;
     border: none;
-    border-radius: 5px;
-    font-size: 1em;
+    border-radius: 8px; /* Bo góc nút nhiều hơn */
+    font-size: 1.05em; /* Font lớn hơn một chút */
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-weight: 600; /* Đậm hơn */
+    gap: 8px; /* Khoảng cách giữa icon và text */
 }
 
 .action-buttons a:first-child {
-    background-color: #4CAF50;
+    background-color: #28a745; /* Màu xanh lá cây */
 }
 
 .action-buttons a:first-child:hover {
-    background-color: #45a049;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #218838;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
 }
 
-.action-buttons a:last-child {
-    background-color: #007bff;
+.action-buttons button#editRoleStatusBtn {
+    background-color: #007bff; /* Màu xanh dương */
 }
 
-.action-buttons a:last-child:hover {
+.action-buttons button#editRoleStatusBtn:hover {
     background-color: #0056b3;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
 }
 
-/* CSS cho phần "Những người dùng khác" */
+/* Edit Role and Status Form */
+#editRoleStatusForm {
+    width: 100%; /* Chiếm toàn bộ chiều rộng của card */
+    max-width: 400px; /* Giới hạn chiều rộng của form */
+    margin-top: 25px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Shadow nổi nhẹ vào trong */
+    text-align: left;
+    box-sizing: border-box;
+}
+
+#editRoleStatusForm h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    color: #343a40;
+    text-align: center;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 18px; /* Khoảng cách giữa các nhóm form */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600; /* Đậm hơn */
+    color: #495057;
+    font-size: 1em;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 10px 12px; /* Tăng padding */
+    border: 1px solid #ced4da; /* Border mềm mại */
+    border-radius: 6px; /* Bo góc nhẹ */
+    box-sizing: border-box;
+    font-size: 1em;
+    appearance: none; /* Ẩn mũi tên mặc định của select */
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%23343a40%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22%2F%3E%3C%2Fsvg%3E'); /* Thêm mũi tên tùy chỉnh */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group select:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.save-button {
+    background-color: #28a745; /* Màu xanh lá cây */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    width: 100%; /* Nút Save chiếm toàn bộ chiều rộng form */
+}
+
+.save-button:hover {
+    background-color: #218838;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Other Users Section */
 .other-users-container {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #eee;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+    margin-top: 40px; /* Tăng khoảng cách trên */
+    padding: 30px; /* Tăng padding */
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
     text-align: center;
 }
 
 .other-users-container h3 {
     margin-top: 0;
-    margin-bottom: 10px;
-    color: #333;
-    font-size: 20px;
+    margin-bottom: 25px; /* Khoảng cách dưới tiêu đề */
+    color: #1a237e;
+    font-size: 2em; /* Kích thước tiêu đề lớn hơn */
+    font-weight: 700;
 }
 
 .four_user {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap; /* Cho phép các thẻ xuống dòng */
     justify-content: center;
-    align-items: center;
-    gap: 20px; /* Tăng khoảng cách nếu cần */
-    flex-wrap: wrap;
+    gap: 30px; /* Tăng khoảng cách giữa các thẻ */
 }
 
 .other-user-link {
-    text-decoration: none; /* Loại bỏ gạch chân mặc định của link */
-    color: inherit; /* Kế thừa màu chữ từ phần tử cha */
-    display: block; /* Để thẻ a chiếm toàn bộ diện tích thẻ div */
+    text-decoration: none;
+    color: inherit;
+    flex: 0 0 auto; /* Đảm bảo kích thước cố định */
 }
 
 .other-user-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 200px; /* Tăng chiều rộng của thẻ */
-    /* height: 250px; /* Bạn cũng có thể tăng chiều cao nếu cần */
-    margin-bottom: 15px; /* Tăng khoảng cách dưới thẻ nếu cần */
-    padding: 15px; /* Tăng padding bên trong thẻ */
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    width: 220px; /* Tăng chiều rộng của thẻ */
+    padding: 20px; /* Tăng padding */
+    border: 1px solid #e0e0e0;
+    border-radius: 10px; /* Bo góc nhẹ */
     text-align: center;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Thêm transition cho hiệu ứng mượt mà */
+    background-color: #fefefe;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); /* Đổ bóng nhẹ nhàng */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .other-user-card:hover {
-    transform: translateY(-5px); /* Di chuyển thẻ lên trên một chút */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Tạo hiệu ứng đổ bóng nổi bật hơn */
+    transform: translateY(-8px); /* Nhấc lên nhiều hơn khi hover */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Đổ bóng mạnh hơn khi hover */
 }
 
 .other-user-card img {
-    width: 100px; /* Tăng kích thước ảnh */
-    height: 100px; /* Tăng kích thước ảnh */
+    width: 120px; /* Kích thước ảnh lớn hơn */
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 8px; /* Khoảng cách dưới ảnh */
+    margin-bottom: 15px; /* Khoảng cách dưới ảnh */
+    border: 3px solid #7768E5; /* Viền ảnh nhỏ hơn, màu chủ đạo */
 }
 
 .other-user-card h4 {
-    margin-top: 8px;
-    margin-bottom: 5px;
-    font-size: 1.2em; /* Tăng kích thước tên */
-    color: #555;
-}
-
-.other-user-card p {
-    font-size: 1em; /* Tăng kích thước vai trò */
-    color: #777;
-    margin-bottom: 2px;
-}
-
-.edit-role-status {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    text-align: left;
-}
-
-.edit-role-status h3 {
     margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.2em;
+    margin-bottom: 8px;
+    font-size: 1.3em; /* Tăng kích thước tên */
+    color: #343a40;
+    font-weight: 600;
 }
 
-.form-group {
-    margin-bottom: 10px;
+.other-user-card p.role {
+    font-size: 1.05em; /* Tăng kích thước vai trò */
+    color: #6c757d;
+    margin-bottom: 0;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-banner {
+        height: 250px;
+    }
+    .hero-banner .hero-text h1 {
+        font-size: 2.5em;
+    }
+    .hero-banner .hero-text p {
+        font-size: 1em;
+    }
+
+    .user-card {
+        padding: 20px;
+    }
+
+    .user-details-wrapper {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .user-card img {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .user-info {
+        width: 100%;
+    }
+
+    .user-info h2 {
+        font-size: 2em;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center; /* Căn giữa các nút khi stack */
+    }
+
+    .action-buttons a,
+    .action-buttons button {
+        width: 80%; /* Nút chiếm gần hết chiều rộng */
+        max-width: 250px; /* Giới hạn chiều rộng tối đa */
+    }
+
+    #editRoleStatusForm {
+        width: 90%;
+        margin: 20px auto 0;
+    }
+
+    .other-users-container {
+        padding: 20px;
+        margin-top: 30px;
+    }
+
+    .other-users-container h3 {
+        font-size: 1.8em;
+    }
+
+    .four_user {
+        gap: 20px;
+    }
+
+    .other-user-card {
+        width: 180px; /* Giảm chiều rộng thẻ khác một chút */
+    }
+    .other-user-card img {
+        width: 100px;
+        height: 100px;
+    }
+    .other-user-card h4 {
+        font-size: 1.1em;
+    }
+    .other-user-card p.role {
+        font-size: 0.95em;
+    }
 }
 
-.form-group select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.save-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-}
-
-.save-button:hover {
-    background-color: #0056b3;
-}
-
-.action-buttons button#editRoleStatusBtn {
-    display: inline-block;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #007bff; /* Màu giống nút Edit */
-}
-
-.action-buttons button#editRoleStatusBtn:hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+@media (max-width: 480px) {
+    .user-card img {
+        width: 120px;
+        height: 120px;
+    }
+    .user-info h2 {
+        font-size: 1.8em;
+    }
+    .user-info p {
+        font-size: 1em;
+        gap: 8px;
+    }
+    .user-info p i {
+        font-size: 1em;
+    }
+    .action-buttons a,
+    .action-buttons button {
+        width: 100%;
+        max-width: none;
+    }
+    .other-users-container h3 {
+        font-size: 1.5em;
+    }
+    .other-user-card {
+        width: 100%; /* Các thẻ người dùng khác chiếm toàn bộ chiều rộng */
+        max-width: 200px; /* Giới hạn kích thước tối đa để không quá lớn */
+    }
 }
