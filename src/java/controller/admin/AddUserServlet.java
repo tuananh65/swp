@@ -124,7 +124,7 @@ public class AddUserServlet extends HttpServlet {
             newUser.setActivated(true); // Mặc định là đã kích hoạt khi admin tạo
 
             // Gọi phương thức để thêm người dùng vào DB
-            boolean success = userDAO.addUser(newUser, roleName);
+            boolean success = userDAO.createUserByAdmin(newUser);
 
             if (success) {
                 // Thêm thông báo thành công vào session để hiển thị sau khi redirect
