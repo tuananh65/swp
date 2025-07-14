@@ -121,6 +121,7 @@
                         <a href="${pageContext.request.contextPath}/sliderlist">Slider List</a>
                     </button>
                 </div>
+<<<<<<< HEAD
                     
                 <div>
                     <button class="dropdown-toggle" onclick="toggleDropdown(this)">
@@ -129,6 +130,14 @@
                 </div>  
                     
               
+=======
+                    <div>
+                    <button class="dropdown-toggle" onclick="toggleDropdown(this)">
+                        <a href="${pageContext.request.contextPath}/subjectDetail">Subject Detail</a>
+                    </button>
+                </div>
+                    
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
                 <div>
                     <button class="dropdown-toggle" onclick="toggleDropdown(this)">
                         <a href="${pageContext.request.contextPath}/admin/registrations">Registation List</a>

@@ -24,7 +24,11 @@
                 <img src="${pageContext.request.contextPath}/image/${loggedInUser.avatarUrl}" alt="${loggedInUser.fullName}">
                 <div class="user-info">
                     <h2>${loggedInUser.fullName} <span class="status ${loggedInUser.status.toLowerCase()}">${loggedInUser.status}</span></h2>
+
                     <p class="role-display">Role: <span id="currentRole">${roleName}</span></p> <%-- RoleName is already a string --%>
+=======
+                    <p class="role-display">Role: <span id="currentRole">${roleName == '1' ? 'Student' : (roleName == '2' ? 'Teacher' : roleName)}</span></p>
+
                     <p class="status-display">Status: <span id="currentStatus">${loggedInUser.status}</span></p>
                     <p class="gender">${loggedInUser.gender}</p>
                     <p class="contact">📞 <a href="tel:${loggedInUser.phone}">${loggedInUser.phone}</a></p>
@@ -40,14 +44,21 @@
             <div id="editRoleStatusForm" class="edit-role-status" style="display: none; margin-top: 15px;">
                 <h3>Edit Role and Status</h3>
                 <form action="${pageContext.request.contextPath}/updateUserRoleStatus" method="post">
+<<<<<<< HEAD
                     <input type="hidden" name="userId" value="${loggedInUser.userId}"> <%-- Changed to userId (lowercase i) --%>
+=======
+                    <input type="hidden" name="userId" value="${loggedInUser.userID}">
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
 
                     <div class="form-group">
                         <label for="roleId">Role:</label>
                         <select id="roleId" name="roleId">
                             <option value="1">Student</option>
                             <option value="2">Instructor</option>
+<<<<<<< HEAD
                             <option value="3">Admin</option> <%-- Added Admin role option if applicable --%>
+=======
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
                         </select>
                     </div>
 
@@ -71,11 +82,19 @@
                     <h3>Other Users</h3>
                     <div class="four_user">
                         <c:forEach var="otherUser" items="${otherUsers}">
+<<<<<<< HEAD
                             <a href="${pageContext.request.contextPath}/userdetail?id=${otherUser.user.userId}" class="other-user-link"> <%-- Changed to userId (lowercase i) and link to servlet --%>
                                 <div class="other-user-card">
                                     <img src="${pageContext.request.contextPath}/image/${otherUser.user.avatarUrl}" alt="${otherUser.user.fullName}">
                                     <h4>${otherUser.user.fullName}</h4>
                                     <p class="role">${otherUser.roleName}</p> <%-- RoleName is already a string --%>
+=======
+                            <a href="${pageContext.request.contextPath}/userdetail?id=${otherUser.user.userID}" class="other-user-link">
+                                <div class="other-user-card">
+                                    <img src="${pageContext.request.contextPath}/image/${otherUser.user.avatarUrl}" alt="${otherUser.user.fullName}">
+                                    <h4>${otherUser.user.fullName}</h4>
+                                    <p class="role">${otherUser.roleName == '1' ? 'Admin' : (otherUser.roleName == '2' ? 'Teacher' : otherUser.roleName)}</p>
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
                                 </div>
                             </a>
                         </c:forEach>
@@ -99,12 +118,17 @@
             // Set giá trị mặc định cho select boxes khi form hiển thị
             if (currentRole === 'Student') {
                 roleSelect.value = '1';
+<<<<<<< HEAD
             } else if (currentRole === 'Instructor') { // Changed 'Teacher' to 'Instructor' based on common role names
                 roleSelect.value = '2';
             } else if (currentRole === 'Admin') { // Added Admin case
                 roleSelect.value = '3';
             } else {
                 roleSelect.value = ''; // Default or handle other roles
+=======
+            } else if (currentRole === 'Teacher') {
+                roleSelect.value = '2';
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
             }
 
             statusSelect.value = currentStatus;

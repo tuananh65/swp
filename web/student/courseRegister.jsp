@@ -1,13 +1,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<<<<<<< HEAD
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+=======
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
 
 <!-- Modal Popup -->
 <div id="modalOverlay" class="courseRegister-modal-overlay" onclick="closeModal(event)">
     <div class="courseRegister-modal-content" onclick="event.stopPropagation()">
         <div class="courseRegister-modal-header">
             <button class="courseRegister-close-btn" onclick="closeModal()">×</button>
+<<<<<<< HEAD
             <h2 class="courseRegister-modal-title" id="modalTitle">COURSE REGISTER</h2>
+=======
+            <h2 class="courseRegister-modal-title">COURSE REGISTER</h2>
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
         </div>
         <div class="courseRegister-modal-body">
             <c:if test="${not empty error}">
@@ -16,16 +23,25 @@
                 </div>
             </c:if>
             <form id="registrationForm" action="${pageContext.request.contextPath}/register-course" method="post">
+<<<<<<< HEAD
                 <input type="hidden" name="courseId" id="courseId" value="${course.courseID}" />
                 <input type="hidden" name="basePrice" id="basePrice" value="${course.salePrice}" />
                 <input type="hidden" name="enrollmentId" id="enrollmentId">
+=======
+                <input type="hidden" name="courseId" value="${course.courseID}" />
+                <input type="hidden" name="basePrice" value="${course.salePrice}" />
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
                 <div class="courseRegister-form-group">
                     <label for="subjectName">Subject Name <span class="courseRegister-required">*</span></label>
                     <input type="text" id="subjectName" name="subjectName" class="courseRegister-form-control" value="${course.courseName}" readonly required>
                 </div>
                 <div class="courseRegister-form-group">
                     <label for="packageId">Package <span class="courseRegister-required">*</span></label>
+<<<<<<< HEAD
                     <select id="packageId" name="packageId" class="courseRegister-form-control" onchange="updateTotalPrice()" required>
+=======
+                    <select id="packageId" name="packageId" class="courseRegister-form-control" required>
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
                         <option value="">Select Package</option>
                         <c:forEach var="pkg" items="${packageList}">
                             <option value="${pkg.packageId}" data-modifier="${pkg.priceModifier}" data-duration="${pkg.durationInDays}">
@@ -40,6 +56,7 @@
                 </div>
                 <div class="courseRegister-form-group">
                     <label for="fullName">Full Name <span class="courseRegister-required">*</span></label>
+<<<<<<< HEAD
                     <input type="text" id="fullName" name="fullName" class="courseRegister-form-control" value="${currentUser.fullName}" ${not empty currentUser ? 'readonly' : ''} required>
                 </div>
                 <div class="courseRegister-form-group">
@@ -48,10 +65,21 @@
                         <option value="">Select Gender</option>
                         <option value="male" ${currentUser.gender == 'male' ? 'selected' : ''}>Male</option>
                         <option value="female" ${currentUser.gender == 'female' ? 'selected' : ''}>Female</option>
+=======
+                    <input type="text" id="fullName" name="fullName" class="courseRegister-form-control" required>
+                </div>
+                <div class="courseRegister-form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" class="courseRegister-form-control">
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
                     </select>
                 </div>
                 <div class="courseRegister-form-group">
                     <label for="email">Email <span class="courseRegister-required">*</span></label>
+<<<<<<< HEAD
                     <input type="email" id="email" name="email" class="courseRegister-form-control" value="${currentUser.email}" ${not empty currentUser ? 'readonly' : ''} required>
                 </div>
                 <div class="courseRegister-form-group">
@@ -61,10 +89,22 @@
                 <div class="courseRegister-form-buttons">
                     <button type="button" class="courseRegister-btn courseRegister-btn-cancel" onclick="resetAndCloseModal()">Cancel</button>
                     <button type="submit" class="courseRegister-btn courseRegister-btn-submit" id="submitButton">Submit</button>
+=======
+                    <input type="email" id="email" name="email" class="courseRegister-form-control" required>
+                </div>
+                <div class="courseRegister-form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" class="courseRegister-form-control">
+                </div>
+                <div class="courseRegister-form-buttons">
+                    <button type="button" class="courseRegister-btn courseRegister-btn-cancel" onclick="resetAndCloseModal()">Cancel</button>
+                    <button type="submit" class="courseRegister-btn courseRegister-btn-submit">Submit</button>
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
                 </div>
             </form>
         </div>
     </div>
+<<<<<<< HEAD
 </div>
 
 
@@ -181,3 +221,6 @@
         if (e.key === 'Escape') closeModal();
     });
 </script>
+=======
+</div>
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4

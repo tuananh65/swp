@@ -245,6 +245,7 @@
         <!-- Main Content -->
                     
         <main class="main-content">
+<<<<<<< HEAD
             <!-- Alerts -->
             <c:if test="${not empty sessionScope.message}">
                 <div class="myRegistrations-alert myRegistrations-alert-success">${sessionScope.message}</div>
@@ -254,6 +255,8 @@
                 <div class="myRegistrations-alert myRegistrations-alert-success">${sessionScope.error}</div>
                 <c:remove var="error" scope="session" />
             </c:if>
+=======
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
            
             <c:if test="${not empty course}">
                 <div class="course-layout">

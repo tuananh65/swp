@@ -283,7 +283,11 @@
                                     </div>
                                     <c:if test="${e.status == 'Submitted'}">
                                         <div class="myRegistrations-card-actions">
+<<<<<<< HEAD
                                             <button class="myRegistrations-btn myRegistrations-btn-edit" onclick="openModal(${e.enrollmentId})">EDIT</button>
+=======
+                                            <a href="edit-registration.jsp?id=${e.enrollmentId}" class="myRegistrations-btn myRegistrations-btn-edit">EDIT</a>
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
                                             <a href="dashboard?action=cancel&id=${e.enrollmentId}" class="myRegistrations-btn myRegistrations-btn-delete"
                                                onclick="return confirm('Are you sure you want to cancel this registration?');">CANCEL</a>
                                         </div>
@@ -301,6 +305,7 @@
             </div>
         </div>
     </main>
+<<<<<<< HEAD
     <jsp:include page="/student/courseRegister.jsp"/>                        
     <!-- Footer -->
     <jsp:include page="/default/footer.jsp"/>            
@@ -374,5 +379,10 @@
             }
         }
     </script>
+=======
+    <!-- Footer -->
+    <jsp:include page="/default/footer.jsp"/>            
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+>>>>>>> 9f0d8d78ba253b25258b2d43672933c3caa423b4
 </body>
 </html>
