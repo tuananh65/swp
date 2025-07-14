@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import model.User;
+import utils.PasswordUtils;
 
 
 public class UserDAO extends DBContext {
@@ -19,38 +20,28 @@ public class UserDAO extends DBContext {
     ResultSet rs = null;
 
     public User login(String email, String password) {
-        String sql = "SELECT * FROM [User] WHERE Email = ? AND Password = ? AND is_activated = 1";
-        try {conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, email);
-            ps.setString(2, password);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                User user = new User();
-                user.setUserId(rs.getInt("UserID"));
-                user.setUserName(rs.getString("UserName"));
-                user.setPassword(rs.getString("Password"));
-                user.setRoleId(rs.getInt("RoleId"));
-                user.setFullName(rs.getString("FullName"));
-                user.setGender(rs.getString("Gender"));
-                user.setDateOfBirth(rs.getDate("DateOfBirth"));
-                user.setAvatarUrl(rs.getString("AvatarUrl"));
-                user.setEmail(rs.getString("Email"));
-                user.setPhone(rs.getString("Phone"));
-                user.setAddress(rs.getString("Address"));
-                user.setStatus(rs.getString("Status"));
-                user.setCreatedAt(rs.getDate("CreatedAt"));
-                user.setActivationToken(rs.getString("activation_token"));
-                user.setActivated(rs.getBoolean("is_activated"));
-                user.setResetToken(rs.getString("reset_token"));
-                user.setTokenExpiry(rs.getTimestamp("token_expiry"));
-                return user;
+    String sql = "SELECT * FROM [User] WHERE Email = ? AND is_activated = 1";
+    try {
+        conn = new DBContext().getConnection();
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, email);
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            // ⭐ Lấy mật khẩu đã hash từ DB
+            String hashedPassword = rs.getString("Password");
+
+            // ⭐ So sánh hash
+            if (utils.PasswordUtils.checkPassword(password, hashedPassword)) {
+                // ⭐ Nếu khớp, trả User object
+                return extractUserFromResultSet(rs);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return null;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return null; // ❌ Sai email/mật khẩu
+}
+
 
    public boolean register(User user, int roleId, String activationToken) {
     // Kiểm tra email đã tồn tại chưa
@@ -59,13 +50,16 @@ public class UserDAO extends DBContext {
         return false;
     }
 
+    // ⭐ Hash mật khẩu trước khi lưu
+    String hashedPassword = utils.PasswordUtils.hashPassword(user.getPassword());
+
     String sql = "INSERT INTO [User] (UserName, Password, RoleId, FullName, Gender, Email, Phone, Status, CreatedAt, activation_token, is_activated) " +
                  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try {
         conn = new DBContext().getConnection();
         ps = conn.prepareStatement(sql);
         ps.setString(1, user.getUserName());
-        ps.setString(2, user.getPassword());
+        ps.setString(2, hashedPassword);   // ⭐ Lưu hash thay vì plaintext
         ps.setInt(3, roleId);
         ps.setString(4, user.getFullName());
         ps.setString(5, user.getGender());
@@ -82,6 +76,7 @@ public class UserDAO extends DBContext {
         return false;
     }
 }
+
 
 
     public boolean isEmailExists(String email) {
@@ -111,18 +106,23 @@ public class UserDAO extends DBContext {
     }
     
     public boolean updatePassword(String email, String password) {
-        String sql = "UPDATE [User] SET Password = ? WHERE Email = ?";
-        try {conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, password);
-            ps.setString(2, email);
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+    // ⭐ Hash password mới
+    String hashed = utils.PasswordUtils.hashPassword(password);
+
+    String sql = "UPDATE [User] SET Password = ? WHERE Email = ?";
+    try {
+        conn = new DBContext().getConnection();
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, hashed);
+        ps.setString(2, email);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
     }
+}
+
     
     public User getUserByEmail(String email) {
         String query = "SELECT * FROM [User] WHERE  Email = ?";
@@ -193,18 +193,23 @@ public class UserDAO extends DBContext {
     }
     
     public boolean resetPassword(int userId, String newPassword) {
-        String query = "UPDATE [User] SET Password = ? WHERE UserID = ?";
-        try {conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, newPassword);
-            ps.setInt(2, userId);
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
+    // ⭐ Hash mật khẩu
+    String hashed = utils.PasswordUtils.hashPassword(newPassword);
+
+    String query = "UPDATE [User] SET Password = ? WHERE UserID = ?";
+    try {
+        conn = new DBContext().getConnection();
+        ps = conn.prepareStatement(query);
+        ps.setString(1, hashed);
+        ps.setInt(2, userId);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    return false;
+}
+
     
     public User getUserById(int userID) {
         String sql = "SELECT * FROM [User] WHERE UserId = ?";
@@ -552,117 +557,40 @@ public class UserDAO extends DBContext {
 }
     
     public static void main(String[] args) {
-    UserDAO dao = new UserDAO();
+        UserDAO dao = new UserDAO();
 
-    // 1. Test đăng ký
-    System.out.println("=== TEST ĐĂNG KÝ ===");
-    User newUser = new User();
-    newUser.setUserName("john123");
-    newUser.setPassword("password123");
-    newUser.setFullName("John Doe");
-    newUser.setGender("Male");
-    newUser.setEmail("john@example.com");
-    newUser.setPhone("0123456789");
-    boolean registerSuccess = dao.register(newUser, 2, "abc123token");
-    System.out.println("Register success: " + registerSuccess);
+        System.out.println("=== TEST ĐĂNG KÝ ===");
+        User newUser = new User();
+        newUser.setUserName("testuser");
+        newUser.setPassword("testPassword123"); // plaintext ở đây
+        newUser.setFullName("Test User");
+        newUser.setGender("Male");
+        newUser.setEmail("test@example.com");
+        newUser.setPhone("0123456789");
 
-    // 2. Test kiểm tra email tồn tại
-    System.out.println("\n=== TEST EMAIL EXISTS ===");
-    System.out.println("Email exists: " + dao.isEmailExists("john@example.com"));
+        boolean registerSuccess = dao.register(newUser, 2, "activationToken123");
+        System.out.println("✅ Register success: " + registerSuccess);
+        System.out.println("👉 Check database: Password field sẽ là BCrypt hash!");
 
-    // 3. Test kích hoạt tài khoản
-    System.out.println("\n=== TEST KÍCH HOẠT ===");
-    System.out.println("Activate account: " + dao.activateAccount("abc123token"));
+        System.out.println("\n=== TEST LOGIN ===");
+        User loggedIn = dao.login("test@example.com", "testPassword123"); // dùng plaintext
+        if (loggedIn != null) {
+            System.out.println("✅ Đăng nhập thành công: " + loggedIn.getFullName());
+        } else {
+            System.out.println("❌ Đăng nhập thất bại!");
+        }
 
-    // 4. Test login
-    System.out.println("\n=== TEST ĐĂNG NHẬP ===");
-    User loggedIn = dao.login("john@example.com", "password123");
-    System.out.println("Logged in user: " + loggedIn);
+        System.out.println("\n=== TEST UPDATE PASSWORD ===");
+        boolean updated = dao.updatePassword("test@example.com", "NewPassword456");
+        System.out.println("✅ Update password success: " + updated);
 
-    // 5. Test lấy user theo ID
-    System.out.println("\n=== TEST LẤY USER THEO ID ===");
-    if (loggedIn != null) {
-        User byId = dao.getUserById(loggedIn.getUserId());
-        System.out.println("User by ID: " + byId);
+        System.out.println("\n=== TEST LOGIN VỚI PASSWORD MỚI ===");
+        User loggedInNew = dao.login("test@example.com", "NewPassword456");
+        if (loggedInNew != null) {
+            System.out.println("✅ Đăng nhập với mật khẩu mới thành công: " + loggedInNew.getFullName());
+        } else {
+            System.out.println("❌ Đăng nhập thất bại!");
+        }
     }
-
-    // 6. Test cập nhật thông tin user
-    System.out.println("\n=== TEST UPDATE USER ===");
-    if (loggedIn != null) {
-        loggedIn.setPhone("0999888777");
-        loggedIn.setStatus("Active"); // ✅ hoặc 'Inactive', 'Pending' tùy schema của bạn
-        boolean updated = dao.updateUser(loggedIn);
-        System.out.println("User updated: " + updated);
-    }
-
-    // 7. Test lấy tất cả người dùng
-    System.out.println("\n=== TẤT CẢ USER ===");
-    List<User> allUsers = dao.getAllUsers();
-    allUsers.forEach(System.out::println);
-
-    // 8. Test phân trang người dùng với vai trò
-    System.out.println("\n=== TEST PHÂN TRANG USER + ROLE ===");
-    List<UserWithRoleDTO> pagedUsers = dao.getUsersWithRoleByPage(0, 5);
-    pagedUsers.forEach(System.out::println);
-
-    // 9. Test tìm kiếm người dùng
-    System.out.println("\n=== TEST TÌM KIẾM USER ===");
-    List<UserWithRoleDTO> searchResult = dao.searchUsers("john", 0, 5);
-    searchResult.forEach(System.out::println);
-
-    // 10. Test update role & status
-    System.out.println("\n=== TEST UPDATE ROLE & STATUS ===");
-    if (loggedIn != null) {
-        boolean updatedRole = dao.updateUserRoleAndStatus(loggedIn.getUserId(), 1, "Enabled");
-        System.out.println("Update role/status: " + updatedRole);
-    }
-
-    // 11. Test đặt token reset password
-    System.out.println("\n=== TEST RESET TOKEN ===");
-    if (loggedIn != null) {
-        boolean tokenStored = dao.storeResetToken(loggedIn.getUserId(), "reset123", new Date(System.currentTimeMillis() + 3600000));
-        System.out.println("Store reset token: " + tokenStored);
-    }
-
-    // 12. Test lấy user qua token
-    System.out.println("\n=== TEST LẤY USER QUA TOKEN ===");
-    User fromToken = dao.getUserByResetToken("reset123");
-    System.out.println("User from token: " + fromToken);
-
-    // 13. Test cập nhật lại mật khẩu
-    System.out.println("\n=== TEST RESET PASSWORD ===");
-    if (loggedIn != null) {
-        boolean passReset = dao.resetPassword(loggedIn.getUserId(), "newPassword123");
-        System.out.println("Reset password: " + passReset);
-    }
-
-    // 14. Test xóa token sau khi dùng
-    System.out.println("\n=== TEST CLEAR TOKEN ===");
-    if (loggedIn != null) {
-        boolean clear = dao.clearResetToken(loggedIn.getUserId());
-        System.out.println("Clear token: " + clear);
-    }
-
-    // 15. Test update giới tính và số điện thoại
-    System.out.println("\n=== TEST UPDATE GENDER & PHONE ===");
-    if (loggedIn != null) {
-        boolean gPhone = dao.updateUserGenderAndPhone(loggedIn.getUserId(), "Other", "123456789");
-        System.out.println("Update gender & phone: " + gPhone);
-    }
-
-    // 16. Test lấy người dùng khác
-    System.out.println("\n=== TEST LẤY NGƯỜI DÙNG KHÁC ===");
-    if (loggedIn != null) {
-        List<UserWithRoleDTO> others = dao.getOtherUsersWithRole(loggedIn.getUserId(), 3);
-        others.forEach(System.out::println);
-    }
-
-    // 17. Test get user by ID có Role name
-    System.out.println("\n=== TEST USER + ROLE NAME ===");
-    if (loggedIn != null) {
-        dto.UserDetailDTO detail = dao.getUserByIdWithRoleName(loggedIn.getUserId());
-        System.out.println("User with role name: " + detail);
-    }
-}
 
 }
