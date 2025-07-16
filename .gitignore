@@ -1,6 +1,16 @@
-/dist/
-/build/
-/nbproject/private/
+# NetBeans project files
+nbproject/private/
 nbproject/build-impl.xml
-nbproject/build-impl.xml~
 nbproject/genfiles.properties
+nbproject/project.properties
+nbproject/project.xml
+nbproject/Makefile-*.mk
+nbproject/jax-ws/
+nbproject/jax-wsClient/
+
+# Other common build/IDE artifacts (bổ sung nếu cần)
+*.log
+*.class
+/target/
+/build/
+.scannerwork/

@@ -344,15 +344,16 @@ public class EnrollmentDAO extends DBContext {
     }
 
     public boolean updateEnrollment(Enrollment e) {
-    String sql = "UPDATE Enrollment SET Status = ?, PackageID = ?, ValidFrom = ?, ValidTo = ?, Note = ?, UpdatedByUserID = ? WHERE EnrollmentID = ?";
+    String sql = "UPDATE Enrollment SET Status = ?, PackageID = ?, ValidFrom = ?, ValidTo = ?, Note = ?, UpdatedByUserID = ?, TotalPrice = ? WHERE EnrollmentID = ?";
     try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
         ps.setString(1, e.getStatus());
         ps.setInt(2, e.getPackageId());
         ps.setDate(3, new java.sql.Date(e.getValidFrom().getTime()));
         ps.setDate(4, new java.sql.Date(e.getValidTo().getTime()));
         ps.setString(5, e.getNote());
-        ps.setObject(6, e.getUpdatedByUserId(), java.sql.Types.INTEGER); // 👈 mới
-        ps.setInt(7, e.getEnrollmentId());
+        ps.setObject(6, e.getUpdatedByUserId(), java.sql.Types.INTEGER);
+        ps.setBigDecimal(7, e.getTotalPrice()); // 👈 thêm dòng này
+        ps.setInt(8, e.getEnrollmentId());
 
         return ps.executeUpdate() > 0;
     } catch (Exception ex) {
@@ -360,6 +361,7 @@ public class EnrollmentDAO extends DBContext {
     }
     return false;
 }
+
     
     public List<EnrollmentDTO> getEnrollmentDTOsByUserId(int userId) {
     List<EnrollmentDTO> list = new ArrayList<>();
