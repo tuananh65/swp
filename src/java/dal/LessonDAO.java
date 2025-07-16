@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,7 +34,7 @@ public class LessonDAO extends DBContext {
                     lesson.setVideoUrl(rs.getString("VideoUrl"));
                     lesson.setStatus(rs.getString("Status"));
                     // Lấy giá trị Integer cho trường "Order"
-                    lesson.setOrder(rs.getObject("Order") != null ? rs.getInt("Order") : null); 
+                    lesson.setOrder(rs.getObject("Order") != null ? rs.getInt("Order") : null);
                     lesson.setType(rs.getString("Type"));
                 }
             }
@@ -154,14 +155,9 @@ public class LessonDAO extends DBContext {
         }
         return uniqueTypes;
     }
-    
-    // Thêm một phương thức để lấy tất cả các loại bài học có thể có (ví dụ: cho dropdown)
-    // Nếu các loại bài học là cố định, bạn có thể hardcode chúng ở Frontend hoặc trong Servlet
-    // hoặc lấy DISTINCT từ bảng Lesson
+
     public List<String> getAllLessonTypes() {
         List<String> types = new ArrayList<>();
-        // Đây là ví dụ nếu bạn muốn lấy tất cả các loại duy nhất đã có trong DB
-        // Hoặc bạn có thể trả về một List<String> cố định
         String sql = "SELECT DISTINCT Type FROM Lesson WHERE Type IS NOT NULL AND Type <> '' ORDER BY Type";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -173,11 +169,15 @@ public class LessonDAO extends DBContext {
             LOGGER.log(Level.SEVERE, "Error getting all unique lesson types", e);
         }
         // Thêm các loại mặc định nếu muốn đảm bảo có đủ các option trong dropdown
-        // Ví dụ:
-        if (!types.contains("Subject topic")) types.add("Subject topic");
-        if (!types.contains("Lesson")) types.add("Lesson");
-        if (!types.contains("Quiz")) types.add("Quiz");
-        if (!types.contains("Assignment")) types.add("Assignment");
+        // Đây là cách bạn có thể xử lý việc có các loại mặc định không phụ thuộc vào DB
+        // Sắp xếp lại danh sách để đảm bảo thứ tự nhất quán
+        Set<String> defaultTypes = new HashSet<>(Arrays.asList("Subject topic", "Lesson", "Quiz", "Assignment"));
+        for (String defaultType : defaultTypes) {
+            if (!types.contains(defaultType)) {
+                types.add(defaultType);
+            }
+        }
+        types.sort(String::compareTo); // Sắp xếp theo alphabet
         return types;
     }
 
@@ -194,7 +194,7 @@ public class LessonDAO extends DBContext {
             return false;
         }
     }
-    
+
     public boolean deleteLesson(int lessonId) {
         String sql = "DELETE FROM Lesson WHERE LessonId = ?";
         try (Connection conn = getConnection();
@@ -207,9 +207,14 @@ public class LessonDAO extends DBContext {
             return false;
         }
     }
-    
+
     // Phương thức thêm mới bài học (ADD)
     public boolean addLesson(Lesson lesson) {
+        // --- THÊM KIỂM TRA NULL Ở ĐÂY ---
+        if (lesson == null) {
+            LOGGER.log(Level.WARNING, "Attempted to add a null lesson object.");
+            return false;
+        }
         String sql = "INSERT INTO Lesson (SubjectId, Title, Content, VideoUrl, Status, [Order], Type) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -230,6 +235,11 @@ public class LessonDAO extends DBContext {
 
     // Phương thức cập nhật bài học (UPDATE)
     public boolean updateLesson(Lesson lesson) {
+        // --- THÊM KIỂM TRA NULL Ở ĐÂY ---
+        if (lesson == null) {
+            LOGGER.log(Level.WARNING, "Attempted to update with a null lesson object.");
+            return false;
+        }
         String sql = "UPDATE Lesson SET SubjectId = ?, Title = ?, Content = ?, VideoUrl = ?, Status = ?, [Order] = ?, Type = ? WHERE LessonId = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -248,7 +258,7 @@ public class LessonDAO extends DBContext {
             return false;
         }
     }
-    
+
     public int getNextOrderForSubject(int subjectId) {
         int maxOrder = 0;
         String sql = "SELECT ISNULL(MAX([order]), 0) FROM [Lesson] WHERE subjectid = ?";
@@ -267,7 +277,4 @@ public class LessonDAO extends DBContext {
         }
         return maxOrder + 1;
     }
-    
-
-      
 }

@@ -38,7 +38,8 @@
             <div class="card-header">
                 <h2 class="lesson-title"><c:out value="${lesson.title != null && !lesson.title.isEmpty() ? lesson.title : 'New Lesson'}" /></h2> <%-- Tiêu đề lesson --%>
             </div>
-            <form action="${pageContext.request.contextPath}/updateLesson" method="post" class="lesson-form">
+            <%-- ĐÃ THÊM enctype="multipart/form-data" VÀO ĐÂY --%>
+            <form action="${pageContext.request.contextPath}/updateLesson" method="post" class="lesson-form" enctype="multipart/form-data">
                 <input type="hidden" name="lessonId" value="${lesson.lessonId}">
                 <input type="hidden" name="subjectId" value="${lesson.subjectId}">
                 
