@@ -242,6 +242,31 @@ public List<Question> getQuestionsByCourseID(int courseID) {
     }
     return questions;
 }
+public List<Question> getQuestionsByCourseAndType(int courseID, String questionType) {
+    List<Question> questions = new ArrayList<>();
+    String sql = "SELECT * FROM Question WHERE CourseID = ? AND QuestionType = ?";
+    try (Connection conn = dbContext.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setInt(1, courseID);
+        ps.setString(2, questionType);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Question question = new Question();
+            question.setQuestionID(rs.getInt("QuestionID"));
+            question.setCourseID(rs.getInt("CourseID"));
+            question.setContent(rs.getString("Content"));
+            question.setPoints(rs.getInt("Points"));
+            question.setQuestionType(rs.getString("QuestionType"));
+            question.setCreatedAt(rs.getDate("CreatedAt"));
+            question.setUpdatedAt(rs.getDate("UpdatedAt"));
+            questions.add(question);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return questions;
+}
+
 
 
     public static void main(String[] args) {

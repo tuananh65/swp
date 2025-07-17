@@ -6,18 +6,20 @@ import java.util.List;
 public class Quiz {
     private int quizID;
     private int courseID;
+    private String courseName;     // 👉 NEW: tên khóa học
     private String title;
     private String description;
     private int duration;
     private String difficulty;
+    private String quizType;       // 👉 NEW: Quiz Type (Multiple Choice / Short Answer)
     private boolean isActive;
     private Date createdAt;
     private Date updatedAt;
 
-    // Optional: nếu muốn load luôn câu hỏi kèm theo
+    // Optional: nếu muốn load luôn danh sách câu hỏi
     private List<QuizQuestion> quizQuestions;
 
-    // Getters and Setters
+    // ✅ Getters and Setters
     public int getQuizID() {
         return quizID;
     }
@@ -32,6 +34,14 @@ public class Quiz {
 
     public void setCourseID(int courseID) {
         this.courseID = courseID;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public String getTitle() {
@@ -64,6 +74,14 @@ public class Quiz {
 
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public String getQuizType() {
+        return quizType;
+    }
+
+    public void setQuizType(String quizType) {
+        this.quizType = quizType;
     }
 
     public boolean isActive() {

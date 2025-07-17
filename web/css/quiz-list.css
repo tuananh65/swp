@@ -1,0 +1,126 @@
+.quiz-page {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    padding: 20px 0;
+}
+
+.quiz-page .container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.quiz-page h2 {
+    text-align: center;
+    color: #333;
+}
+
+.quiz-page .error {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.quiz-page .filter-form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.quiz-page .filter-form input,
+.quiz-page .filter-form select,
+.quiz-page .filter-form button {
+    padding: 6px 12px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.quiz-page .filter-form button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.quiz-page .filter-form button:hover {
+    background-color: #2980b9;
+}
+
+.quiz-page .create-btn {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.quiz-page .create-btn a {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+}
+
+.quiz-page .create-btn a:hover {
+    text-decoration: underline;
+}
+
+.quiz-page table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.quiz-page th, .quiz-page td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.quiz-page th {
+    background-color: #3498db;
+    color: white;
+}
+
+.quiz-page tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.quiz-page .actions a,
+.quiz-page .actions button {
+    margin-right: 5px;
+}
+
+.quiz-page .actions button {
+    padding: 4px 8px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.quiz-page .actions button:hover {
+    background-color: #c0392b;
+}
+
+.quiz-page .pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.quiz-page .pagination a,
+.quiz-page .pagination strong {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #3498db;
+}
+
+.quiz-page .pagination strong {
+    font-weight: bold;
+}
+
+.quiz-page .no-data {
+    text-align: center;
+    color: #666;
+}
