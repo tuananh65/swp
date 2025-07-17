@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${title != null ? title : "Soft Skills Portal"}</title>
+    <title>${param.title != null ? param.title : "Soft Skills Portal"}</title>
 
     <!-- Font & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -14,6 +14,7 @@
     <!-- CSS riêng cho header -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
 </head>
+
 <body>
 
 <nav class="navbar" id="navbar">

@@ -44,7 +44,9 @@ public class QuizDetailServlet extends HttpServlet {
         }
         if (quiz != null) {
             // Load ngân hàng câu hỏi theo CourseID
-            List<Question> availableQuestions = questionDAO.getQuestionsByCourseID(quiz.getCourseID());
+            List<Question> availableQuestions = questionDAO.getQuestionsByCourseAndType(
+                    quiz.getCourseID(), quiz.getQuizType());
+
             // Load câu hỏi đã gán vào quiz
             List<QuizQuestion> quizQuestions = quizQuestionDAO.getQuestionsByQuizID(quiz.getQuizID());
 
@@ -54,83 +56,112 @@ public class QuizDetailServlet extends HttpServlet {
 
         // List of all courses for dropdown
         List<Course> courses = courseDAO.getAllCourses();
+        boolean quizIsActive = quiz != null && quiz.isActive();
+        request.setAttribute("quizIsActive", quizIsActive);
 
         request.setAttribute("quiz", quiz);
+
         request.setAttribute("courses", courses);
+        String updated = request.getParameter("updated");
+        if ("true".equals(updated)) {
+            request.setAttribute("successMessage", "✅ Quiz updated successfully!");
+        }
+
         request.getRequestDispatcher("/instructor/quiz-detail.jsp").forward(request, response);
     }
 
-@Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-    request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
-    String manageAction = request.getParameter("manageAction");
+        String manageAction = request.getParameter("manageAction");
 
-    // ✅ 1️⃣ xử lý thêm câu hỏi vào quiz
-    if ("addQuestion".equals(manageAction)) {
-        int quizID = Integer.parseInt(request.getParameter("quizID"));
-        int questionID = Integer.parseInt(request.getParameter("questionID"));
-        int points = Integer.parseInt(request.getParameter("points"));
+        // ✅ 1️⃣ xử lý thêm câu hỏi vào quiz
+        if ("addQuestion".equals(manageAction)) {
+            int quizID = Integer.parseInt(request.getParameter("quizID"));
+            int questionID = Integer.parseInt(request.getParameter("questionID"));
+            int points = Integer.parseInt(request.getParameter("points"));
 
-        QuizQuestion qq = new QuizQuestion();
-        qq.setQuizID(quizID);
-        qq.setQuestionID(questionID);
-        qq.setPoints(points);
+            Quiz quiz = quizDAO.getQuizByID(quizID);
+            if (quiz != null && quiz.isActive()) {
+                request.setAttribute("errorMessage", "❌ Cannot modify an active quiz.");
+                doGet(request, response);
+                return;
+            }
 
-        quizQuestionDAO.addQuizQuestion(qq);
+            Question question = questionDAO.getQuestionByID(questionID);
 
-        response.sendRedirect("quiz-detail?id=" + quizID);
-        return;
+            if (!quiz.getQuizType().equalsIgnoreCase(question.getQuestionType())) {
+                request.setAttribute("errorMessage", "❌ Question type does not match quiz type.");
+                doGet(request, response);
+                return;
+            }
+
+            QuizQuestion qq = new QuizQuestion();
+            qq.setQuizID(quizID);
+            qq.setQuestionID(questionID);
+            qq.setPoints(points);
+
+            quizQuestionDAO.addQuizQuestion(qq);
+
+            response.sendRedirect("quiz-detail?id=" + quizID);
+            return;
+        }
+
+        // ✅ 2️⃣ xử lý xoá câu hỏi khỏi quiz
+        if ("deleteQuestion".equals(manageAction)) {
+            int quizID = Integer.parseInt(request.getParameter("quizID"));
+            int questionID = Integer.parseInt(request.getParameter("questionID"));
+            Quiz quiz = quizDAO.getQuizByID(quizID);
+            if (quiz != null && quiz.isActive()) {
+                request.setAttribute("errorMessage", "❌ Cannot modify an active quiz.");
+                doGet(request, response);
+                return;
+            }
+
+            quizQuestionDAO.deleteQuizQuestion(quizID, questionID);
+
+            response.sendRedirect("quiz-detail?id=" + quizID);
+            return;
+        }
+
+        // ✅ 3️⃣ Nếu không có manageAction ➜ là submit form Quiz
+        String idParam = request.getParameter("quizID");
+
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
+        String title = request.getParameter("title");
+        String description = request.getParameter("description");
+        int duration = Integer.parseInt(request.getParameter("duration"));
+        String difficulty = request.getParameter("difficulty");
+        String quizType = request.getParameter("quizType"); // ⭐️ NEW
+        boolean isActive = "on".equals(request.getParameter("isActive"));
+
+        Quiz quiz = new Quiz();
+        quiz.setCourseID(courseID);
+        quiz.setTitle(title);
+        quiz.setDescription(description);
+        quiz.setDuration(duration);
+        quiz.setDifficulty(difficulty);
+        quiz.setQuizType(quizType); // ⭐️ NEW
+        quiz.setActive(isActive);
+
+        boolean success;
+        if (idParam == null || idParam.isEmpty()) {
+            success = quizDAO.addQuiz(quiz);
+        } else {
+            quiz.setQuizID(Integer.parseInt(idParam));
+            success = quizDAO.updateQuiz(quiz);
+        }
+
+        if (success) {
+            response.sendRedirect("quiz-detail?id=" + quiz.getQuizID() + "&updated=true");
+
+        } else {
+            request.setAttribute("errorMessage", "Failed to save quiz.");
+            doGet(request, response);
+        }
     }
-
-    // ✅ 2️⃣ xử lý xoá câu hỏi khỏi quiz
-    if ("deleteQuestion".equals(manageAction)) {
-        int quizID = Integer.parseInt(request.getParameter("quizID"));
-        int questionID = Integer.parseInt(request.getParameter("questionID"));
-
-        quizQuestionDAO.deleteQuizQuestion(quizID, questionID);
-
-        response.sendRedirect("quiz-detail?id=" + quizID);
-        return;
-    }
-
-    // ✅ 3️⃣ Nếu không có manageAction ➜ là submit form Quiz
-    String idParam = request.getParameter("quizID");
-
-    int courseID = Integer.parseInt(request.getParameter("courseID"));
-    String title = request.getParameter("title");
-    String description = request.getParameter("description");
-    int duration = Integer.parseInt(request.getParameter("duration"));
-    String difficulty = request.getParameter("difficulty");
-    boolean isActive = "on".equals(request.getParameter("isActive"));
-
-    Quiz quiz = new Quiz();
-    quiz.setCourseID(courseID);
-    quiz.setTitle(title);
-    quiz.setDescription(description);
-    quiz.setDuration(duration);
-    quiz.setDifficulty(difficulty);
-    quiz.setActive(isActive);
-
-    boolean success;
-    if (idParam == null || idParam.isEmpty()) {
-        success = quizDAO.addQuiz(quiz);
-    } else {
-        quiz.setQuizID(Integer.parseInt(idParam));
-        success = quizDAO.updateQuiz(quiz);
-    }
-
-    if (success) {
-        response.sendRedirect("quiz-list");
-    } else {
-        request.setAttribute("errorMessage", "⚠️ Failed to save quiz. Please try again.");
-        List<Course> courses = courseDAO.getAllCourses();
-        request.setAttribute("courses", courses);
-        request.setAttribute("quiz", quiz);
-        request.getRequestDispatcher("/instructor/quiz-detail.jsp").forward(request, response);
-    }
-}
 
 }

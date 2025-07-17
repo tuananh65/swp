@@ -1,0 +1,102 @@
+.import-page {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    padding: 20px;
+}
+
+.import-page .container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.import-page h2, .import-page h3 {
+    text-align: center;
+    color: #333;
+}
+
+.import-page .error-message {
+    color: #e74c3c;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.import-page form {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.import-page input[type="file"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+.import-page button {
+    padding: 8px 16px;
+    background-color: #3498db;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s;
+}
+
+.import-page button:hover {
+    background-color: #2980b9;
+}
+
+.import-page table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.import-page table th, .import-page table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.import-page table th {
+    background-color: #3498db;
+    color: white;
+}
+
+.import-page table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.import-page pre {
+    background-color: #f4f4f4;
+    padding: 12px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: monospace;
+}
+
+.import-page a {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+}
+
+.import-page a:hover {
+    text-decoration: underline;
+}
+
+.import-page .status-success {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.import-page .status-error {
+    color: #e74c3c;
+    font-weight: bold;
+}

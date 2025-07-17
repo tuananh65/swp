@@ -1,0 +1,250 @@
+/* quiz-detail.css - scoped to only main content */
+
+main {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f4f7fa;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 100px);
+    box-sizing: border-box;
+}
+
+main > h2,
+main > form,
+main > hr,
+main > h3,
+main > h4,
+main > table,
+main > p {
+    max-width: 1200px;
+    width: 100%;
+    margin: 10px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+main h2, main h3, main h4 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+main h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+main h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+main h4 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #34495e;
+}
+
+main form {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+main label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #34495e;
+    margin-bottom: 8px;
+    margin-top: 12px;
+}
+
+main input[type="text"],
+main input[type="number"],
+main textarea,
+main select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #2c3e50;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+main input[type="text"]:focus,
+main input[type="number"]:focus,
+main textarea:focus,
+main select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+    background-color: #ffffff;
+}
+
+main textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+main input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: #3498db;
+}
+
+main button[type="submit"] {
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 20px;
+}
+
+main button[type="submit"]:hover:not(:disabled) {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+main button[type="submit"]:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+main a[href="quiz-list"] {
+    display: inline-block;
+    margin-left: 10px;
+    color: #e74c3c;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: 1px solid #e74c3c;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+main a[href="quiz-list"]:hover {
+    background-color: #e74c3c;
+    color: #ffffff;
+}
+
+main .error {
+    color: #e74c3c;
+    background-color: #fce4e4;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+main p[style*="color: green"] {
+    background-color: #e8f5e9;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+main p[style*="color: orange"] {
+    background-color: #fff3e0;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+/* Table styles */
+main table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+main th, main td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+main th {
+    background-color: #3498db;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: center;
+}
+
+main tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+main tr:hover {
+    background-color: #f1f1f1;
+}
+
+main td form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+main td form button {
+    background-color: #e74c3c;
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+main td form button:hover {
+    background-color: #c0392b;
+    transform: translateY(-1px);
+}
+
+/* Horizontal rule */
+main hr {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #dcdcdc, transparent);
+    margin: 30px 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    main form, main table {
+        padding: 15px;
+    }
+
+    main h2 {
+        font-size: 1.5rem;
+    }
+
+    main h3 {
+        font-size: 1.25rem;
+    }
+
+    main h4 {
+        font-size: 1.1rem;
+    }
+
+    main button[type="submit"],
+    main a[href="quiz-list"] {
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+    }
+}
