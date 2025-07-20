@@ -21,7 +21,7 @@ import org.json.JSONArray;
 public class CourseChatServlet extends HttpServlet {
     private ChatbotDAO chatbotDAO;
     private CourseDAO courseDAO;
-    private static final String OPENROUTER_API_KEY = "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";
+    private static final String OPENROUTER_API_KEY = "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";
     private static final String OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
     private static final String SITE_URL = "http://localhost:8080"; // Your site URL
     private static final String SITE_NAME = "Course Advisor"; // Your site name
@@ -127,7 +127,7 @@ public class CourseChatServlet extends HttpServlet {
 
         // Construct JSON payload
         JSONObject payload = new JSONObject();
-        payload.put("model", "deepseek/deepseek-r1-0528-qwen3-8b:free");
+        payload.put("model", "gpt-4-1106-preview");
         JSONArray messages = new JSONArray();
         JSONObject message = new JSONObject();
         message.put("role", "user");
