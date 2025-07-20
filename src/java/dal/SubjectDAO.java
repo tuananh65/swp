@@ -295,6 +295,49 @@ public class SubjectDAO extends DBContext {
         }
         return subjects;
     }
+     public boolean addSubject(Subject subject) {
+    String sql = "INSERT INTO Subject (name, featured, thumbnail, description, ownerID, status, categoryName) " +
+                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    try {
+        conn = getConnection();
+        if (conn == null) {
+            LOGGER.log(Level.SEVERE, "Failed to get database connection in addSubject.");
+            return false;
+        }
+
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, subject.getName());
+        ps.setBoolean(2, subject.isFeatured());
+        ps.setString(3, subject.getThumbnail());
+        ps.setString(4, subject.getDescription());
+        ps.setInt(5, subject.getOwnerId());
+        ps.setString(6, subject.getStatus());
+        ps.setString(7, subject.getCategoryName());
+
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected > 0;
+
+    } catch (SQLException e) {
+        LOGGER.log(Level.SEVERE, "SQL Error in addSubject. Query: " + sql, e);
+        return false;
+    } finally {
+        closeResources();
+    }
+}
+    public boolean isSubjectNameExists(String name) {
+    String sql = "SELECT 1 FROM Subject WHERE name = ?";
+    try (Connection conn = getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, name);
+        ResultSet rs = ps.executeQuery();
+        return rs.next(); // Nếu có kết quả → tên đã tồn tại
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+
+
 
     /**
      * Close database resources.

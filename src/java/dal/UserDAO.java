@@ -705,6 +705,29 @@ public class UserDAO extends DBContext {
         }
         return -1;
     }
+     public List<User> getAllAdmins() {
+    List<User> list = new ArrayList<>();
+    String sql = "SELECT UserID, UserName FROM [User] WHERE RoleID = 3"; // RoleID = 3 là admin
+
+    try (Connection conn = getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            User user = new User();
+            user.setUserId(rs.getInt("UserID"));
+            user.setUserName(rs.getString("UserName")); // KHÔNG phải 'username' vì model của bạn dùng userName
+            list.add(user);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace(); // hoặc dùng Logger nếu đã có
+    }
+
+    return list;
+}
+
+    
     
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
