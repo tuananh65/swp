@@ -222,9 +222,9 @@
                                 </select>
                             </div>
                             <button type="submit" class="subjectListSearchBtn">SEARCH</button>
-                            <a href="subjectList?action=new" style="text-decoration: none;">
-                                <button type="button" class="subjectListNewBtn">NEW SUBJECT</button>
-                            </a>
+                            <a href="${pageContext.request.contextPath}/NewSubjectServlet" style="text-decoration: none;">
+    <button type="button" class="subjectListNewBtn">NEW SUBJECT</button>
+</a>
                         </div>
                     </form>
                 </div>
