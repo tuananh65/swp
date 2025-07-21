@@ -125,7 +125,12 @@
                     <button class="dropdown-toggle" onclick="toggleDropdown(this)">
                         <a href="${pageContext.request.contextPath}/userlist">User List</a>
                     </button>
-                </div>                   
+                </div>       
+                <div>
+                    <button class="dropdown-toggle" onclick="toggleDropdown(this)">
+                        <a href="${pageContext.request.contextPath}/admin/dashboard">Dash board</a>
+                    </button>
+                </div>        
                 <div>
                     <button class="dropdown-toggle" onclick="toggleDropdown(this)">
                         <a href="${pageContext.request.contextPath}/admin/subjectList">Subject List</a>

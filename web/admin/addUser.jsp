@@ -53,7 +53,7 @@
                             <label for="password">Password:</label>
                             <input type="password" id="password" name="password" required>
                         </div>
-                        <div class="form-group">
+<div class="form-group">
                             <label>Gender:</label>
                             <div class="radio-group">
                                 <label><input type="radio" name="gender" value="Male" ${ (not empty enteredGender && enteredGender eq 'Male') || (empty enteredGender && param.gender eq 'Male') ? 'checked' : ''}> Male</label>
@@ -87,11 +87,12 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="status">Status:</label>
+<label for="status">Status:</label>
                             <select id="status" name="status" required>
-                                <option value="active" ${ (not empty enteredStatus && enteredStatus eq 'active') || (empty enteredStatus && param.status eq 'active') ? 'selected' : ''}>Active</option>
-                                <option value="inactive" ${ (not empty enteredStatus && enteredStatus eq 'inactive') || (empty enteredStatus && param.status eq 'inactive') ? 'selected' : ''}>Inactive</option>
-                            </select>
+    <option value="Active" ${enteredStatus eq 'Active' ? 'selected' : ''}>Active</option>
+    <option value="Inactive" ${enteredStatus eq 'Inactive' ? 'selected' : ''}>Inactive</option>
+</select>
+
                         </div>
                         <div class="form-actions">
                             <button type="submit"><i class="fas fa-plus-circle"></i> Add User</button>

@@ -140,66 +140,8 @@
             </div>    
         </section>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-top">
-                <div class="footer-block">
-                    <span class="footer-icon">📍</span>
-                    <span class="footer-label">Address:</span>
-                    <span class="footer-info">1925 Bogness Street</span>
-                </div>
-                <div class="footer-block">
-                    <span class="footer-icon">📞</span>
-                    <span class="footer-label">Phone:</span>
-                    <span class="footer-info">(00) 875 784 568</span>
-                </div>
-                <div class="footer-block">
-                    <span class="footer-icon">📧</span>
-                    <span class="footer-label">Email:</span>
-                    <span class="footer-info">info@gmail.com</span>
-                </div>
-            </div>
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="logo">
-                        <img src="${pageContext.request.contextPath}/images/SoftSkillWhite.png" alt="Soft Skills Logo">
-                    </div>
-                    <p>Interdum velit laoreet id donec ultrices tincidunt arcu tortor aliqua mi facilisi cras fermentum odio eu.</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="icon">F</i></a>
-                        <a href="#"><i class="icon">T</i></a>
-                        <a href="#"><i class="icon">I</i></a>
-                        <a href="#"><i class="icon">L</i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>Our Services:</h4>
-                    <ul>
-                        <li><a href="#">Web Design</a></li>
-                        <li><a href="#">UI/UX Design</a></li>
-                        <li><a href="#">Development</a></li>
-                        <li><a href="#">Marketing</a></li>
-                        <li><a href="#">Digital Marketing</a></li>
-                        <li><a href="#">Blog News</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Gallery</h4>
-                    <div class="gallery">
-                        <img src="${pageContext.request.contextPath}/images/gallery-img-1.jpg" alt="Gallery Image">
-                        <img src="${pageContext.request.contextPath}/images/gallery-img-2.jpg" alt="Gallery Image">
-                        <img src="${pageContext.request.contextPath}/images/gallery-img-3.jpg" alt="Gallery Image">
-                        <img src="${pageContext.request.contextPath}/images/gallery-img-4.jpg" alt="Gallery Image">
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>Subscribe</h4>
-                    <input type="email" placeholder="Enter your email">
-                    <button class="subscribe-btn">SUBSCRIBE NOW</button>
-                </div>
-            </div>
-        </footer>
-        <jsp:include page="/default/header.jsp"/>         
+
+        <jsp:include page="/default/footer.jsp"/>         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

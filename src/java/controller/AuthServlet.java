@@ -205,7 +205,7 @@ public class AuthServlet extends HttpServlet {
 
             switch (role) {
                 case 3:
-                    response.sendRedirect("admin/settinglist");
+                    response.sendRedirect("settinglist");
                     break;
                 case 1:
                     response.sendRedirect("student/dashboard.jsp");

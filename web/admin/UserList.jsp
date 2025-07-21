@@ -10,6 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Users List - Soft Skills</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
     <%-- Đảm bảo đường dẫn đến CSS là chính xác --%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/UserList.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css"> <%-- Nếu bạn có header.css riêng --%>
@@ -20,6 +22,53 @@
     <%-- Header (Đảm bảo đường dẫn include là chính xác) --%>
     <jsp:include page="/default/header.jsp"/>
 
+    <%-- Nút này được tạo bằng JS để đảm bảo vị trí và hành vi đúng --%>
+    <%-- KHÔNG CẦN ĐẶT BUTTON Ở ĐÂY NỮA, NÓ SẼ ĐƯỢC JS THÊM VÀO DOM SAU NÀY --%>
+
+    <div id="courseDropdownContainer">
+        <div id="userSection">
+            <div>
+                <button class="dropdown-toggle">
+                    <a href="${pageContext.request.contextPath}/view/changePassword.jsp">Change Password</a>
+                </button>
+            </div>
+            <div>
+                <button class="dropdown-toggle">
+                    <a href="${pageContext.request.contextPath}/profile?id=${sessionScope.currentUser.userId}">Profile</a>
+                </button>
+            </div>
+            <div>
+                <button class="dropdown-toggle">
+                    <a href="${pageContext.request.contextPath}/admin/dashboard">Dash Board</a>
+                </button>
+            </div>
+            <div>
+                <button class="dropdown-toggle">
+                    <a href="${pageContext.request.contextPath}/sliderlist">Slider List</a>
+                </button>
+            </div>
+            <div>
+                <button class="dropdown-toggle">
+                    <a href="${pageContext.request.contextPath}/userlist">User List</a>
+                </button>
+            </div>
+            <div>
+                <button class="dropdown-toggle">
+                    <a href="${pageContext.request.contextPath}/admin/subjectList">Subject List</a>
+                </button>
+            </div>
+            <div>
+                <button class="dropdown-toggle">
+                    <a href="${pageContext.request.contextPath}/admin/registrations">Registration List</a>
+                </button>
+            </div>
+            <div>
+                <button class="dropdown-toggle">
+                    <a href="${pageContext.request.contextPath}/auth?action=logout">Sign out</a>
+                </button>
+            </div>
+        </div>
+    </div>
     <%-- Banner Section - Đã cập nhật để khớp với cấu trúc của Setting List --%>
     <section class="hero-banner">
         <div class="hero-content">
@@ -194,6 +243,31 @@
         if (currentStatus) {
             document.getElementById('filterStatus').value = currentStatus;
         }
+
+        // === JavaScript cho Sidebar Toggle (Đã copy từ dashboard.jsp) ===
+        // Tạo và thêm nút toggle vào body
+        const toggleMenuBtn = document.createElement('button');
+        toggleMenuBtn.id = 'toggleMenuBtn';
+        toggleMenuBtn.innerHTML = '<i class="bi bi-list"></i>'; // Sử dụng icon Bootstrap Icons
+        document.body.appendChild(toggleMenuBtn);
+
+        const menuContainer = document.getElementById('courseDropdownContainer');
+
+        toggleMenuBtn.addEventListener('click', () => {
+            const isVisible = menuContainer.style.display === 'block';
+            menuContainer.style.display = isVisible ? 'none' : 'block';
+        });
+
+        // Đóng sidebar khi click ra ngoài
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('courseDropdownContainer');
+            const toggleButton = document.getElementById('toggleMenuBtn');
+
+            // Nếu click không phải trên sidebar và không phải trên nút toggle
+            if (sidebar && !sidebar.contains(event.target) && (!toggleButton || !toggleButton.contains(event.target))) {
+                sidebar.style.display = 'none';
+            }
+        });
     });
 </script>
 </body>
