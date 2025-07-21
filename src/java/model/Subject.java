@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.sql.Date; // Hoặc java.time.LocalDate nếu bạn dùng Java 8+
 
 public class Subject {
     private int subjectId;
@@ -12,6 +13,7 @@ public class Subject {
     private int ownerId;
     private String categoryName;
     private int lessonCount; // Added to store lesson count temporarily
+    private Date createdAt; // Thêm thuộc tính này
 
     // Quan hệ 1-n: Subject -> Course
     private List<Course> courseList;
@@ -22,8 +24,9 @@ public class Subject {
     // Constructors
     public Subject() {}
 
+    // Constructor cũ (có thể giữ lại hoặc không, tùy nhu cầu sử dụng)
     public Subject(int subjectId, String name, boolean featured,
-                   String thumbnail, String description, 
+                   String thumbnail, String description,
                    int ownerId, String status, String categoryName) {
         this.subjectId = subjectId;
         this.name = name;
@@ -33,7 +36,25 @@ public class Subject {
         this.ownerId = ownerId;
         this.status = status;
         this.categoryName = categoryName;
+        // createdAt sẽ là null nếu không được gán, hoặc bạn có thể gán giá trị mặc định ở đây nếu muốn
     }
+
+    // Constructor MỚI với createdAt
+    public Subject(int subjectId, String name, boolean featured,
+                   String thumbnail, String description,
+                   int ownerId, String status, String categoryName,
+                   Date createdAt) { // Thêm tham số createdAt
+        this.subjectId = subjectId;
+        this.name = name;
+        this.featured = featured;
+        this.thumbnail = thumbnail;
+        this.description = description;
+        this.ownerId = ownerId;
+        this.status = status;
+        this.categoryName = categoryName;
+        this.createdAt = createdAt; // Gán giá trị cho createdAt
+    }
+
 
     // Getters and Setters
     public int getSubjectId() {
@@ -123,5 +144,14 @@ public class Subject {
 
     public void setLessonCount(int lessonCount) {
         this.lessonCount = lessonCount;
+    }
+
+    // Getter and Setter for createdAt
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

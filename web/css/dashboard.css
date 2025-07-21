@@ -116,7 +116,7 @@ header nav ul li a:hover::after {
     /* XÓA HOÀN TOÀN LỚP PHỦ XÁM */
     display: none;
     /* Có thể xóa các thuộc tính khác như position, top, left, width, height, z-index
-       nếu muốn, vì chúng sẽ không có tác dụng khi display: none. */
+        nếu muốn, vì chúng sẽ không có tác dụng khi display: none. */
 }
 
 .hero-banner .hero-text {
@@ -124,7 +124,7 @@ header nav ul li a:hover::after {
     z-index: 2;
     padding: 15px; /* Giảm padding */
     box-sizing: border-box;
-    color: #0E2A46;
+    color: #0E2A46; /* Đổi màu chữ sang màu đậm để dễ đọc hơn */
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
 }
 
@@ -306,7 +306,7 @@ header nav ul li a:hover::after {
 }
 .chart-container {
     flex: 1;
-    min-width: 48%;
+    min-width: 48%; /* Đảm bảo 2 cột trên màn hình rộng */
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -486,3 +486,80 @@ footer p {
         transform: scale(1);
     }
 }
+
+/* ========================================================================= */
+/* SIDEBAR & TOGGLE BUTTON STYLES (đã tách từ JSP ra đây) */
+#toggleMenuBtn {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    background-color: #6366f1; /* Màu tím */
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+#toggleMenuBtn:hover {
+    background-color: #4f46e5;
+}
+
+#courseDropdownContainer {
+    display: none; /* Ban đầu ẩn đi */
+    position: fixed;
+    top: 50%;
+    left: 60px; /* Vị trí bên phải của nút toggle */
+    transform: translateY(-50%);
+    background-color: #ffffff;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+    padding: 1rem;
+    border-radius: 1rem;
+    z-index: 999;
+    width: 280px;
+    max-height: 80vh;
+    overflow-y: auto;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease-in-out;
+}
+
+#userSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.dropdown-toggle {
+    background-color: #6366f1; /* Màu nền cho button */
+    color: #ffffff; /* Màu chữ trắng */
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 100%;
+    text-align: left;
+    transition: background-color 250ms;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-toggle:hover {
+    background-color: #4f46e5; /* Màu nền khi hover */
+    color: #ffffff;
+}
+
+.dropdown-toggle a {
+    text-decoration: none;
+    color: inherit; /* Kế thừa màu từ button */
+    display: block; /* Để link chiếm toàn bộ diện tích button */
+}
+/* END - Sidebar & Toggle Button Styles */
