@@ -19,8 +19,7 @@ public class CourseDAO extends DBContext {
     // Lấy tất cả khóa học
     public List<Course> getAllCourses() {
         List<Course> list = new ArrayList<>();
-        // Đảm bảo bạn SELECT cả subjectId nếu bạn muốn nó có sẵn khi lấy tất cả khóa học
-        String sql = "SELECT CourseID, CourseName, TagLine, BriefInfo, Description, OriginalPrice, SalePrice, CourseThumbnail, CreatedAt, UpdatedAt, UserID, Featured, SubjectId FROM Course";
+        String sql = "SELECT CourseID, CourseName, TagLine, BriefInfo, Description, OriginalPrice, SalePrice, CourseThumbnail, CreatedAt, UpdatedAt, UserID, Featured FROM Course";
 
         try {
             conn = new DBContext().getConnection();
@@ -41,8 +40,7 @@ public class CourseDAO extends DBContext {
 
     // Lấy khóa học theo ID
     public Course getCourseById(int courseId) {
-        // Đảm bảo bạn SELECT cả subjectId
-        String sql = "SELECT CourseID, CourseName, TagLine, BriefInfo, Description, OriginalPrice, SalePrice, CourseThumbnail, CreatedAt, UpdatedAt, UserID, Featured, SubjectId FROM Course WHERE CourseID = ?";
+        String sql = "SELECT CourseID, CourseName, TagLine, BriefInfo, Description, OriginalPrice, SalePrice, CourseThumbnail, CreatedAt, UpdatedAt, UserID, Featured FROM Course WHERE CourseID = ?";
 
         try {
             conn = new DBContext().getConnection();
@@ -63,9 +61,8 @@ public class CourseDAO extends DBContext {
 
     // Thêm khóa học mới
     public boolean insertCourse(Course course) {
-        // Cập nhật câu lệnh SQL để thêm cột SubjectId
-        String sql = "INSERT INTO Course (CourseName, TagLine, BriefInfo, Description, OriginalPrice, SalePrice, CourseThumbnail, CreatedAt, UpdatedAt, UserID, Featured, SubjectId) "
-                   + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; // Thêm 1 dấu ? cho SubjectId
+        String sql = "INSERT INTO Course (CourseName, TagLine, BriefInfo, Description, OriginalPrice, SalePrice, CourseThumbnail, CreatedAt, UpdatedAt, UserID, Featured) "
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             conn = new DBContext().getConnection();
@@ -83,7 +80,6 @@ public class CourseDAO extends DBContext {
             ps.setDate(9, course.getUpdatedAt() != null ? new java.sql.Date(course.getUpdatedAt().getTime()) : null);
             ps.setInt(10, course.getUserID());
             ps.setBoolean(11, course.isFeatured());
-            ps.setInt(12, course.getSubjectId()); // <-- Thêm giá trị cho SubjectId
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -97,8 +93,7 @@ public class CourseDAO extends DBContext {
     // Lấy 3 khóa học nổi bật
     public List<Course> getFeaturedCourses() {
         List<Course> list = new ArrayList<>();
-        // Đảm bảo bạn SELECT cả subjectId
-        String sql = "SELECT CourseID, CourseName, TagLine, BriefInfo, Description, OriginalPrice, SalePrice, CourseThumbnail, CreatedAt, UpdatedAt, UserID, Featured, SubjectId FROM Course WHERE Featured = 1 ORDER BY CreatedAt DESC OFFSET 0 ROWS FETCH NEXT 3 ROWS ONLY";
+        String sql = "SELECT CourseID, CourseName, TagLine, BriefInfo, Description, OriginalPrice, SalePrice, CourseThumbnail, CreatedAt, UpdatedAt, UserID, Featured FROM Course WHERE Featured = 1 ORDER BY CreatedAt DESC OFFSET 0 ROWS FETCH NEXT 3 ROWS ONLY";
 
         try {
             conn = new DBContext().getConnection();
@@ -136,8 +131,7 @@ public class CourseDAO extends DBContext {
                 break;
         }
 
-        // Đảm bảo bạn SELECT cả subjectId
-        String sql = "SELECT CourseID, CourseName, TagLine, BriefInfo, Description, OriginalPrice, SalePrice, CourseThumbnail, CreatedAt, UpdatedAt, UserID, Featured, SubjectId FROM Course WHERE CourseName LIKE ? "
+        String sql = "SELECT CourseID, CourseName, TagLine, BriefInfo, Description, OriginalPrice, SalePrice, CourseThumbnail, CreatedAt, UpdatedAt, UserID, Featured FROM Course WHERE CourseName LIKE ? "
                    + "ORDER BY " + orderBy + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try {
@@ -228,44 +222,7 @@ public class CourseDAO extends DBContext {
         c.setOriginalPrice(rs.getDouble("OriginalPrice"));
         c.setSalePrice(rs.getDouble("SalePrice"));
         c.setCourseThumbnail(rs.getString("CourseThumbnail"));
-
-        // ****** CHỈNH SỬA TẠI ĐÂY ******
-        // Kiểm tra NULL cho CreatedAt
-        java.sql.Date sqlCreatedAt = rs.getDate("CreatedAt");
-        if (sqlCreatedAt != null) {
-            c.setCreatedAt(new Date(sqlCreatedAt.getTime()));
-        } else {
-            c.setCreatedAt(null); // Hoặc new Date() nếu bạn muốn mặc định là ngày hiện tại
-        }
-
-        // Kiểm tra NULL cho UpdatedAt
-        java.sql.Date sqlUpdatedAt = rs.getDate("UpdatedAt");
-        if (sqlUpdatedAt != null) {
-            c.setUpdatedAt(new Date(sqlUpdatedAt.getTime()));
-        } else {
-            c.setUpdatedAt(null); // Hoặc new Date() nếu bạn muốn mặc định là ngày hiện tại
-        }
-        // **********************************
-
-        c.setUserID(rs.getInt("UserID"));
-        c.setFeatured(rs.getBoolean("Featured"));
-
-        // Đọc giá trị SubjectId từ ResultSet
-        // Luôn kiểm tra xem cột có tồn tại không trước khi đọc (đặc biệt nếu thay đổi schema DB)
-        // Hoặc đảm bảo câu lệnh SQL SELECT đã chọn tất cả các cột cần thiết
-        try {
-            Object subjectIdObj = rs.getObject("SubjectId");
-            if (subjectIdObj != null) {
-                c.setSubjectId(rs.getInt("SubjectId"));
-            } else {
-                c.setSubjectId(0); // Hoặc một giá trị mặc định khác nếu subject_id có thể NULL trong DB
-            }
-        } catch (SQLException e) {
-            // Cột 'SubjectId' có thể không tồn tại trong ResultSet nếu câu SQL SELECT không chọn nó
-            // hoặc schema DB không có cột này.
-            System.err.println("Warning: Column 'SubjectId' not found or null in ResultSet. Setting to default. " + e.getMessage());
-            c.setSubjectId(0); // Set a default or handle as needed
-        }
+        c.setLessonID(rs.getInt("LessonID"));
         return c;
     }
 
@@ -286,14 +243,6 @@ public class CourseDAO extends DBContext {
     public static void main(String[] args) {
         CourseDAO dao = new CourseDAO();
         List<Course> list = dao.searchCourses("java", 0, 5, "price_low");
-        for (Course c : list) {
-            System.out.println("Tên khóa học: " + c.getCourseName() + ", Subject ID: " + c.getSubjectId());
-        }
-
-        List<Course> featuredCourses = dao.getFeaturedCourses();
-        System.out.println("\nFeatured Courses:");
-        featuredCourses.forEach(c -> System.out.println("Tên khóa học: " + c.getCourseName() + ", Subject ID: " + c.getSubjectId()));
-
         // Test insertCourse
         System.out.println("\nTesting insertCourse:");
         Course newCourse = new Course();
@@ -308,7 +257,6 @@ public class CourseDAO extends DBContext {
         newCourse.setUpdatedAt(new Date()); // Current date
         newCourse.setUserID(1); // Assuming user ID 1 exists
         newCourse.setFeatured(false);
-        newCourse.setSubjectId(1); // Assuming subject ID 1 exists
 
         boolean inserted = dao.insertCourse(newCourse);
         if (inserted) {
