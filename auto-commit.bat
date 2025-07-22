@@ -11,8 +11,8 @@ REM Lặp và tạo commit
 for /L %%i in (1,1,%count%) do (
     echo Update %%i at %date% %time%>> log.txt
     git add .
-    git commit -m "Modify %%i at %time%"
+    git commit -m "Modify QuizDAO"
 )
 
-REM Push lên nhánh auto-commit
-git push origin auto-commit
+REM Push lên nhánh update-dal
+git push origin update-dal
