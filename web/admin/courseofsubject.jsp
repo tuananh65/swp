@@ -380,6 +380,25 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
+.register-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 15px;
+}
+
+.register-btn:hover {
+    background: linear-gradient(135deg, #0072ff, #0049b7);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
 
 
     </style>
@@ -428,9 +447,10 @@
                         
                         <p class="brief-info">${course.briefInfo}</p>
                         
-                        <a href="course-detail?courseId=${course.courseID}" class="view-details-btn">
-                            View Course Details
-                        </a>
+                        <a class="register-btn" href="${pageContext.request.contextPath}/CourseDetailServlet?courseId=${course.courseID}">
+  View Course Detail
+</a>
+
                     </div>
                 </div>
             </c:forEach>
