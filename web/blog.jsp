@@ -12,22 +12,6 @@
         <!-- Navigation Bar -->
         <nav>
             <jsp:include page="/default/header.jsp"/>
-            <div class="login-register-links" id="userSection">
-                <%
-                    User user = (User) session.getAttribute("user");
-                    if (user == null) {
-                %>
-                    <a href="${pageContext.request.contextPath}/view/SignIn.jsp" class="custom-btn">Đăng nhập</a>
-                    <a href="${pageContext.request.contextPath}/view/register.jsp" class="custom-btn">Đăng ký</a>
-                <%
-                    } else {
-                %>
-                    <span>Welcome, <%= user.getFullName() %></span>
-                    <a href="${pageContext.request.contextPath}/logout" class="custom-btn">Đăng xuất</a>
-                <%
-                    }
-                %>
-            </div>
         </nav>
         <!-- Banner -->
         <div class="banner">

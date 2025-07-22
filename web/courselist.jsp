@@ -16,7 +16,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <jsp:include page="/default/header.jsp"/>
+    <nav>
+        <jsp:include page="/default/header.jsp"/>
+    </nav>
     
      <section class="banner">
         <div class="container">

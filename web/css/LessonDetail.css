@@ -340,3 +340,36 @@ body {
         font-size: 1.5em;
     }
 }
+
+.lesson-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+.lesson-card {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+.lesson-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    color: #111827;
+}
+.lesson-card p {
+    margin: 0.5rem 0;
+    color: #6c757d;
+}
+.lesson-card video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+}
+.no-lesson {
+    text-align: center;
+    color: #6c757d;
+    padding: 2rem;
+}

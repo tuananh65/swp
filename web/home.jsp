@@ -18,19 +18,6 @@
         <!-- Navigation Bar -->
         <nav>
             <jsp:include page="/default/header.jsp"/>
-            
-            <div class="login-register-links" id="userSection">
-                <c:choose>
-                    <c:when test="${empty sessionScope.user}">
-                        <a href="${pageContext.request.contextPath}/view/SignIn.jsp" class="custom-btn">Đăng nhập</a>
-                        <a href="${pageContext.request.contextPath}/view/register.jsp" class="custom-btn">Đăng ký</a>
-                    </c:when>
-                    <c:otherwise>
-                        <span>Welcome, ${sessionScope.user.fullName}</span>
-                        <a href="${pageContext.request.contextPath}/logout" class="custom-btn">Đăng xuất</a>
-                    </c:otherwise>
-                </c:choose>
-            </div>
         </nav>
         
         <section class="slider-section">
