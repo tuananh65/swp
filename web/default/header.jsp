@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@page import="model.User"%>
 <html lang="vi">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${param.title != null ? param.title : "Soft Skills Portal"}</title>
+    <title>${title != null ? title : "Soft Skills Portal"}</title>
 
     <!-- Font & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -14,7 +14,6 @@
     <!-- CSS riêng cho header -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
 </head>
-
 <body>
 
 <nav class="navbar" id="navbar">
@@ -29,8 +28,23 @@
             <a href="${pageContext.request.contextPath}/blog" class="nav-link">Blog</a>
             <a href="#" class="nav-link">Contact</a>
         </div>
-        <div class="nav-actions">
-            <button class="search-btn" aria-label="Tìm ki?m"><i class="fas fa-search"></i></button>
+    
+        <div class="login-register-links" id="userSection">
+            <%
+                User user = (User) session.getAttribute("currentUser");
+                if (user == null) {
+            %>
+                <a href="${pageContext.request.contextPath}/view/SignIn.jsp" class="custom-btn btn btn-outline-light me-2">Đăng nhập</a>
+                <a href="${pageContext.request.contextPath}/view/register.jsp" class="custom-btn btn btn-primary">Đăng ký</a>
+            <%
+                } else {
+            %>
+                <div class="user-email">
+                        <%= user.getFullName() != null ? user.getFullName() : user.getEmail() != null ? user.getEmail() : "User" %>
+                </div>
+            <%
+                }
+            %>
         </div>
-        
     </div>
+</nav>

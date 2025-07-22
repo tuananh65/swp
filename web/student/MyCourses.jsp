@@ -203,7 +203,9 @@
                     <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i> 4.5k
                 </div>
                 <div class="course-details">Lesson 10 • 19h 30m</div>
-                <button class="enroll-btn">Enroll <i class="fa-solid fa-arrow-right"></i></button>
+                <a href="${pageContext.request.contextPath}/lesson-view?courseId=${course.courseID}">
+                    <button class="enroll-btn">Enroll <i class="fa-solid fa-arrow-right"></i></button>
+                </a>
             </div>
         </c:forEach>
         <c:if test="${empty courses}">

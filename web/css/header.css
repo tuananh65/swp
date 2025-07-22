@@ -94,24 +94,51 @@
   color: #4f46e5;
 }
 
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+
+.login-register-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    padding-right: 15px;
+    white-space: nowrap;
 }
 
-.search-btn {
-  background: none;
-  border: none;
-  color: #4b5563;
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: background-color 200ms, color 200ms;
+.login-register-links a {
+    color: white !important;
+    text-decoration: none;
+    margin-bottom: 5px;
+    font-size: 14px;
 }
 
-.search-btn:hover {
-  color: #6366f1;
-  background-color: #f3f4f6;
+.login-register-links a:hover {
+    text-decoration: underline;
+    color: black !important;
+}
+
+.custom-btn {
+    width: 150px; /* Chiều rộng 100% */
+    padding: 3px; 
+    background-color: #6366F1; 
+    color: white; /* Màu chữ trắng */
+    border-radius: 20px; /* Bo góc 20px */
+    border: none; /* Bỏ viền */
+    text-align: center;
+}
+
+.custom-btn:hover {
+    background-color: white;
+}
+
+.user-email {
+    background-color: #6366F1; /* Màu nền giống custom-btn */
+    color: white; /* Màu chữ trắng */
+    border-radius: 20px; /* Bo góc giống custom-btn */
+    padding: 10px 1px; /* Padding giống custom-btn */
+    border: none; /* Không có viền */
+    cursor: pointer; /* Con trỏ chuột giống nút bấm */
+    display: inline-block; /* Hiển thị dạng inline-block */
+    transition: none; /* Không có hiệu ứng chuyển màu */
+    min-width: 150px;
+    text-align: center;
 }
