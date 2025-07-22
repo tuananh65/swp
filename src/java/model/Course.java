@@ -17,7 +17,7 @@ public class Course {
     private Date updatedAt; // Sử dụng java.util.Date
     private int userID;
     private boolean featured;
-    private int subjectId; // <-- ĐÃ THÊM DÒNG NÀY VÀO MODEL
+    private int lessonID;
 
     public Course() {
     }
@@ -25,7 +25,7 @@ public class Course {
     // Constructor đầy đủ đã được CẬP NHẬT để bao gồm subjectId
     public Course(int courseID, String courseName, String tagLine, String briefInfo, String description,
                   double originalPrice, double salePrice, String courseThumbnail, Date createdAt,
-                  Date updatedAt, int userID, boolean featured, int subjectId) { // <-- THÊM subjectId VÀO CONSTRUCTOR
+                  Date updatedAt, int userID, boolean featured, int lessonID) { 
         this.courseID = courseID;
         this.courseName = courseName;
         this.tagLine = tagLine;
@@ -38,7 +38,7 @@ public class Course {
         this.updatedAt = updatedAt;
         this.userID = userID;
         this.featured = featured;
-        this.subjectId = subjectId; // <-- GÁN GIÁ TRỊ CHO subjectId
+        this.lessonID = lessonID; 
     }
 
     // Getters and Setters
@@ -77,15 +77,9 @@ public class Course {
 
     public boolean isFeatured() { return featured; }
     public void setFeatured(boolean featured) { this.featured = featured; }
-
-    // Getters and Setters cho subjectId
-    public int getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
-    }
+    
+    public int getLessonID() { return lessonID; } // Getter for new field
+    public void setLessonID(int lessonID) { this.lessonID = lessonID; } // Setter for new field
 
     @Override
     public String toString() {
@@ -102,7 +96,7 @@ public class Course {
                 ", updatedAt=" + updatedAt +
                 ", userID=" + userID +
                 ", featured=" + featured +
-                ", subjectId=" + subjectId + // <-- THÊM subjectId VÀO toString
+                ", lessonID=" + lessonID +
                 '}';
     }
 }
