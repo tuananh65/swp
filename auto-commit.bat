@@ -9,10 +9,10 @@ cd /d C:\Users\Admin\swp1\swp
 
 REM Lặp và tạo commit
 for /L %%i in (1,1,%count%) do (
-    echo Tự động cập nhật %%i vào %date% %time%>> log.txt
+    echo Update %%i at %date% %time%>> log.txt
     git add .
-    git commit -m "Commit tự động %%i lúc %time%"
+    git commit -m "Modify QuizDAO"
 )
 
-REM Push lên nhánh auto-commit
-git push origin auto-commit
+REM Push lên nhánh update-dal
+git push origin update-dal
