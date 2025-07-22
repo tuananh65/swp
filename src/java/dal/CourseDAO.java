@@ -211,6 +211,31 @@ public class CourseDAO extends DBContext {
         }
         return BigDecimal.ZERO;
     }
+    // Lấy danh sách các khóa học theo SubjectID
+public List<Course> getCoursesBySubjectId(int subjectId) {
+    List<Course> list = new ArrayList<>();
+    String sql = "SELECT CourseID, CourseName, TagLine, BriefInfo, Description, OriginalPrice, SalePrice, CourseThumbnail, CreatedAt, UpdatedAt, UserID, Featured, SubjectID, LessonID "
+               + "FROM Course WHERE SubjectID = ?";
+
+    try {
+        conn = new DBContext().getConnection();
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, subjectId);
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Course course = extractCourse(rs);
+            list.add(course);
+        }
+    } catch (SQLException e) {
+        System.err.println("Lỗi trong getCoursesBySubjectId: " + e.getMessage());
+    } finally {
+        closeResources();
+    }
+
+    return list;
+}
+
 
     // ✅ Extract Course từ ResultSet
     public static Course extractCourse(ResultSet rs) throws SQLException {
