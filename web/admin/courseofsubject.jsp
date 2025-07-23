@@ -7,6 +7,8 @@
     <title>Courses of Subject</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+   
+
     <style>
         * {
             margin: 0;
@@ -380,24 +382,6 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
-.register-btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    color: white;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-size: 15px;
-}
-
-.register-btn:hover {
-    background: linear-gradient(135deg, #0072ff, #0049b7);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
 
 
 
@@ -438,18 +422,12 @@
                                 <span class="original-price">$${course.originalPrice}</span>
                                 <span class="sale-price">$${course.salePrice}</span>
                             </div>
-                            <c:if test="${course.originalPrice > course.salePrice}">
-                                <span class="discount-badge">
-                                    ${Math.round((1 - course.salePrice/course.originalPrice) * 100)}% OFF
-                                </span>
-                            </c:if>
+                            
                         </div>
                         
                         <p class="brief-info">${course.briefInfo}</p>
                         
-                        <a class="register-btn" href="${pageContext.request.contextPath}/CourseDetailServlet?courseId=${course.courseID}">
-  View Course Detail
-</a>
+
 
                     </div>
                 </div>
