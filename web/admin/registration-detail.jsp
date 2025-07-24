@@ -147,9 +147,8 @@
             <div class="flex items-center gap-6 mb-8 animate-fade-in-up delay-600">
                 <label class="w-1/3 text-blue-900 font-semibold text-lg leading-tight">Status:</label>
                 <select class="flex-1 form-select border border-gray-300 rounded-2xl p-4 bg-gray-50 text-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:bg-white transition-all duration-400" name="status">
-                    <option value="Pending" ${enrollment.status == 'Pending' ? 'selected' : ''}>Pending</option>
-                    <option value="Approved" ${enrollment.status == 'Approved' ? 'selected' : ''}>Approved</option>
-                    <option value="Rejected" ${enrollment.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
+                    <option value="Submitted" ${enrollment.status == 'Submitted' ? 'selected' : ''}>Submitted</option>
+                    <option value="Confirmed" ${enrollment.status == 'Confirmed' ? 'selected' : ''}>Confirmed</option>
                 </select>
             </div>
             <div class="flex items-center gap-6 mb-8 animate-fade-in-up delay-700">
