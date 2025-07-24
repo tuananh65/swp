@@ -205,4 +205,12 @@
         <servlet-name>LessonViewServlet</servlet-name>
         <url-pattern>/lesson-view</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>PaymentServlet</servlet-name>
+        <servlet-class>controller.student.PaymentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PaymentServlet</servlet-name>
+        <url-pattern>/student/pay</url-pattern>
+    </servlet-mapping>
 </web-app>
