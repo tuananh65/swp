@@ -263,8 +263,9 @@
                                                 <p><strong>Status:</strong>
                                                     <c:choose>
                                                         <c:when test="${e.status == 'Submitted'}">
-                                                            <a href="dashboard?action=confirm&id=${e.enrollmentId}" class="myRegistrations-status myRegistrations-submitted"
-                                                               onclick="return confirm('Are you sure you want to confirm this registration?');">
+                                                            <a href="${pageContext.request.contextPath}/student/pay?id=${e.enrollmentId}"
+                                                               class="myRegistrations-status myRegistrations-submitted"
+                                                               onclick="return confirm('Proceed to payment for this course?');">
                                                                Submitted
                                                             </a>
                                                         </c:when>
