@@ -47,7 +47,7 @@ public class DashboardDAO extends DBContext {
         Map<String, Integer> stats = new HashMap<>();
         String sql = "SELECT "
                 + "COUNT(*) AS AllRegistrations, "
-                + "COUNT(CASE WHEN Status = 'Successful' OR Status = 'Confirmed' THEN 1 END) AS SuccessfulRegistrations, " // ĐÃ SỬA ĐỔI ĐỂ BAO GỒM CONFIRMED
+                + "COUNT(CASE WHEN Status = 'Confirmed' THEN 1 END) AS SuccessfulRegistrations, " // ĐÃ SỬA ĐỔI ĐỂ BAO GỒM CONFIRMED
                 + "COUNT(CASE WHEN Status = 'Cancelled' THEN 1 END) AS CancelledRegistrations, "
                 + "COUNT(CASE WHEN Status = 'Submitted' THEN 1 END) AS SubmittedRegistrations "
                 + "FROM Enrollment "
