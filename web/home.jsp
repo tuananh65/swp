@@ -242,7 +242,7 @@
         </div>
 
         <script>
-            // Lưu trạng thái checkbox vào localStorage
+            // Lưu trạng thái checkbox vào localStorage và gửi form
             document.querySelector('.save-btn').addEventListener('click', () => {
                 const checkboxes = document.querySelectorAll('.filter-checkboxes input[type="checkbox"]');
                 const filterState = {};
@@ -250,20 +250,27 @@
                     filterState[cb.name] = cb.checked;
                 });
                 localStorage.setItem('course_display_filters', JSON.stringify(filterState));
+                document.getElementById('filterForm').submit(); // Gửi form sau khi lưu
             });
 
-            // Áp dụng trạng thái từ localStorage khi load trang
+            // Áp dụng trạng thái từ localStorage hoặc đặt mặc định khi load trang
             window.addEventListener('DOMContentLoaded', () => {
                 const savedState = localStorage.getItem('course_display_filters');
-                if (savedState) {
+                const checkboxes = document.querySelectorAll('.filter-checkboxes input[type="checkbox"]');
+                
+                if (!savedState && !${showThumbnail || showPrice || showRegister || showTagline || showTitle}) {
+                    // Nếu không có trạng thái đã lưu và không có tham số từ servlet, đặt mặc định tất cả đều checked
+                    checkboxes.forEach(cb => {
+                        cb.checked = true;
+                    });
+                } else if (savedState) {
+                    // Áp dụng trạng thái từ localStorage
                     const filterState = JSON.parse(savedState);
-                    Object.entries(filterState).forEach(([name, checked]) => {
-                        const checkbox = document.querySelector(`.filter-checkboxes input[name="${name}"]`);
-                        if (checkbox) {
-                            checkbox.checked = checked;
-                        }
+                    checkboxes.forEach(cb => {
+                        cb.checked = filterState[cb.name] !== undefined ? filterState[cb.name] : true;
                     });
                 }
+                // Nếu servlet cung cấp trạng thái (từ tham số URL), trạng thái từ servlet sẽ được giữ nguyên qua ${showX ? 'checked' : ''}
             });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> 
