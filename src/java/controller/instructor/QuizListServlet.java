@@ -68,5 +68,28 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
     request.getRequestDispatcher("/instructor/quiz-list.jsp").forward(request, response);
 }
+@Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+
+    String action = request.getParameter("action");
+
+    if ("delete".equals(action)) {
+        String quizIDParam = request.getParameter("quizID");
+        try {
+            int quizID = Integer.parseInt(quizIDParam);
+            boolean deleted = quizDAO.deleteQuiz(quizID);
+
+            if (!deleted) {
+                request.setAttribute("errorMessage", "Failed to delete quiz.");
+            }
+        } catch (NumberFormatException e) {
+            request.setAttribute("errorMessage", "Invalid Quiz ID.");
+        }
+    }
+
+    // Quay lại trang danh sách để load lại dữ liệu (đảm bảo giữ đúng filter nếu cần)
+    doGet(request, response);
+}
 
 }

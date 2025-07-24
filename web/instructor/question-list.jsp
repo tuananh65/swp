@@ -3,10 +3,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Question List</title>
+
+<jsp:include page="/default/header.jsp">
+    <jsp:param name="title" value="QUESTION LIST"/>
+</jsp:include>
+<jsp:include page="/default/banner.jsp">
+    <jsp:param name="bannerTitle" value="QUESTION LIST"/>
+</jsp:include>
+<jsp:include page="/default/sidebar.jsp" />
+<body>
     <style>
         body { font-family: Arial, sans-serif; }
         table { border-collapse: collapse; width: 100%; margin-top: 20px; }
@@ -18,8 +23,6 @@
         .debug { font-size: 0.9em; color: gray; }
         .error { color: red; }
     </style>
-</head>
-<body>
 <h2>Question List</h2>
 
 <!-- ✅ Debug Log Section -->
@@ -54,9 +57,12 @@
 </form>
 
 <!-- ✅ Create / Import Buttons -->
+<!-- ✅ Create / Import / List Buttons -->
 <p>
     <a href="question-detail">➕ Create New Question</a> |
-    <a href="question-import">📥 Import Questions</a>
+    <a href="question-import">📥 Import Questions</a> |
+    <a href="quiz-list">📝 Quiz List</a> |
+    
 </p>
 
 <!-- ✅ Question Table -->
@@ -117,4 +123,9 @@
 </c:if>
 
 </body>
+<!-- Nhúng widget chatbot đã tối ưu -->
+<jsp:include page="/chatbot/chatbot-widget.jsp" />
+
+<!-- Footer -->
+<jsp:include page="/default/footer.jsp" />
 </html>

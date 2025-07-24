@@ -1,17 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Question Detail</title>
-        <style>
-            .answer-row {
-                margin-bottom: 5px;
-            }
-        </style>
-    </head>
+
+<jsp:include page="/default/header.jsp">
+    <jsp:param name="title" value="QUESTION DETAIL"/>
+</jsp:include>
+<jsp:include page="/default/banner.jsp">
+    <jsp:param name="bannerTitle" value="QUESTION DETAIL"/>
+</jsp:include>
+<jsp:include page="/default/sidebar.jsp" />
+
     <body>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/question-detail.css" />
+        <main>
         <h2>${question != null ? 'Edit Question' : 'Create New Question'}</h2>
 
         <c:if test="${not empty errorMessage}">
@@ -104,6 +105,7 @@
             <button type="submit">Save</button>
             <a href="question-list">Cancel</a>
         </form>
+        </main>
 
         <script>
             function toggleAnswers() {
@@ -116,4 +118,9 @@
             window.onload = toggleAnswers;
         </script>
     </body>
+    <!-- Nhúng widget chatbot đã tối ưu -->
+<jsp:include page="/chatbot/chatbot-widget.jsp" />
+
+<!-- Footer -->
+<jsp:include page="/default/footer.jsp" />
 </html>
