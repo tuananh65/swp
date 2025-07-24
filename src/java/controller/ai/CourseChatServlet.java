@@ -21,7 +21,7 @@ import org.json.JSONArray;
 public class CourseChatServlet extends HttpServlet {
     private ChatbotDAO chatbotDAO;
     private CourseDAO courseDAO;
-    private static final String OPENROUTER_API_KEY = "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";
+    private static final String OPENROUTER_API_KEY = "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";
     private static final String OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
     private static final String SITE_URL = "http://localhost:8080"; // Your site URL
     private static final String SITE_NAME = "Course Advisor"; // Your site name
