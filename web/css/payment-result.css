@@ -1,0 +1,211 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #1f2937;
+}
+
+/* Main container */
+.payment-container {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.payment-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #6366F1, #8B5CF6);
+}
+
+/* Header styles */
+h2 {
+    color: #6366F1;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 4px rgba(99, 102, 241, 0.1);
+}
+
+/* Success message styles */
+.success-message {
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+}
+
+.success-message::before {
+    content: '✓';
+    display: inline-block;
+    font-size: 2rem;
+    margin-right: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+/* Error message styles */
+.error-message {
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+}
+
+.error-message::before {
+    content: '✗';
+    display: inline-block;
+    font-size: 2rem;
+    margin-right: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+}
+
+/* General message text */
+.message-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+
+/* Link styles */
+a {
+    display: inline-block;
+    background: linear-gradient(135deg, #6366F1, #8B5CF6);
+    color: white;
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+    background: linear-gradient(135deg, #5B5FE8, #7C3AED);
+}
+
+a:active {
+    transform: translateY(0);
+}
+
+/* Status indicator */
+.status-indicator {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.status-success {
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: white;
+}
+
+.status-error {
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+    color: white;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .payment-container {
+        padding: 30px 20px;
+        margin: 10px;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+    
+    .message-text {
+        font-size: 1rem;
+    }
+}
+
+/* Animation for page load */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.payment-container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+
+/* Additional styles for canceled payment */
+.status-warning {
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: white;
+}
+
+.warning-message {
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+}
+
+.warning-message::before {
+    content: '⚠';
+    display: inline-block;
+    font-size: 2rem;
+    margin-right: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+}
