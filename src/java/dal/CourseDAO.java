@@ -256,7 +256,7 @@ public List<Course> getCoursesBySubjectId(int subjectId) {
         c.setUserID(rs.getInt("UserID"));
         c.setFeatured(rs.getBoolean("Featured"));
         c.setSubjectID(rs.getInt("SubjectID"));
-
+        c.setSubjectID(rs.getInt("LessonID"));
         int lessonId = rs.getInt("LessonID");
         if (rs.wasNull()) {
             c.setLessonID(null);
