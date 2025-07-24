@@ -242,28 +242,7 @@
 </head>
 <body>
     <!-- Phần header cố định -->
-    <header class="header">
-        <div class="container">
-            <div class="nav-brand">
-                <img src="${pageContext.request.contextPath}/images/logo.jpg" alt="Soft Skills" class="logo">
-                <span class="brand-text"></span>
-            </div>
-            <nav class="navbar">
-                <ul>
-                    <li><a href="${pageContext.request.contextPath}/" class="nav-link">Dashboard</a></li>
-                    <li><a href="${pageContext.request.contextPath}/subjects" class="nav-link">Subjects</a></li>
-                    <li><a href="${pageContext.request.contextPath}/subjectDetail?subjectId=${subject != null ? subject.subjectId : ''}" class="nav-link active">Subject Details</a></li>
-                    <li><a href="#" class="nav-link">Settings</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <div class="user-info">
-                    <span class="user-role">Admin</span>
-                    <i class="fas fa-user-circle"></i>
-                </div>
-            </div>
-        </div>
-    </header>
+      <jsp:include page="/default/header.jsp"/>
 
     <div class="container">
         <!-- Nút quay về Subject -->
@@ -335,6 +314,7 @@
             </form>
         </div>
     </div>
+                <jsp:include page="/default/footer.jsp"/>
 
     <!-- JavaScript xử lý form popup -->
     <script>

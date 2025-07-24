@@ -131,6 +131,22 @@
             .dropdown-toggle:hover {
                 background-color: #f3f4f6;
             }
+            .subjectListViewBtn {
+    background-color: #10b981; /* xanh ngọc */
+    color: white;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    margin-left: 0.25rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.subjectListViewBtn:hover {
+    background-color: #059669;
+}
+
         </style>
 
         <!-- JavaScript -->
@@ -266,6 +282,12 @@
                                            onclick="return confirm('Are you sure you want to delete this subject?')">
                                             <button class="subjectListDeleteBtn">DELETE</button>
                                         </a>
+                                         <a href="${pageContext.request.contextPath}/courses-of-subject?subjectId=${subject.subjectId}" style="text-decoration: none;">
+    <button class="subjectListViewBtn">VIEW COURSE</button>
+</a>
+
+
+
                                     </td>
                                 </tr>
                             </c:forEach>

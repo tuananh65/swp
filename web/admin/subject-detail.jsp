@@ -13,24 +13,10 @@
 </head>
 <body>
 
-<header class="header">
-    <div class="container">
-        <div class="nav-brand">
-            <img src="${pageContext.request.contextPath}/images/logo.jpg" alt="Soft Skills" class="logo">
-        </div>
-        <nav class="navbar">
-            <ul class="nav-list">
-                <li><a href="${pageContext.request.contextPath}/" class="nav-link">Dashboard</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/subjectList" class="nav-link">Subjects</a></li>
-                <li><a href="#" class="nav-link active">Subject Details</a></li>
-            </ul>
-        </nav>
-        <div class="header-actions">
-            <span class="user-role">Admin</span>
-            <i class="fas fa-user-circle"></i>
-        </div>
-    </div>
-</header>
+  <jsp:include page="/default/header.jsp"/>
+  <a href="${pageContext.request.contextPath}/admin/subjectList" style="text-decoration: none;">
+    <button class="back-button">← Back to Subject List</button>
+</a>
 
 <div class="main-container">
     <div class="page-header">
