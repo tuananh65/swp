@@ -554,6 +554,23 @@ public class EnrollmentDAO extends DBContext {
         }
         return false;
     }
+
+    public boolean updateStatus(int enrollmentId, String newStatus) {
+        String sql = "UPDATE Enrollment SET Status = ? WHERE EnrollmentID = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+    
+            ps.setString(1, newStatus);
+            ps.setInt(2, enrollmentId);
+    
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+    
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     
     public List<Course> getConfirmedCoursesByUserId(int userId) {
         List<Course> courses = new ArrayList<>();
