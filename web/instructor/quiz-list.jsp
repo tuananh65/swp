@@ -59,11 +59,14 @@
         <button type="submit">🔎 Search</button>
     </form>
 
-    <!-- ✅ Create New -->
-    <p class="create-btn">
-        <a href="quiz-detail">➕ Create New Quiz</a>
-    </p>
+<!-- ✅ Create New -->
+<p class="create-btn">
+    <a href="quiz-detail">➕ Create New Quiz</a>
+</p>
 
+<p class="create-btn">
+    <a href="question-list">📋 Question List</a>
+</p>
     <!-- ✅ Quiz Table -->
     <table>
         <thead>
