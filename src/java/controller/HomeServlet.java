@@ -26,7 +26,7 @@ public class HomeServlet extends HttpServlet {
         PostDAO postDAO = new PostDAO();
         CourseDAO courseDAO = new CourseDAO();
 
-        // Fetch recent posts (limited to 3)
+        // Fetch recent posts (limited to 4)
         List<Post> recentPosts = postDAO.getRecentPosts(4);
         request.setAttribute("recentPosts", recentPosts);
 
@@ -54,12 +54,23 @@ public class HomeServlet extends HttpServlet {
             if (pageSize > 100) pageSize = 100;
         } catch (NumberFormatException ignored) {}
 
-        // Checkbox filters
-        boolean showThumbnail = "true".equalsIgnoreCase(request.getParameter("showThumbnail"));
-        boolean showPrice = "true".equalsIgnoreCase(request.getParameter("showPrice"));
-        boolean showRegister = "true".equalsIgnoreCase(request.getParameter("showRegister"));
-        boolean showTagline = "true".equalsIgnoreCase(request.getParameter("showTagline"));
-        boolean showTitle = "true".equalsIgnoreCase(request.getParameter("showTitle"));
+        // Checkbox filters with default true for initial load
+        boolean isInitialLoad = request.getParameterMap().isEmpty() || 
+            (request.getParameter("search") == null && 
+             request.getParameter("sort") == null && 
+             request.getParameter("page") == null && 
+             request.getParameter("pageSize") == null &&
+             request.getParameter("showThumbnail") == null &&
+             request.getParameter("showPrice") == null &&
+             request.getParameter("showRegister") == null &&
+             request.getParameter("showTagline") == null &&
+             request.getParameter("showTitle") == null);
+
+        boolean showThumbnail = isInitialLoad ? true : "true".equalsIgnoreCase(request.getParameter("showThumbnail"));
+        boolean showPrice = isInitialLoad ? true : "true".equalsIgnoreCase(request.getParameter("showPrice"));
+        boolean showRegister = isInitialLoad ? true : "true".equalsIgnoreCase(request.getParameter("showRegister"));
+        boolean showTagline = isInitialLoad ? true : "true".equalsIgnoreCase(request.getParameter("showTagline"));
+        boolean showTitle = isInitialLoad ? true : "true".equalsIgnoreCase(request.getParameter("showTitle"));
 
         // Set filter attributes
         request.setAttribute("showThumbnail", showThumbnail);
