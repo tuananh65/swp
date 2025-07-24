@@ -117,7 +117,7 @@ public class EditRegistrationServlet extends HttpServlet {
             boolean createdAccount = false;
             User user = userDAO.getUserById(enrollment.getUserId());
 
-            if ("Approved".equalsIgnoreCase(status)) {
+            if ("Confirmed".equalsIgnoreCase(status)) {
                 if (user == null) {
                     String email = request.getParameter("email");
                     String fullName = request.getParameter("fullName");
