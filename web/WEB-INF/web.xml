@@ -197,4 +197,12 @@
         <servlet-name>PricePackageServlet</servlet-name>
         <url-pattern>/pricePackageList</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>LessonViewServlet</servlet-name>
+        <servlet-class>controller.student.LessonViewServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LessonViewServlet</servlet-name>
+        <url-pattern>/lesson-view</url-pattern>
+    </servlet-mapping>
 </web-app>
