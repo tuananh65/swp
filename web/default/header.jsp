@@ -34,13 +34,19 @@
                 User user = (User) session.getAttribute("currentUser");
                 if (user == null) {
             %>
-                <a href="${pageContext.request.contextPath}/view/SignIn.jsp" class="custom-btn btn btn-outline-light me-2">Đăng nhập</a>
-                <a href="${pageContext.request.contextPath}/view/register.jsp" class="custom-btn btn btn-primary">Đăng ký</a>
+                <a href="${pageContext.request.contextPath}/view/SignIn.jsp" class="custom-btn btn btn-outline-light me-2">Sign In</a>
+                <a href="${pageContext.request.contextPath}/view/register.jsp" class="custom-btn btn btn-primary">Sign Up</a>
             <%
                 } else {
             %>
-                <div class="user-email">
+                <div class="dropdown">
+                    <span class="user-fullname" onclick="toggleDropdown(this)">
                         <%= user.getFullName() != null ? user.getFullName() : user.getEmail() != null ? user.getEmail() : "User" %>
+                    </span>
+                    <div class="dropdown-menu">
+                        <div><a class="dropdown-item" href="${pageContext.request.contextPath}/view/changePassword.jsp">Change Password</a></div>
+                        <div><a class="dropdown-item" href="${pageContext.request.contextPath}/auth?action=logout">Sign out</a></div>
+                    </div>
                 </div>
             <%
                 }
@@ -48,3 +54,16 @@
         </div>
     </div>
 </nav>
+        
+<script>
+    function toggleDropdown(element) {
+        const dropdownMenu = element.nextElementSibling;
+        dropdownMenu.classList.toggle('show');
+        document.addEventListener('click', function closeDropdown(event) {
+            if (!element.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('show');
+                document.removeEventListener('click', closeDropdown);
+            }
+        });
+    }
+</script>
