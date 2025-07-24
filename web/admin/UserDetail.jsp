@@ -57,7 +57,6 @@
                             <select id="roleId" name="roleId">
                                 <option value="1">Student</option>
                                 <option value="2">Instructor</option>
-                                <option value="3">Admin</option>
                             </select>
                         </div>
 
@@ -75,23 +74,7 @@
             </div>
         </section>
 
-        <c:if test="${not empty otherUsers}">
-            <section class="other-users-container">
-                <h3>Other Users</h3>
-                <div class="four_user">
-                    <%-- Thay đổi ở đây: Thêm 'end="2"' để chỉ hiển thị 3 user (index từ 0 đến 2) --%>
-                    <c:forEach var="otherUser" items="${otherUsers}" begin="0" end="2">
-                        <a href="${pageContext.request.contextPath}/userdetail?id=${otherUser.user.userId}" class="other-user-link">
-                            <div class="other-user-card">
-                                <img src="${pageContext.request.contextPath}/image/${otherUser.user.avatarUrl}" alt="${otherUser.user.fullName}">
-                                <h4>${otherUser.user.fullName}</h4>
-                                <p class="role">${otherUser.roleName}</p>
-                            </div>
-                        </a>
-                    </c:forEach>
-                </div>
-            </section>
-        </c:if>
+
     </div>
     <jsp:include page="/default/footer.jsp"/>
 <script>

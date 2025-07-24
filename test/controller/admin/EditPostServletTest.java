@@ -32,7 +32,7 @@ public class EditPostServletTest {
         }
 
         // Các method còn lại không cần dùng, để trống
-        // java bắt overide các method trong interfaceNu
+        // java bắt overide các method trong interface
         public void delete() {}
         public String getContentType() { return null; }
         public String getName() { return null; }

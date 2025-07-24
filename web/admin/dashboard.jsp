@@ -16,9 +16,12 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
+        <%-- Nhúng thư viện Chart.js --%>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <%-- Nhúng Chart.js adapter for date-fns để xử lý trục thời gian tốt hơn --%>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
-        </head>
+    </head>
     <body>
         <div class="wrapper">
             <nav>
@@ -158,10 +161,11 @@
                         </c:choose>
                     </div>
 
+                    <%-- Biểu đồ Doanh thu theo danh mục môn học --%>
                     <div class="chart-container card">
-                        <h3>Revenue by Subject Category</h3>
+                        <h3>Revenue by Subject Category (within selected period)</h3>
                         <c:choose>
-                            <c:when test="${not empty revenueBySubjectCategoryJson && revenueBySubjectCategoryJson ne '[]'}">
+                            <c:when test="${not empty revenueByCategoriesJson && revenueByCategoriesJson ne '[]'}">
                                 <canvas id="revenueByCategoryChart"></canvas>
                             </c:when>
                             <c:otherwise>
@@ -176,77 +180,94 @@
         </div>
 
         <script>
-            // === JavaScript cho Sidebar Toggle ===
-            // Tạo và thêm nút toggle vào body
+            // --- JavaScript cho Sidebar Toggle ---
+            // Tạo và thêm nút toggle vào body. Nút này sẽ hiển thị hoặc ẩn menu điều hướng.
             const toggleMenuBtn = document.createElement('button');
             toggleMenuBtn.id = 'toggleMenuBtn';
-            toggleMenuBtn.innerHTML = '<i class="bi bi-list"></i>'; // Sử dụng icon Bootstrap Icons
-            document.body.appendChild(toggleMenuBtn);
+            toggleMenuBtn.innerHTML = '<i class="bi bi-list"></i>'; // Sử dụng icon Bootstrap Icons cho nút toggle
+            document.body.appendChild(toggleMenuBtn); // Thêm nút vào cuối body
 
+            // Lấy tham chiếu đến container chứa các mục dropdown của menu
             const menuContainer = document.getElementById('courseDropdownContainer');
 
+            // Thêm sự kiện click cho nút toggle
             toggleMenuBtn.addEventListener('click', () => {
+                // Kiểm tra trạng thái hiện tại của menu: nếu đang hiển thị thì ẩn đi, ngược lại thì hiển thị
                 const isVisible = menuContainer.style.display === 'block';
                 menuContainer.style.display = isVisible ? 'none' : 'block';
             });
 
-            // Đóng sidebar khi click ra ngoài
+            // Thêm sự kiện click toàn bộ tài liệu để đóng sidebar khi người dùng click ra ngoài
             document.addEventListener('click', function(event) {
                 const sidebar = document.getElementById('courseDropdownContainer');
                 const toggleButton = document.getElementById('toggleMenuBtn');
 
+                // Nếu sidebar tồn tại VÀ click không phải trên sidebar VÀ click không phải trên nút toggle
                 if (sidebar && !sidebar.contains(event.target) && (!toggleButton || !toggleButton.contains(event.target))) {
-                    sidebar.style.display = 'none';
+                    sidebar.style.display = 'none'; // Ẩn sidebar đi
                 }
             });
 
-            // === JavaScript cho Chart.js ===
+            // --- JavaScript cho Chart.js ---
+            // Đảm bảo rằng DOM đã được tải hoàn chỉnh trước khi chạy script vẽ biểu đồ
             document.addEventListener('DOMContentLoaded', function() {
-                // Biểu đồ Order Trend
+
+                // --- Biểu đồ Order Trend (Xu hướng số lượng đơn hàng) ---
+                // Lấy chuỗi JSON chứa dữ liệu xu hướng đơn hàng từ requestScope của JSP
+                // Sử dụng || '[]' để đảm bảo nó là một chuỗi JSON hợp lệ (mảng rỗng) nếu biến không tồn tại
                 const orderTrendJson = '${orderTrendJson}';
                 let orderTrendData = [];
                 try {
+                    // Cố gắng parse chuỗi JSON thành đối tượng JavaScript
                     orderTrendData = JSON.parse(orderTrendJson || '[]');
                 } catch (e) {
+                    // Ghi lỗi vào console nếu có vấn đề khi parse JSON
                     console.error("Error parsing orderTrendJson:", e);
-                    orderTrendData = [];
+                    orderTrendData = []; // Đặt lại dữ liệu là mảng rỗng để tránh lỗi tiếp theo
                 }
 
+                // Chỉ vẽ biểu đồ nếu có dữ liệu
                 if (orderTrendData.length > 0) {
-                    const dates = [];
-                    const submittedCounts = [];
-                    const allCounts = [];
+                    const dates = []; // Mảng chứa các ngày cho trục X
+                    const submittedCounts = []; // Mảng chứa số lượng đơn hàng "Submitted"
+                    const allCounts = []; // Mảng chứa tổng số lượng đơn hàng
 
+                    // Lặp qua dữ liệu nhận được và điền vào các mảng trên
                     orderTrendData.forEach(function(trend) {
+                        // Chuyển đổi chuỗi ngày thành đối tượng Date của JavaScript
                         const dateObj = new Date(trend.date);
+                        // Định dạng ngày để hiển thị trên nhãn trục (ví dụ: "Jul 24")
                         const options = { month: 'short', day: 'numeric' };
                         dates.push(dateObj.toLocaleDateString('en-US', options));
+                        // Lấy số lượng đơn hàng đã gửi và tổng số đơn hàng
                         submittedCounts.push(trend.submittedOrders);
                         allCounts.push(trend.allOrders);
                     });
 
+                    // Lấy tham chiếu đến phần tử canvas nơi biểu đồ Order Trend sẽ được vẽ
                     const orderCtx = document.getElementById('orderTrendChart');
                     if (orderCtx) {
+                        // Tạo một biểu đồ mới sử dụng Chart.js
                         new Chart(orderCtx.getContext('2d'), {
-                            type: 'line',
+                            type: 'line', // Loại biểu đồ: đường
                             data: {
-                                labels: dates,
+                                labels: dates, // Nhãn cho trục X (các ngày)
                                 datasets: [{
-                                    label: 'Submitted Orders',
-                                    data: submittedCounts,
-                                    borderColor: '#FFC107',
-                                    backgroundColor: 'rgba(255, 193, 7, 0.2)',
-                                    tension: 0.3,
-                                    fill: false,
-                                    pointBackgroundColor: '#FFC107',
-                                    pointBorderColor: '#fff',
-                                    pointRadius: 5,
-                                    pointHoverRadius: 7
+                                    label: 'Submitted Orders', // Tên bộ dữ liệu hiển thị trong chú giải
+                                    data: submittedCounts, // Dữ liệu số lượng đơn hàng đã gửi
+                                    borderColor: '#FFC107', // Màu đường (vàng/cam)
+                                    backgroundColor: 'rgba(255, 193, 7, 0.2)', // Màu nền dưới đường (có độ trong suốt)
+                                    tension: 0.3, // Độ cong của đường
+                                    fill: false, // Không đổ màu bên dưới đường
+                                    pointBackgroundColor: '#FFC107', // Màu của các điểm dữ liệu
+                                    pointBorderColor: '#fff', // Màu viền của các điểm dữ liệu
+                                    pointRadius: 5, // Bán kính của các điểm dữ liệu
+                                    pointHoverRadius: 7 // Bán kính của các điểm khi di chuột qua
                                 }, {
-                                    label: 'All Orders',
-                                    data: allCounts,
-                                    borderColor: '#2196F3',
-                                    backgroundColor: 'rgba(33, 150, 243, 0.2)',
+                                    label: 'All Orders', // Tên bộ dữ liệu cho tất cả đơn hàng
+                                    data: allCounts, // Dữ liệu tổng số đơn hàng
+                                    borderColor: '#2196F3', // Màu đường (xanh dương)
+                                    backgroundColor: 'rgba(33, 150, 243, 0.2)', // Màu nền dưới đường (có độ trong suốt)
                                     tension: 0.3,
                                     fill: false,
                                     pointBackgroundColor: '#2196F3',
@@ -256,45 +277,45 @@
                                 }]
                             },
                             options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
+                                responsive: true, // Biểu đồ tự điều chỉnh kích thước
+                                maintainAspectRatio: false, // Không giữ tỉ lệ khung hình mặc định
                                 scales: {
-                                    y: {
-                                        beginAtZero: true,
+                                    y: { // Cấu hình trục Y
+                                        beginAtZero: true, // Bắt đầu từ 0
                                         title: {
                                             display: true,
-                                            text: 'Number of Orders',
+                                            text: 'Number of Orders', // Tiêu đề trục Y
                                             color: '#555'
                                         },
                                         ticks: {
-                                            precision: 0
+                                            precision: 0 // Đảm bảo các giá trị trên trục Y là số nguyên
                                         }
                                     },
-                                    x: {
+                                    x: { // Cấu hình trục X
                                         title: {
                                             display: true,
-                                            text: 'Date',
+                                            text: 'Date', // Tiêu đề trục X
                                             color: '#555'
                                         }
                                     }
                                 },
                                 plugins: {
                                     title: {
-                                        display: false,
+                                        display: false, // Ẩn tiêu đề biểu đồ (đã có H3 bên ngoài)
                                     },
-                                    legend: {
-                                        position: 'bottom',
+                                    legend: { // Cấu hình chú giải (legend)
+                                        position: 'bottom', // Đặt chú giải ở dưới cùng
                                         labels: {
-                                            boxWidth: 20,
-                                            padding: 15,
+                                            boxWidth: 20, // Chiều rộng của hộp màu trong chú giải
+                                            padding: 15, // Khoảng cách giữa các mục chú giải
                                             font: {
-                                                size: 12
+                                                size: 12 // Kích thước font của chú giải
                                             }
                                         }
                                     },
-                                    tooltip: {
-                                        mode: 'index',
-                                        intersect: false,
+                                    tooltip: { // Cấu hình tooltip (hiển thị khi di chuột)
+                                        mode: 'index', // Hiển thị tooltip cho tất cả các đường tại cùng một điểm trên trục X
+                                        intersect: false, // Tooltip sẽ hiển thị ngay cả khi con trỏ không trực tiếp nằm trên điểm dữ liệu
                                         callbacks: {
                                             label: function(context) {
                                                 let label = context.dataset.label || '';
@@ -302,7 +323,7 @@
                                                     label += ': ';
                                                 }
                                                 if (context.parsed.y !== null) {
-                                                    label += context.parsed.y;
+                                                    label += context.parsed.y; // Hiển thị giá trị y
                                                 }
                                                 return label;
                                             }
@@ -312,14 +333,17 @@
                             }
                         });
                     } else {
+                        // Ghi cảnh báo nếu không tìm thấy phần tử canvas
                         console.warn("Canvas element 'orderTrendChart' not found. Chart will not be rendered.");
                     }
                 } else {
+                    // Ghi cảnh báo nếu không có dữ liệu để vẽ biểu đồ
                     console.warn("No order trend data available to display the chart.");
                 }
 
-                // Biểu đồ Revenue by Category
-                const revenueByCategoryJson = '${revenueBySubjectCategoryJson}';
+                // --- Biểu đồ Revenue by Category (Doanh thu theo danh mục) ---
+                // Lấy chuỗi JSON chứa dữ liệu doanh thu theo danh mục từ requestScope của JSP
+                const revenueByCategoryJson = '${revenueByCategoriesJson}'; // Lưu ý: đã sửa tên biến cho đúng với DashboardServlet
                 let revenueByCategoryData = [];
                 try {
                     revenueByCategoryData = JSON.parse(revenueByCategoryJson || '[]');
@@ -328,19 +352,22 @@
                     revenueByCategoryData = [];
                 }
 
+                // Chỉ vẽ biểu đồ nếu có dữ liệu
                 if (revenueByCategoryData.length > 0) {
-                    const categoryLabels = revenueByCategoryData.map(item => item.categoryName);
-                    const categoryRevenues = revenueByCategoryData.map(item => item.totalRevenue);
+                    const categoryLabels = revenueByCategoryData.map(item => item.categoryName); // Tên danh mục
+                    const categoryRevenues = revenueByCategoryData.map(item => item.totalRevenue); // Doanh thu tương ứng
 
+                    // Lấy tham chiếu đến phần tử canvas nơi biểu đồ Revenue by Category sẽ được vẽ
                     const revenueCtx = document.getElementById('revenueByCategoryChart');
                     if (revenueCtx) {
+                        // Tạo một biểu đồ mới sử dụng Chart.js
                         new Chart(revenueCtx.getContext('2d'), {
-                            type: 'pie', // Hoặc 'bar' tùy theo sở thích
+                            type: 'pie', // Loại biểu đồ: hình tròn (có thể đổi thành 'bar' cho biểu đồ cột)
                             data: {
-                                labels: categoryLabels,
+                                labels: categoryLabels, // Nhãn cho các lát cắt/cột
                                 datasets: [{
-                                    data: categoryRevenues,
-                                    backgroundColor: [
+                                    data: categoryRevenues, // Dữ liệu doanh thu
+                                    backgroundColor: [ // Mảng các màu nền cho mỗi lát cắt/cột
                                         'rgba(255, 99, 132, 0.7)', // Red
                                         'rgba(54, 162, 235, 0.7)', // Blue
                                         'rgba(255, 206, 86, 0.7)', // Yellow
@@ -348,7 +375,7 @@
                                         'rgba(153, 102, 255, 0.7)', // Purple
                                         'rgba(255, 159, 64, 0.7)'  // Orange
                                     ],
-                                    borderColor: [
+                                    borderColor: [ // Mảng các màu viền
                                         'rgba(255, 99, 132, 1)',
                                         'rgba(54, 162, 235, 1)',
                                         'rgba(255, 206, 86, 1)',
@@ -356,7 +383,7 @@
                                         'rgba(153, 102, 255, 1)',
                                         'rgba(255, 159, 64, 1)'
                                     ],
-                                    borderWidth: 1
+                                    borderWidth: 1 // Độ dày viền
                                 }]
                             },
                             options: {
@@ -364,7 +391,7 @@
                                 maintainAspectRatio: false,
                                 plugins: {
                                     legend: {
-                                        position: 'top',
+                                        position: 'top', // Đặt chú giải ở trên cùng
                                     },
                                     tooltip: {
                                         callbacks: {
@@ -374,7 +401,8 @@
                                                     label += ': ';
                                                 }
                                                 if (context.parsed !== null) {
-                                                    label += new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(context.parsed); // Định dạng tiền tệ VNĐ
+                                                    // Định dạng giá trị tiền tệ theo VNĐ
+                                                    label += new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(context.parsed);
                                                 }
                                                 return label;
                                             }
@@ -390,7 +418,7 @@
                     console.warn("No revenue by category data available to display the chart.");
                 }
 
-            }); // End DOMContentLoaded
+            }); // Kết thúc DOMContentLoaded event listener
         </script>
     </body>
 </html>

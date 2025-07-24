@@ -1,7 +1,7 @@
 package controller.admin;
 
 import dal.DashboardDAO;
-import com.google.gson.Gson; // Đảm bảo bạn đã import Gson
+import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -24,32 +24,59 @@ public class DashboardServlet extends HttpServlet {
             throws ServletException, IOException {
 
         LocalDate today = LocalDate.now();
-        LocalDate defaultTrendStartDate = today.minusDays(6);
-        LocalDate defaultStatsStartDate = today.minusDays(30);
+        // Đặt ngày kết thúc mặc định là hôm nay
+        LocalDate defaultEndDate = today;
+        // Đặt ngày bắt đầu mặc định là 1 tháng trước ngày kết thúc mặc định
+        LocalDate defaultStartDate = defaultEndDate.minusMonths(1);
 
         String startDateStr = request.getParameter("startDate");
         String endDateStr = request.getParameter("endDate");
 
-        LocalDate actualTrendStartDate = defaultTrendStartDate;
-        LocalDate actualStatsStartDate = defaultStatsStartDate;
-        LocalDate actualEndDate = today;
+        LocalDate actualStatsStartDate = defaultStartDate;
+        LocalDate actualTrendStartDate = defaultStartDate;
+        LocalDate actualEndDate = defaultEndDate;
 
         try {
+            boolean useDefaultDates = false; // Cờ để kiểm soát việc sử dụng ngày mặc định
+
             if (startDateStr != null && !startDateStr.isEmpty()) {
-                actualStatsStartDate = LocalDate.parse(startDateStr);
-                actualTrendStartDate = LocalDate.parse(startDateStr);
+                LocalDate parsedStartDate = LocalDate.parse(startDateStr);
+                actualStatsStartDate = parsedStartDate;
+                actualTrendStartDate = parsedStartDate;
             }
+
             if (endDateStr != null && !endDateStr.isEmpty()) {
-                actualEndDate = LocalDate.parse(endDateStr);
+                LocalDate parsedEndDate = LocalDate.parse(endDateStr);
+                actualEndDate = parsedEndDate;
             }
+
+            // Kiểm tra các điều kiện để reset về ngày mặc định
+            // 1. Nếu endDate không phải là ngày hôm nay VÀ người dùng đã cung cấp endDate
+            // HOẶC 2. Nếu startDate lớn hơn endDate
+            if ((endDateStr != null && !endDateStr.isEmpty() && !actualEndDate.isEqual(today)) || actualStatsStartDate.isAfter(actualEndDate)) {
+                useDefaultDates = true;
+            }
+
+            if (useDefaultDates) {
+                actualStatsStartDate = defaultStartDate;
+                actualTrendStartDate = defaultStartDate;
+                actualEndDate = defaultEndDate;
+            }
+
         } catch (DateTimeParseException e) {
             System.err.println("Invalid date format. Using default dates. Error: " + e.getMessage());
+            // Nếu có lỗi parse, chắc chắn quay về dùng ngày mặc định
+            actualStatsStartDate = defaultStartDate;
+            actualTrendStartDate = defaultStartDate;
+            actualEndDate = defaultEndDate;
         }
 
+        // Chuyển đổi sang java.sql.Date
         Date sqlStatsStartDate = Date.valueOf(actualStatsStartDate);
         Date sqlTrendStartDate = Date.valueOf(actualTrendStartDate);
         Date sqlEndDate = Date.valueOf(actualEndDate);
 
+        // Đặt lại các thuộc tính để hiển thị trên JSP
         request.setAttribute("currentStartDate", actualStatsStartDate.toString());
         request.setAttribute("currentEndDate", actualEndDate.toString());
 
@@ -57,7 +84,6 @@ public class DashboardServlet extends HttpServlet {
         Gson gson = new Gson();
 
         // --- Lấy dữ liệu và đặt vào request scope ---
-
         // Subject Stats
         Map<String, Integer> subjectStats = dao.getSubjectStats(sqlStatsStartDate, sqlEndDate);
         request.setAttribute("newSubjects", subjectStats.getOrDefault("newSubjects", 0));
