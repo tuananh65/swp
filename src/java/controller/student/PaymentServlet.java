@@ -22,9 +22,9 @@ import org.json.JSONObject;
 
 public class PaymentServlet extends HttpServlet {
 
-    private static final String CLIENT_ID = "2957b83e-32ed-4389-a526-655f3b82d72f";
-    private static final String API_KEY = "61fe5853-3470-4971-a896-e67a4f1db2ea";
-    private static final String CHECKSUM_KEY = "4cd3b8adec3b43be9a00b6885017540621497d178ebb5ced4931c7bc321300d7";
+    private static final String CLIENT_ID = "";
+    private static final String API_KEY = "";
+    private static final String CHECKSUM_KEY = "";
     private static final String RETURN_URL = "http://localhost:8080/SoftSkill25/payment-return.jsp";
     private static final String CANCEL_URL = "http://localhost:8080/SoftSkill25/payment-cancel.jsp";
 
